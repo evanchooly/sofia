@@ -1,4 +1,4 @@
-package org.miloframework.localizer;
+package org.miloframework.sofia;
 /*
 * Copyright 2001-2005 The Apache Software Foundation.
 *
@@ -16,15 +16,9 @@ package org.miloframework.localizer;
 */
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Properties;
-import java.util.TreeMap;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -35,7 +29,7 @@ import org.apache.maven.plugin.MojoExecutionException;
  * @goal localize
  * @phase generate-sources
  */
-public class LocalizerMojo extends AbstractMojo {
+public class SofiaMojo extends AbstractMojo {
     /**
      * @parameter expression="${localizer.target}" default-value="${project.build.directory}/generated-sources/localizer"
      */
@@ -58,22 +52,15 @@ public class LocalizerMojo extends AbstractMojo {
         if (!outputDirectory.exists()) {
             outputDirectory.mkdirs();
         }
-        Properties props = new Properties();
-        Map<String, String> map = new TreeMap<String, String>();
         try {
-            props.load(new FileInputStream(properties));
-            for (Entry<Object, Object> entry : props.entrySet()) {
-                map.put((String) entry.getKey(), (String) entry.getValue());
-            }
-            emitClass(map);
-        } catch (IOException e) {
+            emitClass();
+        } catch (Exception e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
     }
 
-    private void emitClass(Map<String, String> map)
-        throws FileNotFoundException, UnsupportedEncodingException {
-        LocalizerGenerator localizer = new LocalizerGenerator(pkgName, map);
+    private void emitClass() throws IOException, UnsupportedEncodingException {
+        LocalizerGenerator localizer = new LocalizerGenerator(pkgName, properties);
         File outputFile = new File(outputDirectory,
             String.format("%s/Localizer.java", pkgName.replace('.', '/')));
         outputFile.getParentFile().mkdirs();

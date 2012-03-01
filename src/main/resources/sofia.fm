@@ -1,0 +1,32 @@
+package ${packageName};
+
+import java.util.HashMap;
+import java.text.MessageFormat;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
+
+public class Localizer {
+    private static Map<String, String> messages = new HashMap<String, String>();
+
+    static {
+        <#list messages?keys as key>
+        messages.put("${key}", "${messages[key]}");
+        </#list>
+    }
+
+    private static String getMessageValue(String key, Locale... locale) {
+        return messages.get(locale.length != 0 ? String.format("%s.%s", locale[0], key) : key);
+    }
+
+    <#list methods as method>
+    public static String ${method.name}(<#list method.arguments as argument>Object ${argument}<#if argument_has_next>, </#if></#list><#if method.arguments?size != 0>, </#if>Locale... locale) {
+    <#if method.arguments?size != 0>
+        return MessageFormat.format(getMessageValue("${method.key}", locale), <#list method.arguments as argument>${argument}<#if argument_has_next>, </#if></#list>);
+    <#else>
+        return getMessageValue("${method.key}", locale);
+    </#if>
+    }
+
+    </#list>
+}
