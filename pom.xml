@@ -8,12 +8,13 @@
         <version>7</version>
     </parent>
 
-    <groupId>org.miloframework</groupId>
-    <artifactId>sofia</artifactId>
-    <packaging>maven-plugin</packaging>
+    <groupId>org.milocontainer</groupId>
+    <artifactId>sofia-parent</artifactId>
     <version>0.1-SNAPSHOT</version>
-    <name>Sofia Maven Mojo</name>
+    <name>Sofia Parent</name>
     <url>https://github.com/evanchooly/sofia</url>
+
+    <packaging>pom</packaging>
 
     <scm>
         <connection>scm:git:git@github.com:evanchooly/sofia.git</connection>
@@ -21,22 +22,29 @@
         <url>git@github.com:evanchooly/sofia.git</url>
     </scm>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-plugin-api</artifactId>
-            <version>3.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-            <version>2.3.18</version>
-        </dependency>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>6.1.1</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+    <modules>
+        <module>mojo</module>
+        <module>tests</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-plugin-api</artifactId>
+                <version>3.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>2.3.18</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>6.1.1</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

@@ -1,4 +1,4 @@
-package org.miloframework.sofia;
+package com.antwerkz.sofia;
 /*
 * Copyright 2001-2005 The Apache Software Foundation.
 *
@@ -22,25 +22,34 @@ import java.io.UnsupportedEncodingException;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.project.MavenProject;
 
 /**
  * Goal which touches a timestamp file.
  *
- * @goal localize
+ * @goal generate
  * @phase generate-sources
  */
 public class SofiaMojo extends AbstractMojo {
     /**
-     * @parameter expression="${localizer.target}" default-value="${project.build.directory}/generated-sources/localizer"
+     * The default maven project object.
+     *
+     * @parameter expression="${project}"
+     * @required
+     * @readonly
+     */
+    private MavenProject project;
+    /**
+     * @parameter expression="${localizer.target}" default-value="${project.build.directory}/generated-sources/sofia"
      */
     private File outputDirectory;
     /**
-     * @parameter expression="${localizer.properties}" default-value="src/main/resources/localizer.properties"
+     * @parameter expression="${localizer.properties}" default-value="src/main/resources/sofia.properties"
      * @required
      */
     private File properties;
     /**
-     * @parameter expression="${localizer.package}" default-value="org.miloframework.localizer"
+     * @parameter expression="${localizer.package}" default-value="com.antwerkz.sofia"
      * @required
      */
     private String pkgName;
@@ -54,6 +63,7 @@ public class SofiaMojo extends AbstractMojo {
         }
         try {
             emitClass();
+            project .addCompileSourceRoot(outputDirectory.getAbsolutePath());
         } catch (Exception e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }

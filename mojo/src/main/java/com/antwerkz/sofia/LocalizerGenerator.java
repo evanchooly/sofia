@@ -1,4 +1,4 @@
-package org.miloframework.sofia;
+package com.antwerkz.sofia;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -94,7 +94,7 @@ class LocalizerGenerator {
     public String toString() {
         Configuration cfg = new Configuration();
         try {
-            Template template = new Template("localizer",
+            Template template = new Template("sofia",
                 new InputStreamReader(getClass().getResourceAsStream("/sofia.fm")), cfg);
             Writer out = new StringWriter();
             template.process(buildDataMap(), out);
