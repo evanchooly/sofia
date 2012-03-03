@@ -1,7 +1,11 @@
 package com.antwerkz.sofia;
 
+import java.text.Format;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Method {
     private String name;
@@ -38,10 +42,13 @@ public class Method {
     }
 
     private void countArguments(String value) {
-        int index = 0;
-        while ((index = value.indexOf("{}", index)+1) != 0) {
-            arguments.add("arg" + argCount);
-            argCount++;
+        Pattern pattern = Pattern.compile("\\{\\d\\}");
+        Matcher matcher = pattern.matcher(value);
+        int count = matcher.groupCount();
+        Format[] formats = new MessageFormat(value).getFormats();
+        argCount = formats.length;
+        for (int i = 0; i < formats.length; i++) {
+            arguments.add("arg" + i);
         }
     }
 
@@ -49,11 +56,7 @@ public class Method {
         final String[] parts = key.split("\\.");
         StringBuilder name = new StringBuilder();
         for (String part : parts) {
-            if(name.length() != 0) {
-                name.append(part.substring(0, 1).toUpperCase() + part.substring(1));
-            } else {
-                name.append(part);
-            }
+            name.append(name.length() != 0 ? part.substring(0, 1).toUpperCase() + part.substring(1) : part);
         }
         return name.toString();
     }

@@ -2,7 +2,6 @@ package com.antwerkz.sofia;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
@@ -28,10 +27,15 @@ class LocalizerGenerator {
     private String ext;
     private Map<String, String> messages;
     private Set<String> keySet;
+    private String bundleName;
 
     public LocalizerGenerator(String pkgName, File file) throws IOException {
         this.pkgName = pkgName;
         baseFile = file;
+        bundleName = file.getName();
+        if(bundleName.contains(".")) {
+            bundleName = bundleName.substring(0, bundleName.indexOf("."));
+        }
         final String fileName = file.getName();
         baseName = fileName.substring(0, fileName.lastIndexOf('.'));
         ext = fileName.contains(".") ? fileName.substring(fileName.lastIndexOf('.') + 1) : "";
@@ -41,11 +45,12 @@ class LocalizerGenerator {
         for (Entry<String, String> entry : map.entrySet()) {
             methods.add(buildMethod(entry.getKey(), entry.getValue()));
         }
-        record(null, map);
-        record(extractLocale(file), map);
-        loadOtherLocales(map, file);
+//        record(null, map);
+//        record(extractLocale(file), map);
+//        loadOtherLocales(map, file);
     }
 
+/*
     private void record(String locale, Map<String, String> map) {
         for (Entry<String, String> entry : map.entrySet()) {
             messages.put(String.format("%s%s", locale == null ? "" : locale + ".", entry.getKey()), entry.getValue());
@@ -64,6 +69,7 @@ class LocalizerGenerator {
             record(extractLocale(file), loadPropertiesFile(file));
         }
     }
+*/
 
     private Map<String, String> loadPropertiesFile(File file) throws IOException {
         Properties props = new Properties();
@@ -111,7 +117,7 @@ class LocalizerGenerator {
         final HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("packageName", pkgName);
         map.put("methods", methods);
-        map.put("messages", messages);
+        map.put("bundleName", bundleName);
         return map;
     }
 

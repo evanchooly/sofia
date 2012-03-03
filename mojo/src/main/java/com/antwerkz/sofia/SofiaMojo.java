@@ -40,16 +40,16 @@ public class SofiaMojo extends AbstractMojo {
      */
     private MavenProject project;
     /**
-     * @parameter expression="${localizer.target}" default-value="${project.build.directory}/generated-sources/sofia"
+     * @parameter expression="${sofia.target}" default-value="${project.build.directory}/generated-sources/sofia"
      */
     private File outputDirectory;
     /**
-     * @parameter expression="${localizer.properties}" default-value="src/main/resources/sofia.properties"
+     * @parameter expression="${sofia.properties}" default-value="src/main/resources/sofia.properties"
      * @required
      */
     private File properties;
     /**
-     * @parameter expression="${localizer.package}" default-value="com.antwerkz.sofia"
+     * @parameter expression="${sofia.package}" default-value="com.antwerkz.sofia"
      * @required
      */
     private String pkgName;
@@ -71,8 +71,7 @@ public class SofiaMojo extends AbstractMojo {
 
     private void emitClass() throws IOException, UnsupportedEncodingException {
         LocalizerGenerator localizer = new LocalizerGenerator(pkgName, properties);
-        File outputFile = new File(outputDirectory,
-            String.format("%s/Localizer.java", pkgName.replace('.', '/')));
+        File outputFile = new File(outputDirectory, String.format("%s/Localizer.java", pkgName.replace('.', '/')));
         outputFile.getParentFile().mkdirs();
         final PrintWriter stream = new PrintWriter(outputFile, "UTF-8");
         stream.println(localizer);

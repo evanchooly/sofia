@@ -1,22 +1,31 @@
 package ${packageName};
 
-import java.util.HashMap;
-import java.text.MessageFormat;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TreeMap;
+import java.text.*;
+import java.util.*;
 
 public class Localizer {
-    private static Map<String, String> messages = new HashMap<String, String>();
+    private static Map<Locale, ResourceBundle> messages = new HashMap<Locale, ResourceBundle>();
 
-    static {
-        <#list messages?keys as key>
-        messages.put("${key}", "${messages[key]}");
-        </#list>
+    private static ResourceBundle getBundle(Locale... localeList) {
+        Locale locale = localeList.length == 0 ? Locale.getDefault() : localeList[0];
+        ResourceBundle labels = loadBundle(locale);
+        if(labels == null) {
+            labels = loadBundle(Locale.ROOT);
+        }
+        return labels;
+    }
+
+    private static ResourceBundle loadBundle(Locale locale) {
+        ResourceBundle bundle= messages.get(locale);
+        if(bundle == null) {
+            bundle = ResourceBundle.getBundle("${bundleName}", locale);
+            messages.put(locale, bundle);
+        }
+        return bundle;
     }
 
     private static String getMessageValue(String key, Locale... locale) {
-        return messages.get(locale.length != 0 ? String.format("%s.%s", locale[0], key) : key);
+        return (String) getBundle(locale).getObject(key);
     }
 
     <#list methods as method>
