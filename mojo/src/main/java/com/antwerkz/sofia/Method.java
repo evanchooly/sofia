@@ -1,17 +1,18 @@
 package com.antwerkz.sofia;
 
+import java.text.DateFormat;
 import java.text.Format;
 import java.text.MessageFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Method {
     private String name;
     private String value;
     private int argCount;
-    List<String> arguments = new ArrayList<String>();
+    private List<String> arguments = new ArrayList<String>();
+    private List<String> parameters = new ArrayList<String>();
     private String key;
 
     public Method(String key, String value) {
@@ -41,15 +42,29 @@ public class Method {
         return arguments;
     }
 
+    public List<String> getParameters() {
+        return parameters;
+    }
+
     private void countArguments(String value) {
-        Pattern pattern = Pattern.compile("\\{\\d\\}");
-        Matcher matcher = pattern.matcher(value);
-        int count = matcher.groupCount();
-        Format[] formats = new MessageFormat(value).getFormats();
-        argCount = formats.length;
-        for (int i = 0; i < formats.length; i++) {
-            arguments.add("arg" + i);
+        MessageFormat messageFormat = new MessageFormat(value);
+        Format[] formats = messageFormat.getFormats();
+        argCount = messageFormat.getFormats().length;
+        for (int i = 0; i < argCount; i++) {
+            parameters.add(String.format("%s arg%d", getType(formats[i]), i));
+            arguments.add(String.format("arg%d", i));
         }
+    }
+
+    private String getType(Format format) {
+        if(format == null) {
+            return "Object";
+        } else if(format instanceof DateFormat) {
+            return "java.util.Date";
+        } else if(format instanceof NumberFormat) {
+            return "Number";
+        }
+        return "Object";
     }
 
     private String toMethodName(String key) {

@@ -16,7 +16,7 @@ public class Localizer {
     }
 
     private static ResourceBundle loadBundle(Locale locale) {
-        ResourceBundle bundle= messages.get(locale);
+        ResourceBundle bundle = messages.get(locale);
         if(bundle == null) {
             bundle = ResourceBundle.getBundle("${bundleName}", locale);
             messages.put(locale, bundle);
@@ -29,7 +29,7 @@ public class Localizer {
     }
 
     <#list methods as method>
-    public static String ${method.name}(<#list method.arguments as argument>Object ${argument}<#if argument_has_next>, </#if></#list><#if method.arguments?size != 0>, </#if>Locale... locale) {
+    public static String ${method.name}(<#list method.parameters as argument>${argument}<#if argument_has_next>, </#if></#list><#if method.parameters?size != 0>, </#if>Locale... locale) {
     <#if method.arguments?size != 0>
         return MessageFormat.format(getMessageValue("${method.key}", locale), <#list method.arguments as argument>${argument}<#if argument_has_next>, </#if></#list>);
     <#else>

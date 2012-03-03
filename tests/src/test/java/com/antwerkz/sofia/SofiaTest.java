@@ -1,6 +1,7 @@
 package com.antwerkz.sofia;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.Locale;
 
 import org.testng.Assert;
@@ -18,5 +19,8 @@ public class SofiaTest {
         Assert.assertEquals(Localizer.parameterizedPropertyLongName("bob", "alice", Locale.CHINA), "I need parameters bob and alice");
         Assert.assertEquals(Localizer.parameterizedPropertyLongName("bob", "alice", new Locale("en", "GB")), "I need two parameters bob and alice");
         Assert.assertEquals(Localizer.parameterizedPropertyLongName("bob", "alice", Locale.GERMAN), "I need zwei parameters bob and alice");
+
+        String message = Localizer.dateProperty(new Date(),  2);
+        Assert.assertFalse(message.contains("{"), message);
     }
 }
