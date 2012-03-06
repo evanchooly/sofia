@@ -6,12 +6,12 @@
 
     <parent>
         <groupId>com.antwerkz</groupId>
-        <artifactId>sofia-parent</artifactId>
+        <artifactId>sofia</artifactId>
         <version>0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <groupId>com.antwerkz</groupId>
+    <groupId>com.antwerkz.sofia</groupId>
     <artifactId>tests</artifactId>
     <version>0.1-SNAPSHOT</version>
 
@@ -19,9 +19,9 @@
         <defaultGoal>install</defaultGoal>
         <plugins>
             <plugin>
-                <groupId>com.antwerkz</groupId>
-                <artifactId>sofia</artifactId>
-                <version>0.1-SNAPSHOT</version>
+                <groupId>com.antwerkz.sofia</groupId>
+                <artifactId>maven</artifactId>
+                <version>${project.version}</version>
                 <executions>
                     <execution>
                         <goals>
