@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.milocontainer</groupId>
+        <groupId>com.antwerkz</groupId>
         <artifactId>sofia-parent</artifactId>
         <version>0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <groupId>org.milocontainer</groupId>
+    <groupId>com.antwerkz</groupId>
     <artifactId>tests</artifactId>
     <version>0.1-SNAPSHOT</version>
 
@@ -19,7 +19,7 @@
         <defaultGoal>install</defaultGoal>
         <plugins>
             <plugin>
-                <groupId>org.milocontainer</groupId>
+                <groupId>com.antwerkz</groupId>
                 <artifactId>sofia</artifactId>
                 <version>0.1-SNAPSHOT</version>
                 <executions>
