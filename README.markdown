@@ -21,7 +21,7 @@ a java file will be generated with the following interface:
         public static String testProperty(Locale... locale) { }
     }
 
-There are some other details but they're most irrelevant.  Feel free to explore the generated file if you're
+There are some other details but they're mostly irrelevant.  Feel free to explore the generated file if you're
 *really* interested.  What you see here is one method for each property listed in your properties file.  Those properties
 that take parameters result in methods that take parameters as well.  Notice that each parameter is typed according to
 the formatting specified in the properties file.  If no formatting is defined, "Object" is used for that parameter type.
@@ -48,6 +48,8 @@ There are a handful of things I'd like to add:
 1.  Optional autogeneration of error code values for those systems that need numeric codes assigned to each message.
 Oracle had such requirements for its error messages and manually was troublesome.  Of course, generating them might
 prove just as problematic, but we'll see how it goes.
+1.  Play framework support.  I'd love for this to work in [play!](http://playframework.org) as well as I've been using that
+more and more lately.
 
 Great.  How do I use it?
 -----
