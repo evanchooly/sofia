@@ -57,7 +57,7 @@ Add the following to your pom.xml:
     <plugin>
       <groupId>com.antwerkz.sofia</groupId>
       <artifactId>maven</artifactId>
-      <version>${project.version}</version>
+      <version> *** sofia version *** </version>
       <executions>
         <execution>
           <goals>
