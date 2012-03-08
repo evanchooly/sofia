@@ -71,7 +71,7 @@ There are a few configuration options:
 
 <table>
     <tr><td>Value</td><td>Description</td><td>Default</td></tr>
-    <tr><td>sofia.package</td><td>Defines the package for the generated class</td><td>com.antwerz.sofia</td></tr>
+    <tr><td>sofia.package</td><td>Defines the package for the generated class</td><td>com.antwerkz.sofia</td></tr>
     <tr><td>sofia.properties</td><td>The base properties file to use</td><td>src/main/resources/sofia.properties</td></tr>
     <tr><td>sofia.target</td><td>Generated source location</td><td>${project.build.directory}/generated-sources/sofia</td></tr>
 </table>
