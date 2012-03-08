@@ -83,4 +83,6 @@ One last question...  Why sofia?
 
 Project naming can be tricky.  I like my project names to be interesting in one way or another.  This project started
 off as a localization concept:  translation.  One of my favorite movies is "Lost in Translation" which is direced by
-Sofia Coppola.  So ... sofia.  The mystique of the unexplained name was better than the truth wasn't it?  Well, you asked...
+Sofia Coppola.  So ... sofia.
+
+The mystique of the unexplained name was better than the truth wasn't it?  Well, you asked...
