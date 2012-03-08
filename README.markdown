@@ -77,3 +77,10 @@ There are a few configuration options:
     <tr><td>sofia.properties</td><td>The base properties file to use</td><td>src/main/resources/sofia.properties</td></tr>
     <tr><td>sofia.target</td><td>Generated source location</td><td>${project.build.directory}/generated-sources/sofia</td></tr>
 </table>
+
+One last question...  Why sofia?
+-----
+
+Project naming can be tricky.  I like my project names to be interesting in one way or another.  This project started
+off as a localization concept:  translation.  One of my favorite movies is "Lost in Translation" which is direced by
+Sofia Coppola.  So ... sofia.  The mystique of the unexplained name was better than the truth wasn't it?  Well, you asked...
