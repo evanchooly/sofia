@@ -50,6 +50,7 @@ Oracle had such requirements for its error messages and manually managing that w
 them might prove just as problematic, but we'll see how it goes.
 1.  Play framework support.  I'd love for this to work in [play!](http://playframework.org) as well as I've been using that
 more and more lately.
+1.  Logging support via slf4j or logback
 
 Great.  How do I use it?
 -----
@@ -59,7 +60,7 @@ Add the following to your pom.xml:
     <plugin>
       <groupId>com.antwerkz.sofia</groupId>
       <artifactId>maven</artifactId>
-      <version> *** sofia version *** </version>
+      <version>0.1</version>
       <executions>
         <execution>
           <goals>
