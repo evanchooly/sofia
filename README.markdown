@@ -35,8 +35,8 @@ So ... why?
 
 When I worked on [glassfish](http://glassfish.java.net), we'd standardized on a library that did something similar. My
 biggest complaint about that one is that all the generated methods WERE IN ALL CAPS WHICH MADE READING THE CODE AWKWARD.
-Also, I'm not really sure where the source that library is so patching it would be tricky.  In any case, it turned out
-to be a very handy facet to a project which made have use of properties files to manage its messages so I wanted to
+Also, I'm not really sure where the source for that library is so patching it would be tricky.  In any case, it turned out
+to be a very handy facet to a project which makes use of properties files to manage its messages so I wanted to
 improve on it where I could.
 
 OK.  So what's next?
