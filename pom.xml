@@ -11,7 +11,7 @@
     <groupId>com.antwerkz</groupId>
     <artifactId>sofia</artifactId>
     <version>0.1-SNAPSHOT</version>
-    <name>Sofia Parent</name>
+    <name>Sofia</name>
     <url>https://github.com/evanchooly/sofia</url>
 
     <packaging>pom</packaging>
