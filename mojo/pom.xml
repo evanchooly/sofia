@@ -4,14 +4,14 @@
     <parent>
         <groupId>com.antwerkz</groupId>
         <artifactId>sofia</artifactId>
-        <version>0.2-SNAPSHOT</version>
+        <version>0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>com.antwerkz.sofia</groupId>
     <artifactId>maven</artifactId>
     <packaging>maven-plugin</packaging>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.1-SNAPSHOT</version>
     <name>Sofia Maven Mojo</name>
     <url>https://github.com/evanchooly/sofia</url>
 
@@ -21,6 +21,18 @@
         <url>git@github.com:evanchooly/sofia.git</url>
     </scm>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.8.1</version>
+                <configuration>
+                    <phase>package</phase>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <dependencies>
         <dependency>
             <groupId>org.apache.maven</groupId>
