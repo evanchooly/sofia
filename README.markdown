@@ -46,8 +46,8 @@ There are a handful of things I'd like to add:
 
 1.  Build time validation of properties files:  Making sure that all the properties files variants have the same key set.
 1.  Optional autogeneration of error code values for those systems that need numeric codes assigned to each message.
-Oracle had such requirements for its error messages and manually was troublesome.  Of course, generating them might
-prove just as problematic, but we'll see how it goes.
+Oracle had such requirements for its error messages and manually managing that was troublesome.  Of course, generating
+them might prove just as problematic, but we'll see how it goes.
 1.  Play framework support.  I'd love for this to work in [play!](http://playframework.org) as well as I've been using that
 more and more lately.
 
