@@ -13,7 +13,7 @@
     <groupId>com.antwerkz.sofia</groupId>
     <artifactId>play-plugin</artifactId>
     <version>0.2-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <build>
         <plugins>
