@@ -16,9 +16,6 @@ package com.antwerkz.sofia;
 */
 
 import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -62,21 +59,11 @@ public class SofiaMojo extends AbstractMojo {
             outputDirectory.mkdirs();
         }
         try {
-            emitClass();
-            project .addCompileSourceRoot(outputDirectory.getAbsolutePath());
+            new LocalizerGenerator(pkgName, properties, outputDirectory).write();
+            project.addCompileSourceRoot(outputDirectory.getAbsolutePath());
         } catch (Exception e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
-    }
-
-    private void emitClass() throws IOException, UnsupportedEncodingException {
-        LocalizerGenerator localizer = new LocalizerGenerator(pkgName, properties);
-        File outputFile = new File(outputDirectory, String.format("%s/Localizer.java", pkgName.replace('.', '/')));
-        outputFile.getParentFile().mkdirs();
-        final PrintWriter stream = new PrintWriter(outputFile, "UTF-8");
-        stream.println(localizer);
-        stream.flush();
-        stream.close();
     }
 
 }
