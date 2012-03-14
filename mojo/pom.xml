@@ -15,12 +15,6 @@
     <name>Sofia Maven Mojo</name>
     <url>https://github.com/evanchooly/sofia</url>
 
-    <scm>
-        <connection>scm:git:git@github.com:evanchooly/sofia.git</connection>
-        <developerConnection>scm:git:git@github.com:evanchooly/sofia.git</developerConnection>
-        <url>git@github.com:evanchooly/sofia.git</url>
-    </scm>
-
     <dependencies>
         <dependency>
             <groupId>com.antwerkz.sofia</groupId>

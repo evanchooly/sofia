@@ -24,6 +24,7 @@
     <modules>
         <module>core</module>
         <module>mojo</module>
+        <module>play-plugin</module>
         <module>tests</module>
     </modules>
 

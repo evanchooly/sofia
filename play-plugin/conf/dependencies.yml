@@ -1,0 +1,4 @@
+self: play -> sofia 0.1
+
+require:
+    - play
