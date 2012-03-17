@@ -22,14 +22,7 @@ public class SofiaPlugin extends PlayPlugin {
     }
 
     private void generate() {
-        Long targetMod = targetFile.lastModified();
-        Long propMod = properties.lastModified();
-        boolean less = targetMod < propMod;
-        System.out.println("targetMod = " + targetMod);
-        System.out.println("propMod = " + propMod);
-        System.out.println("less = " + less);
-
-        if (less) {
+        if (targetFile.lastModified() < properties.lastModified()) {
             try {
                 new LocalizerGenerator("utils", properties, targetDir).write();
             } catch (IOException e) {
