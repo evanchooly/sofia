@@ -19,7 +19,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
-class LocalizerGenerator {
+public class LocalizerGenerator {
     private List<Method> methods = new ArrayList<Method>();
     private String pkgName;
     private File outputDirectory;

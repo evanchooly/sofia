@@ -16,6 +16,7 @@
     <packaging>pom</packaging>
 
     <build>
+        <defaultGoal>install</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -33,7 +34,7 @@
                             <executable>play</executable>
                             <arguments>
                                 <argument>build-module</argument>
-                                <argument>--require=1.2</argument>
+                                <argument>--require=1.2.4</argument>
                             </arguments>
                         </configuration>
                     </execution>
