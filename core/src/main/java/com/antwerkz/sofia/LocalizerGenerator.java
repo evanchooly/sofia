@@ -24,18 +24,27 @@ public class LocalizerGenerator {
     private String pkgName;
     private File outputDirectory;
     private String bundleName;
+    private SofiaConfig config;
+    private Map<String, List<Method>> loggers = new HashMap<String, List<Method>>();
 
-    public LocalizerGenerator(String pkgName, File file, File outputDirectory) throws IOException {
-        this.pkgName = pkgName;
-        this.outputDirectory = outputDirectory;
-        bundleName = file.getName();
+    public LocalizerGenerator(SofiaConfig sofiaConfig) throws IOException {
+        config = sofiaConfig;
+        this.pkgName = sofiaConfig.getPackageName();
+        this.outputDirectory = sofiaConfig.getOutputDirectory();
+        bundleName = sofiaConfig.getProperties().getName();
         if (bundleName.contains(".")) {
             bundleName = bundleName.substring(0, bundleName.indexOf("."));
         }
-
-        Map<String, String> map = loadPropertiesFile(file);
+        for (String level : config.getType().getLoggingLevels()) {
+            loggers.put(level, new ArrayList<Method>());
+        }
+        Map<String, String> map = loadPropertiesFile(sofiaConfig.getProperties());
         for (Entry<String, String> entry : map.entrySet()) {
-            methods.add(buildMethod(entry.getKey(), entry.getValue()));
+            Method method = new Method(config.getType(), entry.getKey(), entry.getValue());
+            methods.add(method);
+            if(method.getLogged()) {
+                loggers.get(method.getLogLevel()).add(method);
+            }
         }
     }
 
@@ -47,10 +56,6 @@ public class LocalizerGenerator {
             map.put((String) entry.getKey(), (String) entry.getValue());
         }
         return map;
-    }
-
-    private Method buildMethod(String key, String value) {
-        return new Method(key, value);
     }
 
     public String toString() {
@@ -71,9 +76,11 @@ public class LocalizerGenerator {
 
     private Map<String, Object> buildDataMap() {
         final HashMap<String, Object> map = new HashMap<String, Object>();
-        map.put("packageName", pkgName);
+        map.put("packageName", config.getPackageName());
         map.put("methods", methods);
         map.put("bundleName", bundleName);
+        map.put("imports", config.getType().getImports());
+        map.put("logger", config.getType().name());
         return map;
     }
 

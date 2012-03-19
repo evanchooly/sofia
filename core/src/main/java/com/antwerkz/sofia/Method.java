@@ -8,26 +8,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Method {
-    private String name;
     private String value;
+    private Boolean logged = Boolean.FALSE;
     private int argCount;
     private List<String> arguments = new ArrayList<String>();
     private List<String> parameters = new ArrayList<String>();
     private String key;
+    private String logLevel;
+    private String name;
 
-    public Method(String key, String value) {
-        this.key = key;
-        this.name = toMethodName(key);
+    public Method(LoggingType type, String propKey, String value) {
+        this.key = propKey;
+        name = propKey;
+        if (key.startsWith("@")) {
+            logged = Boolean.TRUE;
+            logLevel = key.substring(1, key.indexOf(".")).toLowerCase();
+            name = key.substring(key.indexOf(".")+1);
+        }
         this.value = value;
         countArguments(value);
     }
 
-    public String getKey() {
-        return key;
+    public Boolean getLogged() {
+        return logged;
     }
 
-    public String getName() {
-        return name;
+    public String getLogLevel() {
+        return logLevel;
+    }
+
+    public String getKey() {
+        return key;
     }
 
     public String getValue() {
@@ -57,22 +68,48 @@ public class Method {
     }
 
     private String getType(Format format) {
-        if(format == null) {
+        if (format == null) {
             return "Object";
-        } else if(format instanceof DateFormat) {
+        } else if (format instanceof DateFormat) {
             return "java.util.Date";
-        } else if(format instanceof NumberFormat) {
+        } else if (format instanceof NumberFormat) {
             return "Number";
         }
         return "Object";
     }
 
-    private String toMethodName(String key) {
-        final String[] parts = key.split("\\.");
+    public String getMethodName() {
+        final String[] parts = name.split("\\.");
         StringBuilder name = new StringBuilder();
         for (String part : parts) {
-            name.append(name.length() != 0 ? part.substring(0, 1).toUpperCase() + part.substring(1) : part);
+            name.append(name.length() != 0 ? Character.toTitleCase(part.charAt(0)) + part.substring(1) : part);
         }
         return name.toString();
+    }
+
+    public String getLoggerName() {
+        final String[] parts = name.split("\\.");
+        StringBuilder name = new StringBuilder();
+        name.append("log");
+        for (String part : parts) {
+            name.append(Character.toTitleCase(part.charAt(0)))
+                .append(part.substring(1));
+        }
+        return name.toString();
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder()
+            .append("Method {")
+            .append("key='").append(key).append('\'')
+            .append(", parameters=").append(parameters)
+            .append(", logged=").append(logged)
+            .append(", logLevel='").append(logLevel).append('\'')
+            .append(", value='").append(value).append('\'')
+            .append(", argCount=").append(argCount)
+            .append(", arguments=").append(arguments)
+            .append('}');
+        return sb.toString();
     }
 }

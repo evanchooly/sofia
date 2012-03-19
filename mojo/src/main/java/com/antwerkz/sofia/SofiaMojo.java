@@ -50,6 +50,11 @@ public class SofiaMojo extends AbstractMojo {
      * @required
      */
     private String pkgName;
+    /**
+     * @parameter expression="${sofia.logging}" default-value="slf4j"
+     * @required
+     */
+   private String loggingType;
 
     public void execute() throws MojoExecutionException {
         if (!properties.exists()) {
@@ -59,10 +64,22 @@ public class SofiaMojo extends AbstractMojo {
             outputDirectory.mkdirs();
         }
         try {
-            new LocalizerGenerator(pkgName, properties, outputDirectory).write();
+            new LocalizerGenerator(new SofiaConfig()
+                .setPackageName(pkgName)
+                .setProperties(properties)
+                .setType(loadLoggingType())
+                .setOutputDirectory(outputDirectory)).write();
             project.addCompileSourceRoot(outputDirectory.getAbsolutePath());
         } catch (Exception e) {
             throw new MojoExecutionException(e.getMessage(), e);
+        }
+    }
+
+    private LoggingType loadLoggingType() throws MojoExecutionException {
+        try {
+            return loggingType == null ? null : LoggingType.valueOf(loggingType.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new MojoExecutionException("Unknown logging type: " + loggingType);
         }
     }
 
