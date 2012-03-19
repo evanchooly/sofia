@@ -62,7 +62,7 @@ public class LocalizerGenerator {
         Configuration cfg = new Configuration();
         try {
             Template template = new Template("sofia",
-                new InputStreamReader(getClass().getResourceAsStream("/sofia.fm")), cfg);
+                new InputStreamReader(getClass().getResourceAsStream("/sofia.ftl")), cfg);
             Writer out = new StringWriter();
             template.process(buildDataMap(), out);
             out.flush();
