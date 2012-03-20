@@ -60,7 +60,7 @@ Add the following to your pom.xml:
     <plugin>
       <groupId>com.antwerkz.sofia</groupId>
       <artifactId>maven</artifactId>
-      <version>0.1</version>
+      <version>0.2</version>
       <executions>
         <execution>
           <goals>
