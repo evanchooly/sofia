@@ -43,7 +43,13 @@ public class LocalizerGenerator {
             Method method = new Method(config.getType(), entry.getKey(), entry.getValue());
             methods.add(method);
             if(method.getLogged()) {
-                loggers.get(method.getLogLevel()).add(method);
+                List<Method> level = loggers.get(method.getLogLevel());
+                if(level == null) {
+                    throw new IllegalArgumentException(
+                        String.format("Invalid logging level '%s' for logging type '%s'", method.getLogLevel(),
+                            config.getType()));
+                }
+                level.add(method);
             }
         }
     }
@@ -89,9 +95,7 @@ public class LocalizerGenerator {
         File file = new File(outputDirectory, String.format("%s/Localizer.java", pkgName.replace('.', '/')));
         file.getParentFile().mkdirs();
         try {
-            stream = new PrintWriter(
-                file,
-                "UTF-8");
+            stream = new PrintWriter(file, "UTF-8");
             stream.println(this);
             stream.flush();
         } catch (Exception e) {

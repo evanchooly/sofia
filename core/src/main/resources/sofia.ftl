@@ -8,8 +8,9 @@ ${imports}
 public class Localizer {
     private static Map<Locale, ResourceBundle> messages = new HashMap<Locale, ResourceBundle>();
     <#if "${logger}" == "SLF4J">
-        // SLF4J
         private static final Logger logger = LoggerFactory.getLogger(Localizer.class);
+    <#elseif "${logger}" == "JUL">
+        private static Logger logger = Logger.getLogger(Localizer.class.getName());
     </#if>
 
     private static ResourceBundle getBundle(Locale... localeList) {
@@ -45,8 +46,12 @@ public class Localizer {
 
     <#if method.logged>
     public static void ${method.getLoggerName()}(<#list method.parameters as argument>${argument}<#if argument_has_next>, </#if></#list><#if method.parameters?size != 0>, </#if>Locale... locale) {
+    <#if "${logger}" == "SLF4J">
         if(logger.is${method.logLevel?cap_first}Enabled()) {
-            <#if method.arguments?size != 0>
+    <#elseif "${logger}" == "JUL">
+        if(logger.isLoggable(Level.${method.logLevel?upper_case})) {
+    </#if>
+           <#if method.arguments?size != 0>
             logger.${method.logLevel}(${method.getMethodName()}(<#list method.arguments as argument>${argument}<#if argument_has_next>, </#if></#list>));
             <#else>
             logger.${method.logLevel}(${method.getMethodName()}());

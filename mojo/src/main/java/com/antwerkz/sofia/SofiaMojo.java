@@ -49,7 +49,7 @@ public class SofiaMojo extends AbstractMojo {
      * @parameter expression="${sofia.package}" default-value="com.antwerkz.sofia"
      * @required
      */
-    private String pkgName;
+    private String packageName;
     /**
      * @parameter expression="${sofia.logging}" default-value="slf4j"
      * @required
@@ -65,7 +65,7 @@ public class SofiaMojo extends AbstractMojo {
         }
         try {
             new LocalizerGenerator(new SofiaConfig()
-                .setPackageName(pkgName)
+                .setPackageName(packageName)
                 .setProperties(properties)
                 .setType(loadLoggingType())
                 .setOutputDirectory(outputDirectory)).write();
