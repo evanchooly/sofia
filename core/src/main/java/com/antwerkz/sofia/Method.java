@@ -82,7 +82,7 @@ public class Method {
         final String[] parts = name.split("\\.");
         StringBuilder name = new StringBuilder();
         for (String part : parts) {
-            name.append(name.length() != 0 ? Character.toTitleCase(part.charAt(0)) + part.substring(1) : part);
+            name.append(name.length() != 0 ? LocalizerGenerator.capitalize(part) : part);
         }
         return name.toString();
     }

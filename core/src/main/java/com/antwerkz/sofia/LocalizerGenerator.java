@@ -35,6 +35,7 @@ public class LocalizerGenerator {
         if (bundleName.contains(".")) {
             bundleName = bundleName.substring(0, bundleName.indexOf("."));
         }
+        System.out.println("bundleName = " + bundleName);
         for (String level : config.getType().getLoggingLevels()) {
             loggers.put(level, new ArrayList<Method>());
         }
@@ -52,6 +53,10 @@ public class LocalizerGenerator {
                 level.add(method);
             }
         }
+    }
+
+    public static String capitalize(String text) {
+        return Character.toTitleCase(text.charAt(0)) + text.substring(1);
     }
 
     private Map<String, String> loadPropertiesFile(File file) throws IOException {
@@ -83,6 +88,7 @@ public class LocalizerGenerator {
     private Map<String, Object> buildDataMap() {
         final HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("packageName", config.getPackageName());
+        map.put("className", bundleName);
         map.put("methods", methods);
         map.put("bundleName", bundleName);
         map.put("imports", config.getType().getImports());
@@ -92,7 +98,8 @@ public class LocalizerGenerator {
 
     public void write() {
         PrintWriter stream = null;
-        File file = new File(outputDirectory, String.format("%s/Localizer.java", pkgName.replace('.', '/')));
+        File file = new File(outputDirectory, String.format("%s/%s.java", pkgName.replace('.', '/'),
+            capitalize(bundleName)));
         file.getParentFile().mkdirs();
         try {
             stream = new PrintWriter(file, "UTF-8");

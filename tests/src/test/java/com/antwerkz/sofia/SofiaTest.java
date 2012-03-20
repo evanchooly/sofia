@@ -15,20 +15,20 @@ public class SofiaTest {
     public void simple() throws IOException {
         LogManager.getLogManager().readConfiguration(getClass().getResourceAsStream("/logging.properties"));
 
-        Assert.assertEquals(Localizer.testProperty(), "I'm the first test property");
-        Assert.assertEquals(Localizer.testProperty(Locale.CHINA), "I'm the first test property");
-        Assert.assertEquals(Localizer.testProperty(new Locale("en", "GB")), "I'm the first test property, bloke");
-        Assert.assertEquals(Localizer.testProperty(Locale.GERMAN), "I'm zee first test property");
+        Assert.assertEquals(Sofia.testProperty(), "I'm the first test property");
+        Assert.assertEquals(Sofia.testProperty(Locale.CHINA), "I'm the first test property");
+        Assert.assertEquals(Sofia.testProperty(new Locale("en", "GB")), "I'm the first test property, bloke");
+        Assert.assertEquals(Sofia.testProperty(Locale.GERMAN), "I'm zee first test property");
 
-        Assert.assertEquals(Localizer.parameterizedPropertyLongName("bob", "alice"), "I need parameters bob and alice");
-        Assert.assertEquals(Localizer.parameterizedPropertyLongName("bob", "alice", Locale.CHINA), "I need parameters bob and alice");
-        Assert.assertEquals(Localizer.parameterizedPropertyLongName("bob", "alice", new Locale("en", "GB")), "I need two parameters bob and alice");
-        Assert.assertEquals(Localizer.parameterizedPropertyLongName("bob", "alice", Locale.GERMAN), "I need zwei parameters bob and alice");
+        Assert.assertEquals(Sofia.parameterizedPropertyLongName("bob", "alice"), "I need parameters bob and alice");
+        Assert.assertEquals(Sofia.parameterizedPropertyLongName("bob", "alice", Locale.CHINA), "I need parameters bob and alice");
+        Assert.assertEquals(Sofia.parameterizedPropertyLongName("bob", "alice", new Locale("en", "GB")), "I need two parameters bob and alice");
+        Assert.assertEquals(Sofia.parameterizedPropertyLongName("bob", "alice", Locale.GERMAN), "I need zwei parameters bob and alice");
 
-        String message = Localizer.dateProperty(new Date(),  2);
+        String message = Sofia.dateProperty(new Date(),  2);
         Assert.assertFalse(message.contains("{"), message);
 
-        Localizer.logMe();
+        Sofia.logMe();
         String s = FileUtils.readFileToString(new File("/tmp/sofia.log"));
         Assert.assertTrue(s.contains("I'm just a warning, though."));
     }

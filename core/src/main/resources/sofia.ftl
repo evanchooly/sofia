@@ -5,12 +5,12 @@ import java.util.*;
 
 ${imports}
 
-public class Localizer {
+public class ${className?capitalize} {
     private static Map<Locale, ResourceBundle> messages = new HashMap<Locale, ResourceBundle>();
     <#if "${logger}" == "SLF4J">
-        private static final Logger logger = LoggerFactory.getLogger(Localizer.class);
+        private static final Logger logger = LoggerFactory.getLogger(${className?capitalize}.class);
     <#elseif "${logger}" == "JUL">
-        private static Logger logger = Logger.getLogger(Localizer.class.getName());
+        private static Logger logger = Logger.getLogger(${className?capitalize}.class.getName());
     </#if>
 
     private static ResourceBundle getBundle(Locale... localeList) {
