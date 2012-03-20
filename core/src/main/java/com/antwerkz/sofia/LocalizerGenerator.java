@@ -35,7 +35,6 @@ public class LocalizerGenerator {
         if (bundleName.contains(".")) {
             bundleName = bundleName.substring(0, bundleName.indexOf("."));
         }
-        System.out.println("bundleName = " + bundleName);
         for (String level : config.getType().getLoggingLevels()) {
             loggers.put(level, new ArrayList<Method>());
         }
