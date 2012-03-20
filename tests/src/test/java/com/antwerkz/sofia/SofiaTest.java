@@ -16,6 +16,10 @@ public class SofiaTest {
         LogManager.getLogManager().readConfiguration(getClass().getResourceAsStream("/logging.properties"));
 
         Assert.assertEquals(Sofia.testProperty(), "I'm the first test property");
+
+        Assert.assertEquals(Sofia.lonely(), "I'm only in the default bundle.");
+        Assert.assertEquals(Sofia.lonely(Locale.GERMAN), "I'm only in the default bundle.");
+
         Assert.assertEquals(Sofia.testProperty(Locale.CHINA), "I'm the first test property");
         Assert.assertEquals(Sofia.testProperty(new Locale("en", "GB")), "I'm the first test property, bloke");
         Assert.assertEquals(Sofia.testProperty(Locale.GERMAN), "I'm zee first test property");
