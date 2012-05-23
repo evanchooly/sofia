@@ -4,14 +4,14 @@
     <parent>
         <groupId>com.antwerkz</groupId>
         <artifactId>sofia</artifactId>
-        <version>0.3</version>
+        <version>0.4-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>com.antwerkz.sofia</groupId>
     <artifactId>core</artifactId>
     <packaging>jar</packaging>
-    <version>0.3</version>
+    <version>0.4-SNAPSHOT</version>
     <name>Sofia Core</name>
     <url>https://github.com/evanchooly/sofia</url>
 
