@@ -7,7 +7,7 @@ import com.antwerkz.sofia.LocalizerGenerator;
 import play.PlayPlugin;
 
 public class SofiaPlugin extends PlayPlugin {
-    private File properties = new File("conf/sofia.properties");
+    private File properties = new File("conf/messages.properties");
     private File targetDir = new File("app");
     private File targetFile = new File(targetDir, "utils/Localizer.java");
 
