@@ -4,14 +4,14 @@
     <parent>
         <groupId>com.antwerkz</groupId>
         <artifactId>sofia</artifactId>
-        <version>0.4-SNAPSHOT</version>
+        <version>0.4</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>com.antwerkz.sofia</groupId>
     <artifactId>maven</artifactId>
     <packaging>maven-plugin</packaging>
-    <version>0.4-SNAPSHOT</version>
+    <version>0.4</version>
     <name>Sofia Maven Mojo</name>
     <url>https://github.com/evanchooly/sofia</url>
 
