@@ -1,7 +1,12 @@
 package ${packageName};
 
+import java.io.*;
+import java.net.*;
 import java.text.*;
 import java.util.*;
+import java.security.*;
+import java.util.ResourceBundle.Control;
+
 
 ${imports}
 
@@ -25,7 +30,7 @@ public class ${className?capitalize} {
     private static ResourceBundle loadBundle(Locale locale) {
         ResourceBundle bundle = messages.get(locale);
         if(bundle == null) {
-            bundle = ResourceBundle.getBundle("${bundleName}", locale);
+            bundle = ResourceBundle.getBundle("${bundleName}", locale <#if useControl>, new SofiaControl() </#if>);
             messages.put(locale, bundle);
         }
         return bundle;
@@ -60,4 +65,40 @@ public class ${className?capitalize} {
     }
     </#if>
     </#list>
+
+    <#if useControl>
+    private static class SofiaControl extends Control {
+    @Override
+    public ResourceBundle newBundle(String baseName, Locale locale, String format, final ClassLoader loader,
+        boolean reload) throws IllegalAccessException, InstantiationException, IOException {
+
+        ResourceBundle bundle = null;
+        String name = toBundleName(baseName, locale);
+        if(name.contains("_")) {
+            name = name.replaceFirst("_", ".");
+        }
+        InputStream stream = null;
+        try {
+            final String bundleName = name;
+            stream = AccessController.doPrivileged(
+                new PrivilegedExceptionAction<InputStream>() {
+                    public InputStream run() throws IOException {
+                        return loader.getResourceAsStream(bundleName);
+                    }
+                });
+        } catch (PrivilegedActionException e) {
+            throw (IOException) e.getException();
+        }
+        if (stream != null) {
+            try {
+                bundle = new PropertyResourceBundle(stream);
+            } finally {
+                stream.close();
+            }
+        }
+
+        return bundle;
+    }
+    </#if>
+  }
 }

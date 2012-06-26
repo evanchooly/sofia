@@ -92,6 +92,7 @@ public class LocalizerGenerator {
         map.put("bundleName", bundleName);
         map.put("imports", config.getType().getImports());
         map.put("logger", config.getType().name());
+        map.put("useControl", config.isUseControl());
         return map;
     }
 
@@ -112,4 +113,5 @@ public class LocalizerGenerator {
             }
         }
     }
+
 }
