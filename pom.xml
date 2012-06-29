@@ -37,7 +37,7 @@
     <modules>
         <module>core</module>
         <module>mojo</module>
-        <module>play-plugin</module>
+        <module>sofia-play</module>
         <module>tests</module>
     </modules>
 
