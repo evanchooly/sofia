@@ -100,5 +100,4 @@ public class ${className?capitalize} {
         return bundle;
     }
     </#if>
-  }
 }
