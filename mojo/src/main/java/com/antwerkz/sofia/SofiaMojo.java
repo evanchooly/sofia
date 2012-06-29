@@ -51,6 +51,11 @@ public class SofiaMojo extends AbstractMojo {
      */
     private String packageName;
     /**
+     * @parameter expression="${sofia.play.logging}" default-value="false"
+     * @required
+     */
+   private boolean playController;
+    /**
      * @parameter expression="${sofia.logging}" default-value="slf4j"
      * @required
      */
@@ -68,6 +73,7 @@ public class SofiaMojo extends AbstractMojo {
                 .setPackageName(packageName)
                 .setProperties(properties)
                 .setType(loadLoggingType())
+                .setUseControl(playController)
                 .setOutputDirectory(outputDirectory)).write();
             project.addCompileSourceRoot(outputDirectory.getAbsolutePath());
         } catch (Exception e) {
