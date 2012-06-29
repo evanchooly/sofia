@@ -30,7 +30,7 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>../play-plugin/lib</outputDirectory>
+                            <outputDirectory>../sofia-play/lib</outputDirectory>
                             <overWriteIfNewer>true</overWriteIfNewer>
                         </configuration>
                     </execution>
