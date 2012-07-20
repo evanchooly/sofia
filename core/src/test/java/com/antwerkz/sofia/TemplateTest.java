@@ -12,23 +12,22 @@ public class TemplateTest {
   @Test
   public void control() {
     File properties = new File("src/test/resources/template.properties");
+    SofiaConfig sofiaConfig = new SofiaConfig()
+      .setPackageName("utils")
+      .setBundleName("template")
+      .setProperties(properties)
+      .setOutputDirectory(new File("target"))
+      .setUseControl(false);
     try {
-      new LocalizerGenerator(new SofiaConfig()
-        .setPackageName("utils")
-        .setProperties(properties)
-        .setOutputDirectory(new File("target"))
-        .setUseControl(false)).write();
+      new LocalizerGenerator(sofiaConfig).write();
     } catch (IOException e) {
       throw new RuntimeException(e.getMessage(), e);
     }
     Assert.assertFalse(readFile("target/utils/Template.java").contains("SofiaControl"));
 
+    sofiaConfig.setUseControl(true);
     try {
-      new LocalizerGenerator(new SofiaConfig()
-        .setPackageName("utils")
-        .setProperties(properties)
-        .setOutputDirectory(new File("target"))
-        .setUseControl(true)).write();
+      new LocalizerGenerator(sofiaConfig).write();
     } catch (IOException e) {
       throw new RuntimeException(e.getMessage(), e);
     }

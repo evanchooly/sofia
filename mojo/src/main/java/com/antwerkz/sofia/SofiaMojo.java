@@ -28,65 +28,70 @@ import org.apache.maven.project.MavenProject;
  * @phase generate-sources
  */
 public class SofiaMojo extends AbstractMojo {
-    /**
-     * The default maven project object.
-     *
-     * @parameter expression="${project}"
-     * @required
-     * @readonly
-     */
-    private MavenProject project;
-    /**
-     * @parameter expression="${sofia.target}" default-value="${project.build.directory}/generated-sources/sofia"
-     */
-    private File outputDirectory;
-    /**
-     * @parameter expression="${sofia.properties}" default-value="src/main/resources/sofia.properties"
-     * @required
-     */
-    private File properties;
-    /**
-     * @parameter expression="${sofia.package}" default-value="com.antwerkz.sofia"
-     * @required
-     */
-    private String packageName;
-    /**
-     * @parameter expression="${sofia.play.logging}" default-value="false"
-     * @required
-     */
-   private boolean playController;
-    /**
-     * @parameter expression="${sofia.logging}" default-value="slf4j"
-     * @required
-     */
-   private String loggingType;
+  /**
+   * The default maven project object.
+   *
+   * @parameter expression="${project}"
+   * @required
+   * @readonly
+   */
+  private MavenProject project;
+  /**
+   * @parameter expression="${sofia.target}" default-value="${project.build.directory}/generated-sources/sofia"
+   */
+  private File outputDirectory;
+  /**
+   * @parameter expression="${sofia.properties}" default-value="src/main/resources/sofia.properties"
+   * @required
+   */
+  private File properties;
+  /**
+   * @parameter expression="${sofia.package}" default-value="com.antwerkz.sofia"
+   * @required
+   */
+  private String packageName;
+  /**
+   * @parameter expression="${sofia.play.logging}" default-value="false"
+   * @required
+   */
+  private boolean playController;
+  /**
+   * @parameter expression="${sofia.logging}" default-value="slf4j"
+   * @required
+   */
+  private String loggingType;
 
-    public void execute() throws MojoExecutionException {
-        if (!properties.exists()) {
-            throw new MojoExecutionException("Missing input file: " + properties);
-        }
-        if (!outputDirectory.exists()) {
-            outputDirectory.mkdirs();
-        }
-        try {
-            new LocalizerGenerator(new SofiaConfig()
-                .setPackageName(packageName)
-                .setProperties(properties)
-                .setType(loadLoggingType())
-                .setUseControl(playController)
-                .setOutputDirectory(outputDirectory)).write();
-            project.addCompileSourceRoot(outputDirectory.getAbsolutePath());
-        } catch (Exception e) {
-            throw new MojoExecutionException(e.getMessage(), e);
-        }
+  public void execute() throws MojoExecutionException {
+    if (!properties.exists()) {
+      throw new MojoExecutionException("Missing input file: " + properties);
     }
+    if (!outputDirectory.exists()) {
+      outputDirectory.mkdirs();
+    }
+    try {
+      String bundleName = properties.getName();
+//      if (bundleName.endsWith(".properties")) {
+//        bundleName = bundleName.substring(0, bundleName.indexOf("."));
+//      }
+      new LocalizerGenerator(new SofiaConfig()
+        .setBundleName(bundleName)
+        .setPackageName(packageName)
+        .setProperties(properties)
+        .setType(loadLoggingType())
+        .setUseControl(playController)
+        .setOutputDirectory(outputDirectory)).write();
+      project.addCompileSourceRoot(outputDirectory.getAbsolutePath());
+    } catch (Exception e) {
+      throw new MojoExecutionException(e.getMessage(), e);
+    }
+  }
 
-    private LoggingType loadLoggingType() throws MojoExecutionException {
-        try {
-            return loggingType == null ? null : LoggingType.valueOf(loggingType.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new MojoExecutionException("Unknown logging type: " + loggingType);
-        }
+  private LoggingType loadLoggingType() throws MojoExecutionException {
+    try {
+      return loggingType == null ? null : LoggingType.valueOf(loggingType.toUpperCase());
+    } catch (IllegalArgumentException e) {
+      throw new MojoExecutionException("Unknown logging type: " + loggingType);
     }
+  }
 
 }

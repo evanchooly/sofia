@@ -1,8 +1,8 @@
-self: play -> sofia 0.5-SNAPSHOT
+self: play -> sofia 0.6-SNAPSHOT
 
 require:
     - play
-    - sofia -> core 0.5-SNAPSHOT
+    - sofia -> core 0.6-SNAPSHOT
 
 repositories:
     - antwerkz:

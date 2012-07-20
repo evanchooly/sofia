@@ -1,7 +1,6 @@
 package com.antwerkz.sofia;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -12,8 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Properties;
-import java.util.TreeMap;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -30,7 +27,7 @@ public class LocalizerGenerator {
     config = sofiaConfig;
     this.pkgName = sofiaConfig.getPackageName();
     this.outputDirectory = sofiaConfig.getOutputDirectory();
-    bundleName = sofiaConfig.getProperties().getName();
+    bundleName = sofiaConfig.getBundleName();
     if (bundleName.contains(".")) {
       bundleName = bundleName.substring(0, bundleName.indexOf("."));
     }
@@ -38,7 +35,7 @@ public class LocalizerGenerator {
     for (String level : config.getType().getLoggingLevels()) {
       loggers.put(level, new ArrayList<Method>());
     }
-    Map<String, String> map = loadPropertiesFile(sofiaConfig.getProperties());
+    Map<String, String> map = sofiaConfig.getProperties();
     for (Entry<String, String> entry : map.entrySet()) {
       Method method = new Method(config.getType(), entry.getKey(), entry.getValue());
       methods.add(method);
@@ -58,15 +55,6 @@ public class LocalizerGenerator {
     return Character.toTitleCase(text.charAt(0)) + text.substring(1);
   }
 
-  private Map<String, String> loadPropertiesFile(File file) throws IOException {
-    Properties props = new Properties();
-    Map<String, String> map = new TreeMap<>();
-    props.load(new FileInputStream(file));
-    for (Entry<Object, Object> entry : props.entrySet()) {
-      map.put((String) entry.getKey(), (String) entry.getValue());
-    }
-    return map;
-  }
 
   public String toString() {
     Configuration cfg = new Configuration();

@@ -1,14 +1,16 @@
 package com.antwerkz.sofia.play;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 import com.antwerkz.sofia.LocalizerGenerator;
 import com.antwerkz.sofia.SofiaConfig;
 import play.PlayPlugin;
 
 public class SofiaPlugin extends PlayPlugin {
-  private File properties = new File("conf/messages");
   private File targetDir = new File("app");
 
   @Override
@@ -25,7 +27,8 @@ public class SofiaPlugin extends PlayPlugin {
     try {
       new LocalizerGenerator(new SofiaConfig()
         .setPackageName("utils")
-        .setProperties(properties)
+        .setBundleName("messages")
+        .setProperties(findProperties())
         .setOutputDirectory(targetDir)
         .setUseControl(true))
         .write();
@@ -33,4 +36,13 @@ public class SofiaPlugin extends PlayPlugin {
       throw new RuntimeException(e.getMessage(), e);
     }
   }
+
+  private InputStream findProperties() throws FileNotFoundException {
+    InputStream stream = getClass().getClassLoader().getResourceAsStream("/messages");
+    if(stream == null) {
+      stream = new FileInputStream("conf/messages");
+    }
+    return stream;
+  }
+
 }
