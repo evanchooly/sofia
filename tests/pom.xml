@@ -26,7 +26,7 @@
                             <goal>sofia</goal>
                         </goals>
                         <configuration>
-                            <loggingType>jul</loggingType>
+                            <loggingType>slf4j</loggingType>
                         </configuration>
                     </execution>
                 </executions>
