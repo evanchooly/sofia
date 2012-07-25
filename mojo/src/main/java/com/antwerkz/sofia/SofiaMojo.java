@@ -24,7 +24,7 @@ import org.apache.maven.project.MavenProject;
 /**
  * Goal which touches a timestamp file.
  *
- * @goal generate
+ * @goal sofia
  * @phase generate-sources
  */
 public class SofiaMojo extends AbstractMojo {
@@ -41,10 +41,10 @@ public class SofiaMojo extends AbstractMojo {
    */
   private File outputDirectory;
   /**
-   * @parameter expression="${sofia.properties}" default-value="src/main/resources/sofia.properties"
+   * @parameter expression="${sofia.input}" default-value="src/main/resources/sofia.properties"
    * @required
    */
-  private File properties;
+  private File input;
   /**
    * @parameter expression="${sofia.package}" default-value="com.antwerkz.sofia"
    * @required
@@ -62,21 +62,17 @@ public class SofiaMojo extends AbstractMojo {
   private String loggingType;
 
   public void execute() throws MojoExecutionException {
-    if (!properties.exists()) {
-      throw new MojoExecutionException("Missing input file: " + properties);
+    if (!input.exists()) {
+      throw new MojoExecutionException("Missing input file: " + input);
     }
     if (!outputDirectory.exists()) {
       outputDirectory.mkdirs();
     }
     try {
-      String bundleName = properties.getName();
-//      if (bundleName.endsWith(".properties")) {
-//        bundleName = bundleName.substring(0, bundleName.indexOf("."));
-//      }
       new LocalizerGenerator(new SofiaConfig()
-        .setBundleName(bundleName)
+        .setBundleName(input.getName())
         .setPackageName(packageName)
-        .setProperties(properties)
+        .setProperties(input)
         .setType(loadLoggingType())
         .setUseControl(playController)
         .setOutputDirectory(outputDirectory)).write();

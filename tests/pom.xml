@@ -23,10 +23,11 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>generate</goal>
+                            <goal>sofia</goal>
                         </goals>
                         <configuration>
-                            <loggingType>slf4j</loggingType>
+                            <input>bob</input>
+                            <loggingType>jul</loggingType>
                         </configuration>
                     </execution>
                 </executions>
