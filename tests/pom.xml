@@ -26,7 +26,6 @@
                             <goal>sofia</goal>
                         </goals>
                         <configuration>
-                            <input>bob</input>
                             <loggingType>jul</loggingType>
                         </configuration>
                     </execution>
