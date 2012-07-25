@@ -41,10 +41,10 @@ public class SofiaMojo extends AbstractMojo {
    */
   private File outputDirectory;
   /**
-   * @parameter expression="${sofia.input}" default-value="src/main/resources/sofia.properties"
+   * @parameter expression="${sofia.inputFile}" default-value="src/main/resources/sofia.properties"
    * @required
    */
-  private File input;
+  private File inputFile;
   /**
    * @parameter expression="${sofia.package}" default-value="com.antwerkz.sofia"
    * @required
@@ -62,17 +62,17 @@ public class SofiaMojo extends AbstractMojo {
   private String loggingType;
 
   public void execute() throws MojoExecutionException {
-    if (!input.exists()) {
-      throw new MojoExecutionException("Missing input file: " + input);
+    if (!inputFile.exists()) {
+      throw new MojoExecutionException("Missing inputFile file: " + inputFile);
     }
     if (!outputDirectory.exists()) {
       outputDirectory.mkdirs();
     }
     try {
       new LocalizerGenerator(new SofiaConfig()
-        .setBundleName(input.getName())
+        .setBundleName(inputFile.getName())
         .setPackageName(packageName)
-        .setProperties(input)
+        .setProperties(inputFile)
         .setType(loadLoggingType())
         .setUseControl(playController)
         .setOutputDirectory(outputDirectory)).write();
