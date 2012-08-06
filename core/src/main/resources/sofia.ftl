@@ -7,11 +7,10 @@ import java.util.*;
 import java.security.*;
 import java.util.ResourceBundle.Control;
 
-
 ${imports}
 
 public class ${className?capitalize} {
-    private static Map<Locale, ResourceBundle> messages = new HashMap<Locale, ResourceBundle>();
+    private static Map<Locale, ResourceBundle> messages = new HashMap<>();
     <#if "${logger}" == "SLF4J">
         private static final Logger logger = LoggerFactory.getLogger(${className?capitalize}.class);
     <#elseif "${logger}" == "JUL">
@@ -77,7 +76,7 @@ public class ${className?capitalize} {
         if(name.contains("_")) {
             name = name.replaceFirst("_", ".");
         }
-        InputStream stream = null;
+        InputStream stream;
         try {
             final String bundleName = name;
             stream = AccessController.doPrivileged(

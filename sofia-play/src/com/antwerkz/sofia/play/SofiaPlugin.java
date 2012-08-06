@@ -13,6 +13,11 @@ import play.PlayPlugin;
 public class SofiaPlugin extends PlayPlugin {
   private File targetDir = new File("app");
 
+//  @Override
+//  public boolean compileSources() {
+//    return true;
+//  }
+
   @Override
   public void onApplicationStart() {
     generate();
@@ -45,4 +50,7 @@ public class SofiaPlugin extends PlayPlugin {
     return stream;
   }
 
+  public static void main(String[] args) {
+    new SofiaPlugin().generate();
+  }
 }

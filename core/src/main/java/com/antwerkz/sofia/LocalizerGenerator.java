@@ -55,7 +55,6 @@ public class LocalizerGenerator {
     return Character.toTitleCase(text.charAt(0)) + text.substring(1);
   }
 
-
   public String toString() {
     Configuration cfg = new Configuration();
     try {
