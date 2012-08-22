@@ -2,11 +2,4 @@ self: play -> sofia 0.9
 
 require:
     - play
-    - sofia -> core 0.9
-
-repositories:
-    - antwerkz:
-        type:       local
-        artifact:   "/Users/jlee/.m2/repository/com/antwerkz/[organization]/[module]/[revision]/[module]-[revision].[ext]"
-        contains:
-            - sofia -> *
+    - com.antwerkz.sofia -> core 0.9
