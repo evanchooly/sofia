@@ -1,4 +1,4 @@
-self: play -> sofia 0.9
+self: play -> sofia 0.9a
 
 require:
     - play

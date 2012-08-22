@@ -8,6 +8,7 @@ import java.io.InputStream;
 
 import com.antwerkz.sofia.LocalizerGenerator;
 import com.antwerkz.sofia.SofiaConfig;
+
 import play.PlayPlugin;
 
 public class SofiaPlugin extends PlayPlugin {
