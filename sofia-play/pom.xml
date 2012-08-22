@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.antwerkz</groupId>
         <artifactId>sofia</artifactId>
-        <version>0.9-SNAPSHOT</version>
+        <version>0.9</version>
     </parent>
 
     <groupId>com.antwerkz.sofia</groupId>
     <artifactId>sofia-play</artifactId>
-    <version>0.9-SNAPSHOT</version>
+    <version>0.9</version>
     <packaging>pom</packaging>
 
     <build>
