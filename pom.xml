@@ -9,7 +9,7 @@
 
     <groupId>com.antwerkz</groupId>
     <artifactId>sofia</artifactId>
-    <version>0.9</version>
+    <version>0.10-SNAPSHOT</version>
     <name>Sofia</name>
     <url>https://github.com/evanchooly/sofia</url>
 
