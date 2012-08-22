@@ -1,4 +1,7 @@
 *.iml
 *.swp
 .idea
+*.pyc
 target/
+sofia-play/dist/
+sofia-play/lib/
