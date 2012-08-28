@@ -60,7 +60,7 @@ Add the following to your pom.xml:
     <plugin>
       <groupId>com.antwerkz.sofia</groupId>
       <artifactId>maven</artifactId>
-      <version>0.9</version>
+      <version>0.11</version>
       <executions>
         <execution>
           <goals>
@@ -85,7 +85,7 @@ Add the github project as a repository for your play application:
 
     require:
         - play
-        - antwerkz -> sofia 0.9
+        - antwerkz -> sofia-play 0.11
 
     repositories:
          - antwerkz:
