@@ -2,4 +2,4 @@ self: play -> sofia 0.10
 
 require:
     - play
-    - com.antwerkz.sofia -> core 0.9
+    - com.antwerkz.sofia -> core 0.10
