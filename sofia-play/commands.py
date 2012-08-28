@@ -4,7 +4,7 @@ import os
 
 # Here you can create play commands that are specific to the module, and extend existing commands
 
-MODULE = 'sofia-play'
+MODULE = 'sofia'
 
 # Commands that are specific to your module
 

@@ -79,6 +79,21 @@ There are a few configuration options:
     <tr><td>outputDirectory</td><td>Generated source location</td><td>${project.build.directory}/generated-sources/sofia</td></tr>
 </table>
 
+### For use in Play apps
+
+Add the github project as a repository for your play application:
+
+    require:
+        - play
+        - antwerkz -> sofia 0.9
+
+    repositories:
+         - antwerkz:
+                 type: http
+                 artifact:  http://cloud.github.com/downloads/evanchooly/sofia/[module]-[revision].zip
+                 contains:
+                     - antwerkz -> *
+
 One last question...  Why sofia?
 -----
 
