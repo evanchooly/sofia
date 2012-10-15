@@ -3,9 +3,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.antwerkz</groupId>
-        <artifactId>sofia</artifactId>
+        <groupId>com.antwerkz.sofia</groupId>
+        <artifactId>sofia-parent</artifactId>
         <version>0.12-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>com.antwerkz.sofia</groupId>
@@ -20,7 +21,7 @@
     <dependencies>
         <dependency>
             <groupId>com.antwerkz.sofia</groupId>
-            <artifactId>core</artifactId>
+            <artifactId>sofia-core</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

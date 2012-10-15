@@ -3,8 +3,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.antwerkz</groupId>
-        <artifactId>sofia</artifactId>
+        <groupId>com.antwerkz.sofia</groupId>
+        <artifactId>sofia-parent</artifactId>
         <version>0.12-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -18,7 +18,7 @@
         <plugins>
             <plugin>
                 <groupId>com.antwerkz.sofia</groupId>
-                <artifactId>maven</artifactId>
+                <artifactId>sofia-maven</artifactId>
                 <version>${project.version}</version>
                 <executions>
                     <execution>
@@ -38,6 +38,7 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
