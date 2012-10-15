@@ -60,7 +60,7 @@ Add the following to your pom.xml:
     <plugin>
       <groupId>com.antwerkz.sofia</groupId>
       <artifactId>maven</artifactId>
-      <version>0.11</version>
+      <version>0.12</version>
       <executions>
         <execution>
           <goals>
@@ -81,18 +81,29 @@ There are a few configuration options:
 
 ### For use in Play apps
 
-Add the github project as a repository for your play application:
+Add the this line to your Build.scala file in your appDependencies variable
 
-    require:
-        - play
-        - antwerkz -> sofia-play 0.11
+    "com.antwerkz.sofia" % "sofia-play" % "0.12"
 
-    repositories:
-         - antwerkz:
-                 type: http
-                 artifact:  http://cloud.github.com/downloads/evanchooly/sofia/[module]-[revision].zip
-                 contains:
-                     - antwerkz -> *
+If you've just checked out a new project, you might need to pregenerate your file before the play app
+will start.  The easiest way, for now, is if the project has provided a pom.xml and configured Sofia
+with something like this:
+
+    <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+
+        <configuration>
+            <mainClass>com.antwerkz.sofia.play.SofiaPlugin</mainClass>
+            <arguments>
+                <argument>-Xmx512m</argument>
+            </arguments>
+        </configuration>
+    </plugin>
+
+Ideally, Sofia would provide an sbt plugin to make this happen.  I don't know how to write those yet so
+that will just have to wait until I do or someone provides a patch.</hint>  It would be easiest for all
+to simply commit your generated file to whichever version control system you use.
 
 One last question...  Why sofia?
 -----
