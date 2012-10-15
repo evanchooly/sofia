@@ -95,9 +95,6 @@ with something like this:
 
         <configuration>
             <mainClass>com.antwerkz.sofia.play.SofiaPlugin</mainClass>
-            <arguments>
-                <argument>-Xmx512m</argument>
-            </arguments>
         </configuration>
     </plugin>
 
