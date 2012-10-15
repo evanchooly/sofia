@@ -12,6 +12,7 @@ import java.util.TreeMap;
 
 public class SofiaConfig {
   private String bundleName = "sofia";
+  private String className;
   private String packageName = "com.antwerkz.sofia";
   private File outputDirectory;
   private LoggingType type = LoggingType.NONE;
@@ -20,6 +21,10 @@ public class SofiaConfig {
 
   public String getBundleName() {
     return bundleName;
+  }
+
+  public String getClassName() {
+    return className;
   }
 
   public File getOutputDirectory() {
@@ -44,6 +49,11 @@ public class SofiaConfig {
 
   public SofiaConfig setBundleName(String bundleName) {
     this.bundleName = bundleName;
+    return this;
+  }
+
+  public SofiaConfig setClassName(String className) {
+    this.className = className;
     return this;
   }
 
@@ -92,7 +102,7 @@ public class SofiaConfig {
   }
 
   private Map<String, String> loadProperties(InputStream inputStream) {
-    try(InputStream stream = inputStream) {
+    try (InputStream stream = inputStream) {
       properties = new TreeMap<>();
       Properties props = new Properties();
       props.load(stream);

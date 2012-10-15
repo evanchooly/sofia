@@ -21,6 +21,7 @@ public class LocalizerGenerator {
   private String pkgName;
   private File outputDirectory;
   private String bundleName;
+  private String className;
   private SofiaConfig config;
 
   public LocalizerGenerator(SofiaConfig sofiaConfig) throws IOException {
@@ -31,6 +32,7 @@ public class LocalizerGenerator {
     if (bundleName.contains(".")) {
       bundleName = bundleName.substring(0, bundleName.indexOf("."));
     }
+    className = sofiaConfig.getClassName() != null ? sofiaConfig.getClassName() : bundleName;
     Map<String, List<Method>> loggers = new HashMap<>();
     for (String level : config.getType().getLoggingLevels()) {
       loggers.put(level, new ArrayList<Method>());
@@ -72,7 +74,7 @@ public class LocalizerGenerator {
   private Map<String, Object> buildDataMap() {
     final HashMap<String, Object> map = new HashMap<>();
     map.put("packageName", config.getPackageName());
-    map.put("className", bundleName);
+    map.put("className", className);
     map.put("methods", methods);
     map.put("bundleName", bundleName);
     map.put("imports", config.getType().getImports());
@@ -83,7 +85,8 @@ public class LocalizerGenerator {
 
   public void write() {
     File file = new File(outputDirectory, String.format("%s/%s.java", pkgName.replace('.', '/'),
-      capitalize(bundleName)));
+      capitalize(className)));
+    System.out.printf("Generating code in to %s\n", file);
     file.getParentFile().mkdirs();
     try (PrintWriter stream = new PrintWriter(file, "UTF-8")) {
       stream.println(this);
