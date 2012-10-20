@@ -64,7 +64,7 @@ Add the following to your pom.xml:
       <executions>
         <execution>
           <goals>
-            <goal>generate</goal>
+            <goal>sofia</goal>
           </goals>
         </execution>
       </executions>
