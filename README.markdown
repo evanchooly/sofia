@@ -59,7 +59,7 @@ Add the following to your pom.xml:
 
     <plugin>
       <groupId>com.antwerkz.sofia</groupId>
-      <artifactId>maven</artifactId>
+      <artifactId>sofia-maven</artifactId>
       <version>0.12</version>
       <executions>
         <execution>
