@@ -14,7 +14,7 @@ A simple example looks like this.  For this properties file:
 
 a java file will be generated with the following interface:
 
-    public class Localizer {
+    public class Sofia {
         public static String dateProperty(java.util.Date arg0, Number arg1, Locale... locale) { }
         public static String newProperty(Locale... locale) { }
         public static String parameterizedPropertyLongName(Object arg0, Object arg1, Locale... locale) { }
