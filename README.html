@@ -1,114 +1,155 @@
-<h1>Sofia</h1>
+<html>
+    <body>
+        <h1>Sofia</h1>
 
-<p>Sofia is a typesafe (ish) layer on top of a properties file.  Given a properties file, it will generate a java class
-providing compile time checks that you're using values that actually exist in your properties file.  It supports multiple
-locales if you provide them.</p>
+        <p>Sofia is a typesafe (ish) layer on top of a properties file. Given a properties file, it will generate a java
+            class
+            providing compile time checks that you're using values that actually exist in your properties file. It
+            supports multiple
+            locales if you provide them.</p>
 
-<p>A simple example looks like this.  For this properties file:</p>
+        <p>A simple example looks like this. For this properties file:</p>
 
 <pre><code>test.property=I'm the first test property
-parameterized.property.long.name=I need parameters {0} and {1}
-new.property=New Property
-date.property=Today''s date {0,date,full} and now a number {1,number}
+    parameterized.property.long.name=I need parameters {0} and {1}
+    new.property=New Property
+    date.property=Today''s date {0,date,full} and now a number {1,number}
 </code></pre>
 
-<p>a java file will be generated with the following interface:</p>
+        <p>a java file will be generated with the following interface:</p>
 
 <pre><code>public class Localizer {
     public static String dateProperty(java.util.Date arg0, Number arg1, Locale... locale) { }
     public static String newProperty(Locale... locale) { }
     public static String parameterizedPropertyLongName(Object arg0, Object arg1, Locale... locale) { }
     public static String testProperty(Locale... locale) { }
-}
+    }
 </code></pre>
 
-<p>There are some other details but they're mostly irrelevant.  Feel free to explore the generated file if you're
-<em>really</em> interested.  What you see here is one method for each property listed in your properties file.  Those properties
-that take parameters result in methods that take parameters as well.  Notice that each parameter is typed according to
-the formatting specified in the properties file.  If no formatting is defined, "Object" is used for that parameter type.</p>
+        <p>There are some other details but they're mostly irrelevant. Feel free to explore the generated file if you're
+            <em>really</em> interested. What you see here is one method for each property listed in your properties
+            file. Those properties
+            that take parameters result in methods that take parameters as well. Notice that each parameter is typed
+            according to
+            the formatting specified in the properties file. If no formatting is defined, "Object" is used for that
+            parameter type.</p>
 
-<p>Also note that each method takes a Locale... parameter.  This allows sofia to generate one method per property while
-supporting an optional Locale to be supplied without having to generate two identical methods or having to pass in a null
-to a "singleton" parameter.  Multiple Locales can be passed in but only one will be used.</p>
+        <p>Also note that each method takes a Locale... parameter. This allows sofia to generate one method per property
+            while
+            supporting an optional Locale to be supplied without having to generate two identical methods or having to
+            pass in a null
+            to a "singleton" parameter. Multiple Locales can be passed in but only one will be used.</p>
 
-<h2>So ... why?</h2>
+        <h2>So ... why?</h2>
 
-<p>When I worked on <a href="http://glassfish.java.net">glassfish</a>, we'd standardized on a library that did something similar. My
-biggest complaint about that one is that all the generated methods WERE IN ALL CAPS WHICH MADE READING THE CODE AWKWARD.
-Also, I'm not really sure where the source for that library is so patching it would be tricky.  In any case, it turned out
-to be a very handy facet to a project which makes use of properties files to manage its messages so I wanted to
-improve on it where I could.</p>
+        <p>When I worked on <a href="http://glassfish.java.net">glassfish</a>, we'd standardized on a library that did
+            something similar. My
+            biggest complaint about that one is that all the generated methods WERE IN ALL CAPS WHICH MADE READING THE
+            CODE AWKWARD.
+            Also, I'm not really sure where the source for that library is so patching it would be tricky. In any case,
+            it turned out
+            to be a very handy facet to a project which makes use of properties files to manage its messages so I wanted
+            to
+            improve on it where I could.</p>
 
-<h2>OK.  So what's next?</h2>
+        <h2>OK. So what's next?</h2>
 
-<p>There are a handful of things I'd like to add:</p>
+        <p>There are a handful of things I'd like to add:</p>
 
-<ol>
-<li>Build time validation of properties files:  Making sure that all the properties files variants have the same key set.</li>
-<li>Optional autogeneration of error code values for those systems that need numeric codes assigned to each message.
-Oracle had such requirements for its error messages and manually managing that was troublesome.  Of course, generating
-them might prove just as problematic, but we'll see how it goes.</li>
-<li>Play framework support.  I'd love for this to work in <a href="http://playframework.org">play!</a> as well as I've been using that
-more and more lately.</li>
-<li>Logging support via slf4j or logback</li>
-</ol>
+        <ol>
+            <li>Build time validation of properties files: Making sure that all the properties files variants have the
+                same key set.
+            </li>
+            <li>Optional autogeneration of error code values for those systems that need numeric codes assigned to each
+                message.
+                Oracle had such requirements for its error messages and manually managing that was troublesome. Of
+                course, generating
+                them might prove just as problematic, but we'll see how it goes.
+            </li>
+            <li>Play framework support. I'd love for this to work in <a href="http://playframework.org">play!</a> as
+                well as I've been using that
+                more and more lately.
+            </li>
+            <li>Logging support via slf4j or logback</li>
+        </ol>
 
-<h2>Great.  How do I use it?</h2>
+        <h2>Great. How do I use it?</h2>
 
-<p>Add the following to your pom.xml:</p>
+        <p>Add the following to your pom.xml:</p>
 
 <pre><code>&lt;plugin&gt;
-  &lt;groupId&gt;com.antwerkz.sofia&lt;/groupId&gt;
-  &lt;artifactId&gt;maven&lt;/artifactId&gt;
-  &lt;version&gt;0.12&lt;/version&gt;
-  &lt;executions&gt;
+    &lt;groupId&gt;com.antwerkz.sofia&lt;/groupId&gt;
+    &lt;artifactId&gt;maven&lt;/artifactId&gt;
+    &lt;version&gt;0.12&lt;/version&gt;
+    &lt;executions&gt;
     &lt;execution&gt;
-      &lt;goals&gt;
-        &lt;goal&gt;generate&lt;/goal&gt;
-      &lt;/goals&gt;
+    &lt;goals&gt;
+    &lt;goal&gt;generate&lt;/goal&gt;
+    &lt;/goals&gt;
     &lt;/execution&gt;
-  &lt;/executions&gt;
-&lt;/plugin&gt;
+    &lt;/executions&gt;
+    &lt;/plugin&gt;
 </code></pre>
 
-<p>There are a few configuration options:</p>
+        <p>There are a few configuration options:</p>
 
-<table>
-    <tr><td>Value</td><td>Description</td><td>Default</td></tr>
-    <tr><td>packageName</td><td>Defines the package for the generated class</td><td>com.antwerkz.sofia</td></tr>
-    <tr><td>input</td><td>The base properties file to use</td><td>src/main/resources/sofia.properties</td></tr>
-    <tr><td>outputDirectory</td><td>Generated source location</td><td>${project.build.directory}/generated-sources/sofia</td></tr>
-</table>
+        <table>
+            <tr>
+                <td>Value</td>
+                <td>Description</td>
+                <td>Default</td>
+            </tr>
+            <tr>
+                <td>packageName</td>
+                <td>Defines the package for the generated class</td>
+                <td>com.antwerkz.sofia</td>
+            </tr>
+            <tr>
+                <td>input</td>
+                <td>The base properties file to use</td>
+                <td>src/main/resources/sofia.properties</td>
+            </tr>
+            <tr>
+                <td>outputDirectory</td>
+                <td>Generated source location</td>
+                <td>${project.build.directory}/generated-sources/sofia</td>
+            </tr>
+        </table>
 
-<h3>For use in Play apps</h3>
+        <h3>For use in Play apps</h3>
 
-<p>Add the this line to your Build.scala file in your appDependencies variable</p>
+        <p>Add the this line to your Build.scala file in your appDependencies variable</p>
 
 <pre><code>"com.antwerkz.sofia" % "sofia-play" % "0.12"
 </code></pre>
 
-<p>If you've just checked out a new project, you might need to pregenerate your file before the play app
-will start.  The easiest way, for now, is if the project has provided a pom.xml and configured Sofia
-with something like this:</p>
+        <p>If you've just checked out a new project, you might need to pregenerate your file before the play app
+            will start. The easiest way, for now, is if the project has provided a pom.xml and configured Sofia
+            with something like this:</p>
 
 <pre><code>&lt;plugin&gt;
     &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
     &lt;artifactId&gt;exec-maven-plugin&lt;/artifactId&gt;
 
     &lt;configuration&gt;
-        &lt;mainClass&gt;com.antwerkz.sofia.play.SofiaPlugin&lt;/mainClass&gt;
+    &lt;mainClass&gt;com.antwerkz.sofia.play.SofiaPlugin&lt;/mainClass&gt;
     &lt;/configuration&gt;
-&lt;/plugin&gt;
+    &lt;/plugin&gt;
 </code></pre>
 
-<p>Ideally, Sofia would provide an sbt plugin to make this happen.  I don't know how to write those yet so
-that will just have to wait until I do or someone provides a patch.</hint>  It would be easiest for all
-to simply commit your generated file to whichever version control system you use.</p>
+        <p>Ideally, Sofia would provide an sbt plugin to make this happen. I don't know how to write those yet so
+            that will just have to wait until I do or someone provides a patch.</hint>  It would be easiest for all
+            to simply commit your generated file to whichever version control system you use.</p>
 
-<h2>One last question...  Why sofia?</h2>
+        <h2>One last question... Why sofia?</h2>
 
-<p>Project naming can be tricky.  I like my project names to be interesting in one way or another.  This project started
-off as a localization concept:  translation.  One of my favorite movies is "Lost in Translation" which is direced by
-Sofia Coppola.  So ... sofia.</p>
+        <p>Project naming can be tricky. I like my project names to be interesting in one way or another. This project
+            started
+            off as a localization concept: translation. One of my favorite movies is "Lost in Translation" which is
+            direced by
+            Sofia Coppola. So ... sofia.</p>
 
-<p>The mystique of the unexplained name was better than the truth wasn't it?  Well, you asked...</p>
+        <p>The mystique of the unexplained name was better than the truth wasn't it? Well, you asked...</p>
+
+    </body>
+</html>
