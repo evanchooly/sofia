@@ -17,6 +17,8 @@ public class ${className?capitalize} {
         private static Logger logger = Logger.getLogger(${className?capitalize}.class.getName());
     </#if>
 
+    private ${className?capitalize}() {}
+
     private static ResourceBundle getBundle(Locale... localeList) {
         Locale locale = localeList.length == 0 ? Locale.getDefault() : localeList[0];
         ResourceBundle labels = loadBundle(locale);

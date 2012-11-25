@@ -7,19 +7,15 @@ locales if you provide them.
 
 A simple example looks like this.  For this properties file:
 
-    test.property=I'm the first test property
-    parameterized.property.long.name=I need parameters {0} and {1}
-    new.property=New Property
-    date.property=Today''s date {0,date,full} and now a number {1,number}
+-------------------------------------------
+include::tests/src/main/resources/sofia.properties[]
+-------------------------------------------
 
 a java file will be generated with the following interface:
 
-    public class Localizer {
-        public static String dateProperty(java.util.Date arg0, Number arg1, Locale... locale) { }
-        public static String newProperty(Locale... locale) { }
-        public static String parameterizedPropertyLongName(Object arg0, Object arg1, Locale... locale) { }
-        public static String testProperty(Locale... locale) { }
-    }
+-------------------------------------------
+include::tests/target/sofia.output[]
+-------------------------------------------
 
 There are some other details but they're mostly irrelevant.  Feel free to explore the generated file if you're
 *really* interested.  What you see here is one method for each property listed in your properties file.  Those properties
@@ -44,19 +40,20 @@ OK.  So what's next?
 
 There are a handful of things I'd like to add:
 
-1.  Build time validation of properties files:  Making sure that all the properties files variants have the same key set.
-1.  Optional autogeneration of error code values for those systems that need numeric codes assigned to each message.
+.  Build time validation of properties files:  Making sure that all the properties files variants have the same key set.
+.  Optional autogeneration of error code values for those systems that need numeric codes assigned to each message.
 Oracle had such requirements for its error messages and manually managing that was troublesome.  Of course, generating
 them might prove just as problematic, but we'll see how it goes.
-1.  Play framework support.  I'd love for this to work in [play!](http://playframework.org) as well as I've been using that
+.  Play framework support.  I'd love for this to work in [play!](http://playframework.org) as well as I've been using that
 more and more lately.
-1.  Logging support via slf4j or logback
+.  Logging support via slf4j or logback
 
 Great.  How do I use it?
------
+------------------------
 
 Add the following to your pom.xml:
 
+-------------------------------------------
     <plugin>
       <groupId>com.antwerkz.sofia</groupId>
       <artifactId>maven</artifactId>
@@ -69,41 +66,49 @@ Add the following to your pom.xml:
         </execution>
       </executions>
     </plugin>
+-------------------------------------------
 
 There are a few configuration options:
 
-<table>
-    <tr><td>Value</td><td>Description</td><td>Default</td></tr>
-    <tr><td>packageName</td><td>Defines the package for the generated class</td><td>com.antwerkz.sofia</td></tr>
-    <tr><td>input</td><td>The base properties file to use</td><td>src/main/resources/sofia.properties</td></tr>
-    <tr><td>outputDirectory</td><td>Generated source location</td><td>${project.build.directory}/generated-sources/sofia</td></tr>
-</table>
+|======
+| Value | Description | Default
+| packageName | Defines the package for the generated class | com.antwerkz.sofia
+| inputFile | The base properties file to use | src/main/resources/sofia.properties
+| outputDirectory | Generated source location | ${project.build.directory}/generated-sources/sofia
+| loggingType | Use a specific logger |
+| playController | Generate code for use in play applications (supported: none, jul, slf4j) | slf4j
+|======
 
-### For use in Play apps
+For use in Play apps
+~~~~~~~~~~~~~~~~~~~~
 
 Add the this line to your Build.scala file in your appDependencies variable
 
-    "com.antwerkz.sofia" % "sofia-play" % "0.12"
+-----------
+"com.antwerkz.sofia" % "sofia-play" % "0.12"
+-----------
 
 If you've just checked out a new project, you might need to pregenerate your file before the play app
 will start.  The easiest way, for now, is if the project has provided a pom.xml and configured Sofia
 with something like this:
 
-    <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
+-----------
+<plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>exec-maven-plugin</artifactId>
 
-        <configuration>
-            <mainClass>com.antwerkz.sofia.play.SofiaPlugin</mainClass>
-        </configuration>
-    </plugin>
+    <configuration>
+        <mainClass>com.antwerkz.sofia.play.SofiaPlugin</mainClass>
+    </configuration>
+</plugin>
+-----------
 
 Ideally, Sofia would provide an sbt plugin to make this happen.  I don't know how to write those yet so
 that will just have to wait until I do or someone provides a patch.</hint>  It would be easiest for all
 to simply commit your generated file to whichever version control system you use.
 
 One last question...  Why sofia?
------
+--------------------------------
 
 Project naming can be tricky.  I like my project names to be interesting in one way or another.  This project started
 off as a localization concept:  translation.  One of my favorite movies is "Lost in Translation" which is direced by

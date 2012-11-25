@@ -21,6 +21,10 @@
         <url>git@github.com:evanchooly/sofia.git</url>
     </scm>
 
+    <properties>
+        <maven.version>3.0.4</maven.version>
+    </properties>
+
     <repositories>
         <repository>
             <id>typesafe</id>
@@ -53,6 +57,25 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>asciidoc</executable>
+                    <arguments>
+                        <argument>README.asciidoc</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <modules>
@@ -67,7 +90,17 @@
             <dependency>
                 <groupId>org.apache.maven</groupId>
                 <artifactId>maven-plugin-api</artifactId>
-                <version>3.0.4</version>
+                <version>${maven.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-core</artifactId>
+                <version>${maven.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.plexus</groupId>
+                <artifactId>plexus-utils</artifactId>
+                <version>${maven.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.freemarker</groupId>

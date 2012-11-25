@@ -23,13 +23,34 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>sofia</goal>
+                            <goal>generate</goal>
                         </goals>
                         <configuration>
                             <loggingType>slf4j</loggingType>
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>javap</executable>
+                    <outputFile>target/sofia.output</outputFile>
+                    <arguments>
+                        <argument>-public</argument>
+                        <argument>target/classes/com/antwerkz/sofia/Sofia.class</argument>
+                    </arguments>
+                </configuration>
             </plugin>
         </plugins>
     </build>

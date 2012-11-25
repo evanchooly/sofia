@@ -19,46 +19,24 @@ import java.io.File;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
-/**
- * Goal which touches a timestamp file.
- *
- * @goal sofia
- * @phase generate-sources
- */
+@Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
 public class SofiaMojo extends AbstractMojo {
-  /**
-   * The default maven project object.
-   *
-   * @parameter expression="${project}"
-   * @required
-   * @readonly
-   */
+  @Parameter(property = "project", defaultValue = "${project}", required = true, readonly = true)
   private MavenProject project;
-  /**
-   * @parameter expression="${sofia.target}" default-value="${project.build.directory}/generated-sources/sofia"
-   */
+  @Parameter(property = "sofia.target", defaultValue = "${project.build.directory}/generated-sources/sofia")
   private File outputDirectory;
-  /**
-   * @parameter expression="${sofia.inputFile}" default-value="src/main/resources/sofia.properties"
-   * @required
-   */
+  @Parameter(property = "sofia.inputFile", defaultValue = "src/main/resources/sofia.properties")
   private File inputFile;
-  /**
-   * @parameter expression="${sofia.package}" default-value="com.antwerkz.sofia"
-   * @required
-   */
+  @Parameter(property = "sofia.package", defaultValue = "com.antwerkz.sofia")
   private String packageName;
-  /**
-   * @parameter expression="${sofia.play.logging}" default-value="false"
-   * @required
-   */
+  @Parameter(property = "sofia.play.logging", defaultValue = "false")
   private boolean playController;
-  /**
-   * @parameter expression="${sofia.logging}" default-value="slf4j"
-   * @required
-   */
+  @Parameter(property="sofia.logging", defaultValue="slf4j")
   private String loggingType;
 
   public void execute() throws MojoExecutionException {
