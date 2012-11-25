@@ -72,7 +72,8 @@
                 <configuration>
                     <executable>asciidoc</executable>
                     <arguments>
-                        <argument>README.asciidoc</argument>
+                        <argument>-o README.html</argument>
+                        <argument>readmesource.asciidoc</argument>
                     </arguments>
                 </configuration>
             </plugin>
