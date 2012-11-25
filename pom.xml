@@ -32,6 +32,7 @@
         </repository>
     </repositories>
     <build>
+        <defaultGoal>install</defaultGoal>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -55,26 +56,6 @@
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2.1</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <executable>asciidoc</executable>
-                    <arguments>
-                        <argument>-o README.html</argument>
-                        <argument>readmesource.asciidoc</argument>
-                    </arguments>
                 </configuration>
             </plugin>
         </plugins>

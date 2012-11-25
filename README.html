@@ -1,935 +1,114 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
-    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-<head>
-<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
-<meta name="generator" content="AsciiDoc 8.6.7" />
-<title>Sofia</title>
-<style type="text/css">
-/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
-
-/* Default font. */
-body {
-  font-family: Georgia,serif;
-}
-
-/* Title font. */
-h1, h2, h3, h4, h5, h6,
-div.title, caption.title,
-thead, p.table.header,
-#toctitle,
-#author, #revnumber, #revdate, #revremark,
-#footer {
-  font-family: Arial,Helvetica,sans-serif;
-}
-
-body {
-  margin: 1em 5% 1em 5%;
-}
-
-a {
-  color: blue;
-  text-decoration: underline;
-}
-a:visited {
-  color: fuchsia;
-}
-
-em {
-  font-style: italic;
-  color: navy;
-}
-
-strong {
-  font-weight: bold;
-  color: #083194;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  color: #527bbd;
-  margin-top: 1.2em;
-  margin-bottom: 0.5em;
-  line-height: 1.3;
-}
-
-h1, h2, h3 {
-  border-bottom: 2px solid silver;
-}
-h2 {
-  padding-top: 0.5em;
-}
-h3 {
-  float: left;
-}
-h3 + * {
-  clear: left;
-}
-h5 {
-  font-size: 1.0em;
-}
-
-div.sectionbody {
-  margin-left: 0;
-}
-
-hr {
-  border: 1px solid silver;
-}
-
-p {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-}
-
-ul, ol, li > p {
-  margin-top: 0;
-}
-ul > li     { color: #aaa; }
-ul > li > * { color: black; }
-
-pre {
-  padding: 0;
-  margin: 0;
-}
-
-#author {
-  color: #527bbd;
-  font-weight: bold;
-  font-size: 1.1em;
-}
-#email {
-}
-#revnumber, #revdate, #revremark {
-}
-
-#footer {
-  font-size: small;
-  border-top: 2px solid silver;
-  padding-top: 0.5em;
-  margin-top: 4.0em;
-}
-#footer-text {
-  float: left;
-  padding-bottom: 0.5em;
-}
-#footer-badges {
-  float: right;
-  padding-bottom: 0.5em;
-}
-
-#preamble {
-  margin-top: 1.5em;
-  margin-bottom: 1.5em;
-}
-div.imageblock, div.exampleblock, div.verseblock,
-div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
-div.admonitionblock {
-  margin-top: 1.0em;
-  margin-bottom: 1.5em;
-}
-div.admonitionblock {
-  margin-top: 2.0em;
-  margin-bottom: 2.0em;
-  margin-right: 10%;
-  color: #606060;
-}
-
-div.content { /* Block element content. */
-  padding: 0;
-}
-
-/* Block element titles. */
-div.title, caption.title {
-  color: #527bbd;
-  font-weight: bold;
-  text-align: left;
-  margin-top: 1.0em;
-  margin-bottom: 0.5em;
-}
-div.title + * {
-  margin-top: 0;
-}
-
-td div.title:first-child {
-  margin-top: 0.0em;
-}
-div.content div.title:first-child {
-  margin-top: 0.0em;
-}
-div.content + div.title {
-  margin-top: 0.0em;
-}
-
-div.sidebarblock > div.content {
-  background: #ffffee;
-  border: 1px solid #dddddd;
-  border-left: 4px solid #f0f0f0;
-  padding: 0.5em;
-}
-
-div.listingblock > div.content {
-  border: 1px solid #dddddd;
-  border-left: 5px solid #f0f0f0;
-  background: #f8f8f8;
-  padding: 0.5em;
-}
-
-div.quoteblock, div.verseblock {
-  padding-left: 1.0em;
-  margin-left: 1.0em;
-  margin-right: 10%;
-  border-left: 5px solid #f0f0f0;
-  color: #888;
-}
-
-div.quoteblock > div.attribution {
-  padding-top: 0.5em;
-  text-align: right;
-}
-
-div.verseblock > pre.content {
-  font-family: inherit;
-  font-size: inherit;
-}
-div.verseblock > div.attribution {
-  padding-top: 0.75em;
-  text-align: left;
-}
-/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
-div.verseblock + div.attribution {
-  text-align: left;
-}
-
-div.admonitionblock .icon {
-  vertical-align: top;
-  font-size: 1.1em;
-  font-weight: bold;
-  text-decoration: underline;
-  color: #527bbd;
-  padding-right: 0.5em;
-}
-div.admonitionblock td.content {
-  padding-left: 0.5em;
-  border-left: 3px solid #dddddd;
-}
-
-div.exampleblock > div.content {
-  border-left: 3px solid #dddddd;
-  padding-left: 0.5em;
-}
-
-div.imageblock div.content { padding-left: 0; }
-span.image img { border-style: none; }
-a.image:visited { color: white; }
-
-dl {
-  margin-top: 0.8em;
-  margin-bottom: 0.8em;
-}
-dt {
-  margin-top: 0.5em;
-  margin-bottom: 0;
-  font-style: normal;
-  color: navy;
-}
-dd > *:first-child {
-  margin-top: 0.1em;
-}
-
-ul, ol {
-    list-style-position: outside;
-}
-ol.arabic {
-  list-style-type: decimal;
-}
-ol.loweralpha {
-  list-style-type: lower-alpha;
-}
-ol.upperalpha {
-  list-style-type: upper-alpha;
-}
-ol.lowerroman {
-  list-style-type: lower-roman;
-}
-ol.upperroman {
-  list-style-type: upper-roman;
-}
-
-div.compact ul, div.compact ol,
-div.compact p, div.compact p,
-div.compact div, div.compact div {
-  margin-top: 0.1em;
-  margin-bottom: 0.1em;
-}
-
-tfoot {
-  font-weight: bold;
-}
-td > div.verse {
-  white-space: pre;
-}
-
-div.hdlist {
-  margin-top: 0.8em;
-  margin-bottom: 0.8em;
-}
-div.hdlist tr {
-  padding-bottom: 15px;
-}
-dt.hdlist1.strong, td.hdlist1.strong {
-  font-weight: bold;
-}
-td.hdlist1 {
-  vertical-align: top;
-  font-style: normal;
-  padding-right: 0.8em;
-  color: navy;
-}
-td.hdlist2 {
-  vertical-align: top;
-}
-div.hdlist.compact tr {
-  margin: 0;
-  padding-bottom: 0;
-}
-
-.comment {
-  background: yellow;
-}
-
-.footnote, .footnoteref {
-  font-size: 0.8em;
-}
-
-span.footnote, span.footnoteref {
-  vertical-align: super;
-}
-
-#footnotes {
-  margin: 20px 0 20px 0;
-  padding: 7px 0 0 0;
-}
-
-#footnotes div.footnote {
-  margin: 0 0 5px 0;
-}
-
-#footnotes hr {
-  border: none;
-  border-top: 1px solid silver;
-  height: 1px;
-  text-align: left;
-  margin-left: 0;
-  width: 20%;
-  min-width: 100px;
-}
-
-div.colist td {
-  padding-right: 0.5em;
-  padding-bottom: 0.3em;
-  vertical-align: top;
-}
-div.colist td img {
-  margin-top: 0.3em;
-}
-
-@media print {
-  #footer-badges { display: none; }
-}
-
-#toc {
-  margin-bottom: 2.5em;
-}
-
-#toctitle {
-  color: #527bbd;
-  font-size: 1.1em;
-  font-weight: bold;
-  margin-top: 1.0em;
-  margin-bottom: 0.1em;
-}
-
-div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-div.toclevel2 {
-  margin-left: 2em;
-  font-size: 0.9em;
-}
-div.toclevel3 {
-  margin-left: 4em;
-  font-size: 0.9em;
-}
-div.toclevel4 {
-  margin-left: 6em;
-  font-size: 0.9em;
-}
-
-span.aqua { color: aqua; }
-span.black { color: black; }
-span.blue { color: blue; }
-span.fuchsia { color: fuchsia; }
-span.gray { color: gray; }
-span.green { color: green; }
-span.lime { color: lime; }
-span.maroon { color: maroon; }
-span.navy { color: navy; }
-span.olive { color: olive; }
-span.purple { color: purple; }
-span.red { color: red; }
-span.silver { color: silver; }
-span.teal { color: teal; }
-span.white { color: white; }
-span.yellow { color: yellow; }
-
-span.aqua-background { background: aqua; }
-span.black-background { background: black; }
-span.blue-background { background: blue; }
-span.fuchsia-background { background: fuchsia; }
-span.gray-background { background: gray; }
-span.green-background { background: green; }
-span.lime-background { background: lime; }
-span.maroon-background { background: maroon; }
-span.navy-background { background: navy; }
-span.olive-background { background: olive; }
-span.purple-background { background: purple; }
-span.red-background { background: red; }
-span.silver-background { background: silver; }
-span.teal-background { background: teal; }
-span.white-background { background: white; }
-span.yellow-background { background: yellow; }
-
-span.big { font-size: 2em; }
-span.small { font-size: 0.6em; }
-
-span.underline { text-decoration: underline; }
-span.overline { text-decoration: overline; }
-span.line-through { text-decoration: line-through; }
-
-div.unbreakable { page-break-inside: avoid; }
-
-
-/*
- * xhtml11 specific
- *
- * */
-
-tt {
-  font-family: "Courier New", Courier, monospace;
-  font-size: inherit;
-  color: navy;
-}
-
-div.tableblock {
-  margin-top: 1.0em;
-  margin-bottom: 1.5em;
-}
-div.tableblock > table {
-  border: 3px solid #527bbd;
-}
-thead, p.table.header {
-  font-weight: bold;
-  color: #527bbd;
-}
-p.table {
-  margin-top: 0;
-}
-/* Because the table frame attribute is overriden by CSS in most browsers. */
-div.tableblock > table[frame="void"] {
-  border-style: none;
-}
-div.tableblock > table[frame="hsides"] {
-  border-left-style: none;
-  border-right-style: none;
-}
-div.tableblock > table[frame="vsides"] {
-  border-top-style: none;
-  border-bottom-style: none;
-}
-
-
-/*
- * html5 specific
- *
- * */
-
-.monospaced {
-  font-family: "Courier New", Courier, monospace;
-  font-size: inherit;
-  color: navy;
-}
-
-table.tableblock {
-  margin-top: 1.0em;
-  margin-bottom: 1.5em;
-}
-thead, p.tableblock.header {
-  font-weight: bold;
-  color: #527bbd;
-}
-p.tableblock {
-  margin-top: 0;
-}
-table.tableblock {
-  border-width: 3px;
-  border-spacing: 0px;
-  border-style: solid;
-  border-color: #527bbd;
-  border-collapse: collapse;
-}
-th.tableblock, td.tableblock {
-  border-width: 1px;
-  padding: 4px;
-  border-style: solid;
-  border-color: #527bbd;
-}
-
-table.tableblock.frame-topbot {
-  border-left-style: hidden;
-  border-right-style: hidden;
-}
-table.tableblock.frame-sides {
-  border-top-style: hidden;
-  border-bottom-style: hidden;
-}
-table.tableblock.frame-none {
-  border-style: hidden;
-}
-
-th.tableblock.halign-left, td.tableblock.halign-left {
-  text-align: left;
-}
-th.tableblock.halign-center, td.tableblock.halign-center {
-  text-align: center;
-}
-th.tableblock.halign-right, td.tableblock.halign-right {
-  text-align: right;
-}
-
-th.tableblock.valign-top, td.tableblock.valign-top {
-  vertical-align: top;
-}
-th.tableblock.valign-middle, td.tableblock.valign-middle {
-  vertical-align: middle;
-}
-th.tableblock.valign-bottom, td.tableblock.valign-bottom {
-  vertical-align: bottom;
-}
-
-
-/*
- * manpage specific
- *
- * */
-
-body.manpage h1 {
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  border-top: 2px solid silver;
-  border-bottom: 2px solid silver;
-}
-body.manpage h2 {
-  border-style: none;
-}
-body.manpage div.sectionbody {
-  margin-left: 3em;
-}
-
-@media print {
-  body.manpage div#toc { display: none; }
-}
-</style>
-<script type="text/javascript">
-/*<![CDATA[*/
-var asciidoc = {  // Namespace.
-
-/////////////////////////////////////////////////////////////////////
-// Table Of Contents generator
-/////////////////////////////////////////////////////////////////////
-
-/* Author: Mihai Bazon, September 2002
- * http://students.infoiasi.ro/~mishoo
- *
- * Table Of Content generator
- * Version: 0.4
- *
- * Feel free to use this script under the terms of the GNU General Public
- * License, as long as you do not remove or alter this notice.
- */
-
- /* modified by Troy D. Hanson, September 2006. License: GPL */
- /* modified by Stuart Rackham, 2006, 2009. License: GPL */
-
-// toclevels = 1..4.
-toc: function (toclevels) {
-
-  function getText(el) {
-    var text = "";
-    for (var i = el.firstChild; i != null; i = i.nextSibling) {
-      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
-        text += i.data;
-      else if (i.firstChild != null)
-        text += getText(i);
-    }
-    return text;
-  }
-
-  function TocEntry(el, text, toclevel) {
-    this.element = el;
-    this.text = text;
-    this.toclevel = toclevel;
-  }
-
-  function tocEntries(el, toclevels) {
-    var result = new Array;
-    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
-    // Function that scans the DOM tree for header elements (the DOM2
-    // nodeIterator API would be a better technique but not supported by all
-    // browsers).
-    var iterate = function (el) {
-      for (var i = el.firstChild; i != null; i = i.nextSibling) {
-        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
-          var mo = re.exec(i.tagName);
-          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
-            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
-          }
-          iterate(i);
-        }
-      }
-    }
-    iterate(el);
-    return result;
-  }
-
-  var toc = document.getElementById("toc");
-  if (!toc) {
-    return;
-  }
-
-  // Delete existing TOC entries in case we're reloading the TOC.
-  var tocEntriesToRemove = [];
-  var i;
-  for (i = 0; i < toc.childNodes.length; i++) {
-    var entry = toc.childNodes[i];
-    if (entry.nodeName.toLowerCase() == 'div'
-     && entry.getAttribute("class")
-     && entry.getAttribute("class").match(/^toclevel/))
-      tocEntriesToRemove.push(entry);
-  }
-  for (i = 0; i < tocEntriesToRemove.length; i++) {
-    toc.removeChild(tocEntriesToRemove[i]);
-  }
-
-  // Rebuild TOC entries.
-  var entries = tocEntries(document.getElementById("content"), toclevels);
-  for (var i = 0; i < entries.length; ++i) {
-    var entry = entries[i];
-    if (entry.element.id == "")
-      entry.element.id = "_toc_" + i;
-    var a = document.createElement("a");
-    a.href = "#" + entry.element.id;
-    a.appendChild(document.createTextNode(entry.text));
-    var div = document.createElement("div");
-    div.appendChild(a);
-    div.className = "toclevel" + entry.toclevel;
-    toc.appendChild(div);
-  }
-  if (entries.length == 0)
-    toc.parentNode.removeChild(toc);
-},
-
-
-/////////////////////////////////////////////////////////////////////
-// Footnotes generator
-/////////////////////////////////////////////////////////////////////
-
-/* Based on footnote generation code from:
- * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
- */
-
-footnotes: function () {
-  // Delete existing footnote entries in case we're reloading the footnodes.
-  var i;
-  var noteholder = document.getElementById("footnotes");
-  if (!noteholder) {
-    return;
-  }
-  var entriesToRemove = [];
-  for (i = 0; i < noteholder.childNodes.length; i++) {
-    var entry = noteholder.childNodes[i];
-    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
-      entriesToRemove.push(entry);
-  }
-  for (i = 0; i < entriesToRemove.length; i++) {
-    noteholder.removeChild(entriesToRemove[i]);
-  }
-
-  // Rebuild footnote entries.
-  var cont = document.getElementById("content");
-  var spans = cont.getElementsByTagName("span");
-  var refs = {};
-  var n = 0;
-  for (i=0; i<spans.length; i++) {
-    if (spans[i].className == "footnote") {
-      n++;
-      var note = spans[i].getAttribute("data-note");
-      if (!note) {
-        // Use [\s\S] in place of . so multi-line matches work.
-        // Because JavaScript has no s (dotall) regex flag.
-        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
-        spans[i].innerHTML =
-          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
-          "' title='View footnote' class='footnote'>" + n + "</a>]";
-        spans[i].setAttribute("data-note", note);
-      }
-      noteholder.innerHTML +=
-        "<div class='footnote' id='_footnote_" + n + "'>" +
-        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
-        n + "</a>. " + note + "</div>";
-      var id =spans[i].getAttribute("id");
-      if (id != null) refs["#"+id] = n;
-    }
-  }
-  if (n == 0)
-    noteholder.parentNode.removeChild(noteholder);
-  else {
-    // Process footnoterefs.
-    for (i=0; i<spans.length; i++) {
-      if (spans[i].className == "footnoteref") {
-        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
-        href = href.match(/#.*/)[0];  // Because IE return full URL.
-        n = refs[href];
-        spans[i].innerHTML =
-          "[<a href='#_footnote_" + n +
-          "' title='View footnote' class='footnote'>" + n + "</a>]";
-      }
-    }
-  }
-},
-
-install: function(toclevels) {
-  var timerId;
-
-  function reinstall() {
-    asciidoc.footnotes();
-    if (toclevels) {
-      asciidoc.toc(toclevels);
-    }
-  }
-
-  function reinstallAndRemoveTimer() {
-    clearInterval(timerId);
-    reinstall();
-  }
-
-  timerId = setInterval(reinstall, 500);
-  if (document.addEventListener)
-    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
-  else
-    window.onload = reinstallAndRemoveTimer;
-}
-
-}
-asciidoc.install();
-/*]]>*/
-</script>
-</head>
-<body class="article">
-<div id="header">
 <h1>Sofia</h1>
-</div>
-<div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph"><p>Sofia is a typesafe (ish) layer on top of a properties file.  Given a properties file, it will generate a java class
-providing compile time checks that you&#8217;re using values that actually exist in your properties file.  It supports multiple
-locales if you provide them.</p></div>
-<div class="paragraph"><p>A simple example looks like this.  For this properties file:</p></div>
-<div class="listingblock">
-<div class="content">
-<pre><tt>test.property=I'm the first test property
+
+<p>Sofia is a typesafe (ish) layer on top of a properties file.  Given a properties file, it will generate a java class
+providing compile time checks that you're using values that actually exist in your properties file.  It supports multiple
+locales if you provide them.</p>
+
+<p>A simple example looks like this.  For this properties file:</p>
+
+<pre><code>test.property=I'm the first test property
 parameterized.property.long.name=I need parameters {0} and {1}
 new.property=New Property
+date.property=Today''s date {0,date,full} and now a number {1,number}
+</code></pre>
 
-@error.date.property=Today''s date {0,date,full} and now a number {1,number}
+<p>a java file will be generated with the following interface:</p>
 
-@error.another=I'm an error
-@warn.me=I'm just a warning, though.
+<pre><code>public class Localizer {
+    public static String dateProperty(java.util.Date arg0, Number arg1, Locale... locale) { }
+    public static String newProperty(Locale... locale) { }
+    public static String parameterizedPropertyLongName(Object arg0, Object arg1, Locale... locale) { }
+    public static String testProperty(Locale... locale) { }
+}
+</code></pre>
 
-lonely=I'm only in the default bundle.</tt></pre>
-</div></div>
-<div class="paragraph"><p>a java file will be generated with the following interface:</p></div>
-<div class="listingblock">
-<div class="content">
-<pre><tt>Compiled from "Sofia.java"
-public class com.antwerkz.sofia.Sofia {
-  public static java.lang.String another(java.util.Locale...);
-  public static void logAnother(java.util.Locale...);
-  public static java.lang.String dateProperty(java.util.Date, java.lang.Number, java.util.Locale...);
-  public static void logDateProperty(java.util.Date, java.lang.Number, java.util.Locale...);
-  public static java.lang.String me(java.util.Locale...);
-  public static void logMe(java.util.Locale...);
-  public static java.lang.String lonely(java.util.Locale...);
-  public static java.lang.String newProperty(java.util.Locale...);
-  public static java.lang.String parameterizedPropertyLongName(java.lang.Object, java.lang.Object, java.util.Locale...);
-  public static java.lang.String testProperty(java.util.Locale...);
-}</tt></pre>
-</div></div>
-<div class="paragraph"><p>There are some other details but they&#8217;re mostly irrelevant.  Feel free to explore the generated file if you&#8217;re
-<strong>really</strong> interested.  What you see here is one method for each property listed in your properties file.  Those properties
+<p>There are some other details but they're mostly irrelevant.  Feel free to explore the generated file if you're
+<em>really</em> interested.  What you see here is one method for each property listed in your properties file.  Those properties
 that take parameters result in methods that take parameters as well.  Notice that each parameter is typed according to
-the formatting specified in the properties file.  If no formatting is defined, "Object" is used for that parameter type.</p></div>
-<div class="paragraph"><p>Also note that each method takes a Locale&#8230; parameter.  This allows sofia to generate one method per property while
+the formatting specified in the properties file.  If no formatting is defined, "Object" is used for that parameter type.</p>
+
+<p>Also note that each method takes a Locale... parameter.  This allows sofia to generate one method per property while
 supporting an optional Locale to be supplied without having to generate two identical methods or having to pass in a null
-to a "singleton" parameter.  Multiple Locales can be passed in but only one will be used.</p></div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_so_8230_why">So &#8230; why?</h2>
-<div class="sectionbody">
-<div class="paragraph"><p>When I worked on [glassfish](<a href="http://glassfish.java.net">http://glassfish.java.net</a>), we&#8217;d standardized on a library that did something similar. My
+to a "singleton" parameter.  Multiple Locales can be passed in but only one will be used.</p>
+
+<h2>So ... why?</h2>
+
+<p>When I worked on <a href="http://glassfish.java.net">glassfish</a>, we'd standardized on a library that did something similar. My
 biggest complaint about that one is that all the generated methods WERE IN ALL CAPS WHICH MADE READING THE CODE AWKWARD.
-Also, I&#8217;m not really sure where the source for that library is so patching it would be tricky.  In any case, it turned out
+Also, I'm not really sure where the source for that library is so patching it would be tricky.  In any case, it turned out
 to be a very handy facet to a project which makes use of properties files to manage its messages so I wanted to
-improve on it where I could.</p></div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_ok_so_what_8217_s_next">OK.  So what&#8217;s next?</h2>
-<div class="sectionbody">
-<div class="paragraph"><p>There are a handful of things I&#8217;d like to add:</p></div>
-<div class="olist arabic"><ol class="arabic">
-<li>
-<p>
-Build time validation of properties files:  Making sure that all the properties files variants have the same key set.
-</p>
-</li>
-<li>
-<p>
-Optional autogeneration of error code values for those systems that need numeric codes assigned to each message.
+improve on it where I could.</p>
+
+<h2>OK.  So what's next?</h2>
+
+<p>There are a handful of things I'd like to add:</p>
+
+<ol>
+<li>Build time validation of properties files:  Making sure that all the properties files variants have the same key set.</li>
+<li>Optional autogeneration of error code values for those systems that need numeric codes assigned to each message.
 Oracle had such requirements for its error messages and manually managing that was troublesome.  Of course, generating
-them might prove just as problematic, but we&#8217;ll see how it goes.
-</p>
-</li>
-<li>
-<p>
-Play framework support.  I&#8217;d love for this to work in [play!](<a href="http://playframework.org">http://playframework.org</a>) as well as I&#8217;ve been using that
-more and more lately.
-</p>
-</li>
-<li>
-<p>
-Logging support via slf4j or logback
-</p>
-</li>
-</ol></div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_great_how_do_i_use_it">Great.  How do I use it?</h2>
-<div class="sectionbody">
-<div class="paragraph"><p>Add the following to your pom.xml:</p></div>
-<div class="listingblock">
-<div class="content">
-<pre><tt>    &lt;plugin&gt;
-      &lt;groupId&gt;com.antwerkz.sofia&lt;/groupId&gt;
-      &lt;artifactId&gt;maven&lt;/artifactId&gt;
-      &lt;version&gt;0.12&lt;/version&gt;
-      &lt;executions&gt;
-        &lt;execution&gt;
-          &lt;goals&gt;
-            &lt;goal&gt;generate&lt;/goal&gt;
-          &lt;/goals&gt;
-        &lt;/execution&gt;
-      &lt;/executions&gt;
-    &lt;/plugin&gt;</tt></pre>
-</div></div>
-<div class="paragraph"><p>There are a few configuration options:</p></div>
-<div class="tableblock">
-<table rules="all"
-width="100%"
-frame="border"
-cellspacing="0" cellpadding="4">
-<col width="33%" />
-<col width="33%" />
-<col width="33%" />
-<tbody>
-<tr>
-<td align="left" valign="top"><p class="table">Value</p></td>
-<td align="left" valign="top"><p class="table">Description</p></td>
-<td align="left" valign="top"><p class="table">Default</p></td>
-</tr>
-<tr>
-<td align="left" valign="top"><p class="table">packageName</p></td>
-<td align="left" valign="top"><p class="table">Defines the package for the generated class</p></td>
-<td align="left" valign="top"><p class="table">com.antwerkz.sofia</p></td>
-</tr>
-<tr>
-<td align="left" valign="top"><p class="table">inputFile</p></td>
-<td align="left" valign="top"><p class="table">The base properties file to use</p></td>
-<td align="left" valign="top"><p class="table">src/main/resources/sofia.properties</p></td>
-</tr>
-<tr>
-<td align="left" valign="top"><p class="table">outputDirectory</p></td>
-<td align="left" valign="top"><p class="table">Generated source location</p></td>
-<td align="left" valign="top"><p class="table">${project.build.directory}/generated-sources/sofia</p></td>
-</tr>
-<tr>
-<td align="left" valign="top"><p class="table">loggingType</p></td>
-<td align="left" valign="top"><p class="table">Use a specific logger</p></td>
-<td align="left" valign="top"><p class="table"></p></td>
-</tr>
-<tr>
-<td align="left" valign="top"><p class="table">playController</p></td>
-<td align="left" valign="top"><p class="table">Generate code for use in play applications (supported: none, jul, slf4j)</p></td>
-<td align="left" valign="top"><p class="table">slf4j</p></td>
-</tr>
-</tbody>
+them might prove just as problematic, but we'll see how it goes.</li>
+<li>Play framework support.  I'd love for this to work in <a href="http://playframework.org">play!</a> as well as I've been using that
+more and more lately.</li>
+<li>Logging support via slf4j or logback</li>
+</ol>
+
+<h2>Great.  How do I use it?</h2>
+
+<p>Add the following to your pom.xml:</p>
+
+<pre><code>&lt;plugin&gt;
+  &lt;groupId&gt;com.antwerkz.sofia&lt;/groupId&gt;
+  &lt;artifactId&gt;maven&lt;/artifactId&gt;
+  &lt;version&gt;0.12&lt;/version&gt;
+  &lt;executions&gt;
+    &lt;execution&gt;
+      &lt;goals&gt;
+        &lt;goal&gt;generate&lt;/goal&gt;
+      &lt;/goals&gt;
+    &lt;/execution&gt;
+  &lt;/executions&gt;
+&lt;/plugin&gt;
+</code></pre>
+
+<p>There are a few configuration options:</p>
+
+<table>
+    <tr><td>Value</td><td>Description</td><td>Default</td></tr>
+    <tr><td>packageName</td><td>Defines the package for the generated class</td><td>com.antwerkz.sofia</td></tr>
+    <tr><td>input</td><td>The base properties file to use</td><td>src/main/resources/sofia.properties</td></tr>
+    <tr><td>outputDirectory</td><td>Generated source location</td><td>${project.build.directory}/generated-sources/sofia</td></tr>
 </table>
-</div>
-<div class="sect2">
-<h3 id="_for_use_in_play_apps">For use in Play apps</h3>
-<div class="paragraph"><p>Add the this line to your Build.scala file in your appDependencies variable</p></div>
-<div class="listingblock">
-<div class="content">
-<pre><tt>"com.antwerkz.sofia" % "sofia-play" % "0.12"</tt></pre>
-</div></div>
-<div class="paragraph"><p>If you&#8217;ve just checked out a new project, you might need to pregenerate your file before the play app
+
+<h3>For use in Play apps</h3>
+
+<p>Add the this line to your Build.scala file in your appDependencies variable</p>
+
+<pre><code>"com.antwerkz.sofia" % "sofia-play" % "0.12"
+</code></pre>
+
+<p>If you've just checked out a new project, you might need to pregenerate your file before the play app
 will start.  The easiest way, for now, is if the project has provided a pom.xml and configured Sofia
-with something like this:</p></div>
-<div class="listingblock">
-<div class="content">
-<pre><tt>&lt;plugin&gt;
+with something like this:</p>
+
+<pre><code>&lt;plugin&gt;
     &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
     &lt;artifactId&gt;exec-maven-plugin&lt;/artifactId&gt;
 
     &lt;configuration&gt;
         &lt;mainClass&gt;com.antwerkz.sofia.play.SofiaPlugin&lt;/mainClass&gt;
     &lt;/configuration&gt;
-&lt;/plugin&gt;</tt></pre>
-</div></div>
-<div class="paragraph"><p>Ideally, Sofia would provide an sbt plugin to make this happen.  I don&#8217;t know how to write those yet so
-that will just have to wait until I do or someone provides a patch.&lt;/hint&gt;  It would be easiest for all
-to simply commit your generated file to whichever version control system you use.</p></div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_one_last_question_8230_why_sofia">One last question&#8230;  Why sofia?</h2>
-<div class="sectionbody">
-<div class="paragraph"><p>Project naming can be tricky.  I like my project names to be interesting in one way or another.  This project started
+&lt;/plugin&gt;
+</code></pre>
+
+<p>Ideally, Sofia would provide an sbt plugin to make this happen.  I don't know how to write those yet so
+that will just have to wait until I do or someone provides a patch.</hint>  It would be easiest for all
+to simply commit your generated file to whichever version control system you use.</p>
+
+<h2>One last question...  Why sofia?</h2>
+
+<p>Project naming can be tricky.  I like my project names to be interesting in one way or another.  This project started
 off as a localization concept:  translation.  One of my favorite movies is "Lost in Translation" which is direced by
-Sofia Coppola.  So &#8230; sofia.</p></div>
-<div class="paragraph"><p>The mystique of the unexplained name was better than the truth wasn&#8217;t it?  Well, you asked&#8230;</p></div>
-</div>
-</div>
-</div>
-<div id="footnotes"><hr /></div>
-<div id="footer">
-<div id="footer-text">
-Last updated 2012-11-25 15:06:59 EST
-</div>
-</div>
-</body>
-</html>
+Sofia Coppola.  So ... sofia.</p>
+
+<p>The mystique of the unexplained name was better than the truth wasn't it?  Well, you asked...</p>
