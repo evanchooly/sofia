@@ -106,7 +106,6 @@ public class LocalizerGenerator {
   public void write() {
     File file = new File(outputDirectory, String.format("%s/%s.java", pkgName.replace('.', '/'),
       capitalize(className)));
-    System.out.printf("Generating code in to %s\n", file);
     file.getParentFile().mkdirs();
     try (PrintWriter stream = new PrintWriter(file, "UTF-8")) {
       stream.println(this.generateJava());
@@ -116,7 +115,6 @@ public class LocalizerGenerator {
     }
     if(generateJavascript) {
       file = new File(jsOutputDir, "sofia.js");
-      System.out.printf("Generating javascript code in to %s\n", file);
       file.getParentFile().mkdirs();
       try (PrintWriter stream = new PrintWriter(file, "UTF-8")) {
         stream.println(this.generateJavascript());
