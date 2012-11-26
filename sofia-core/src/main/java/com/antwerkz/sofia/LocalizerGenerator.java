@@ -23,11 +23,15 @@ public class LocalizerGenerator {
   private String bundleName;
   private String className;
   private SofiaConfig config;
+  private File jsOutputDir;
+  private boolean generateJavascript;
 
   public LocalizerGenerator(SofiaConfig sofiaConfig) throws IOException {
     config = sofiaConfig;
     this.pkgName = sofiaConfig.getPackageName();
     this.outputDirectory = sofiaConfig.getOutputDirectory();
+    generateJavascript = sofiaConfig.isGenerateJavascript();
+    jsOutputDir = sofiaConfig.getJavascriptOutputDirectory();
     bundleName = sofiaConfig.getBundleName();
     if (bundleName.contains(".")) {
       bundleName = bundleName.substring(0, bundleName.indexOf("."));
@@ -57,13 +61,29 @@ public class LocalizerGenerator {
     return Character.toTitleCase(text.charAt(0)) + text.substring(1);
   }
 
-  public String toString() {
+  public String generateJava() {
     Configuration cfg = new Configuration();
     try {
       Template template = new Template("sofia",
         new InputStreamReader(getClass().getResourceAsStream("/sofia.ftl")), cfg);
       Writer out = new StringWriter();
       template.process(buildDataMap(), out);
+      out.flush();
+      return out.toString();
+    } catch (IOException | TemplateException e) {
+      throw new RuntimeException(e.getMessage(), e);
+    }
+  }
+
+  public String generateJavascript() {
+    Configuration cfg = new Configuration();
+    try {
+      Template template = new Template("sofia",
+        new InputStreamReader(getClass().getResourceAsStream("/sofia-js.ftl")), cfg);
+      Writer out = new StringWriter();
+      Map<String, Object> map = buildDataMap();
+      map.put("properties", config.getProperties());
+      template.process(map, out);
       out.flush();
       return out.toString();
     } catch (IOException | TemplateException e) {
@@ -89,10 +109,22 @@ public class LocalizerGenerator {
     System.out.printf("Generating code in to %s\n", file);
     file.getParentFile().mkdirs();
     try (PrintWriter stream = new PrintWriter(file, "UTF-8")) {
-      stream.println(this);
+      stream.println(this.generateJava());
       stream.flush();
     } catch (Exception e) {
       throw new RuntimeException(e.getMessage(), e);
+    }
+    if(generateJavascript) {
+      file = new File(jsOutputDir, "sofia.js");
+      System.out.printf("Generating javascript code in to %s\n", file);
+      file.getParentFile().mkdirs();
+      try (PrintWriter stream = new PrintWriter(file, "UTF-8")) {
+        stream.println(this.generateJavascript());
+        stream.flush();
+      } catch (Exception e) {
+        throw new RuntimeException(e.getMessage(), e);
+      }
+
     }
   }
 }

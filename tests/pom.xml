@@ -27,6 +27,7 @@
                         </goals>
                         <configuration>
                             <loggingType>slf4j</loggingType>
+                            <javascript>true</javascript>
                         </configuration>
                     </execution>
                 </executions>

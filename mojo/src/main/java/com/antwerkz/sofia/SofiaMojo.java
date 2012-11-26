@@ -38,6 +38,10 @@ public class SofiaMojo extends AbstractMojo {
   private boolean playController;
   @Parameter(property="sofia.logging", defaultValue="slf4j")
   private String loggingType;
+  @Parameter(property="sofia.js.dir", defaultValue="src/main/webapp/js")
+  private File jsOutputDir;
+  @Parameter(property="sofia.javascript", defaultValue="false")
+  private boolean javascript;
 
   public void execute() throws MojoExecutionException {
     if (!inputFile.exists()) {
@@ -53,7 +57,10 @@ public class SofiaMojo extends AbstractMojo {
         .setProperties(inputFile)
         .setType(loadLoggingType())
         .setUseControl(playController)
-        .setOutputDirectory(outputDirectory)).write();
+        .setOutputDirectory(outputDirectory)
+        .setGenerateJavascript(javascript)
+        .setJavascriptOutputDirectory(jsOutputDir)
+      ).write();
       project.addCompileSourceRoot(outputDirectory.getAbsolutePath());
     } catch (Exception e) {
       throw new MojoExecutionException(e.getMessage(), e);

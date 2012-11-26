@@ -18,6 +18,8 @@ public class SofiaConfig {
   private LoggingType type = LoggingType.NONE;
   private boolean useControl = false;
   private Map<String, String> properties;
+  private boolean generateJavascript;
+  private File javascriptOutputDirectory;
 
   public String getBundleName() {
     return bundleName;
@@ -113,5 +115,23 @@ public class SofiaConfig {
       throw new RuntimeException(e.getMessage(), e);
     }
     return properties;
+  }
+
+  public boolean isGenerateJavascript() {
+    return generateJavascript;
+  }
+
+  public SofiaConfig setGenerateJavascript(boolean generateJavascript) {
+    this.generateJavascript = generateJavascript;
+    return this;
+  }
+
+  public File getJavascriptOutputDirectory() {
+    return javascriptOutputDirectory;
+  }
+
+  public SofiaConfig setJavascriptOutputDirectory(File javascriptOutputDirectory) {
+    this.javascriptOutputDirectory = javascriptOutputDirectory;
+    return this;
   }
 }
