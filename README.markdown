@@ -86,6 +86,9 @@ There are a few configuration options:
     </tbody>
 </table>
 
+If you'd like continuous monitoring and regeneration of your files, there's also "sofia:watch."  Using this target,
+sofia will watch for changes to your input file and regenerate as needed.
+
 ### For use in Play apps
 
 Add the this line to your Build.scala file in your appDependencies variable

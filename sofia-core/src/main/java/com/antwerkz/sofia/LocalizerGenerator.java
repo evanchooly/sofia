@@ -23,7 +23,7 @@ public class LocalizerGenerator {
   private String bundleName;
   private String className;
   private SofiaConfig config;
-  private File jsOutputDir;
+  private File jsOutputFile;
   private boolean generateJavascript;
 
   public LocalizerGenerator(SofiaConfig sofiaConfig) throws IOException {
@@ -31,7 +31,7 @@ public class LocalizerGenerator {
     this.pkgName = sofiaConfig.getPackageName();
     this.outputDirectory = sofiaConfig.getOutputDirectory();
     generateJavascript = sofiaConfig.isGenerateJavascript();
-    jsOutputDir = sofiaConfig.getJavascriptOutputDirectory();
+    jsOutputFile = sofiaConfig.getJavascriptOutputFile();
     bundleName = sofiaConfig.getBundleName();
     if (bundleName.contains(".")) {
       bundleName = bundleName.substring(0, bundleName.indexOf("."));
@@ -106,6 +106,7 @@ public class LocalizerGenerator {
   public void write() {
     File file = new File(outputDirectory, String.format("%s/%s.java", pkgName.replace('.', '/'),
       capitalize(className)));
+    System.out.printf("Generating code in to %s\n", file);
     file.getParentFile().mkdirs();
     try (PrintWriter stream = new PrintWriter(file, "UTF-8")) {
       stream.println(this.generateJava());
@@ -114,7 +115,8 @@ public class LocalizerGenerator {
       throw new RuntimeException(e.getMessage(), e);
     }
     if(generateJavascript) {
-      file = new File(jsOutputDir, "sofia.js");
+      file = jsOutputFile;
+      System.out.printf("Generating javascript code in to %s\n", file);
       file.getParentFile().mkdirs();
       try (PrintWriter stream = new PrintWriter(file, "UTF-8")) {
         stream.println(this.generateJavascript());

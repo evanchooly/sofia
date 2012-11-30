@@ -16,6 +16,7 @@ package com.antwerkz.sofia;
 */
 
 import java.io.File;
+import java.io.IOException;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -26,45 +27,49 @@ import org.apache.maven.project.MavenProject;
 
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
 public class SofiaMojo extends AbstractMojo {
-  @Parameter(property = "project", defaultValue = "${project}", required = true, readonly = true)
+  @Parameter(property = "project")
   private MavenProject project;
-  @Parameter(property = "sofia.target", defaultValue = "${project.build.directory}/generated-sources/sofia")
+  @Parameter(property = "outputDirectory", defaultValue = "${project.build.directory}/generated-sources/sofia")
   private File outputDirectory;
-  @Parameter(property = "sofia.inputFile", defaultValue = "src/main/resources/sofia.properties")
+  @Parameter(defaultValue = "src/main/resources/sofia.properties")
   private File inputFile;
-  @Parameter(property = "sofia.package", defaultValue = "com.antwerkz.sofia")
+  @Parameter(defaultValue = "com.antwerkz.sofia")
   private String packageName;
-  @Parameter(property = "sofia.play.logging", defaultValue = "false")
+  @Parameter(defaultValue = "false")
   private boolean playController;
-  @Parameter(property="sofia.logging", defaultValue="slf4j")
+  @Parameter(defaultValue = "jul")
   private String loggingType;
-  @Parameter(property="sofia.js.dir", defaultValue="src/main/webapp/js")
-  private File jsOutputDir;
-  @Parameter(property="sofia.javascript", defaultValue="false")
+  @Parameter(defaultValue = "src/main/webapp/js/sofia.js")
+  private File jsOutputFile;
+  @Parameter(defaultValue = "false")
   private boolean javascript;
 
   public void execute() throws MojoExecutionException {
-    if (!inputFile.exists()) {
-      throw new MojoExecutionException("Missing inputFile file: " + inputFile);
-    }
     if (!outputDirectory.exists()) {
       outputDirectory.mkdirs();
     }
     try {
-      new LocalizerGenerator(new SofiaConfig()
-        .setBundleName(inputFile.getName())
-        .setPackageName(packageName)
-        .setProperties(inputFile)
-        .setType(loadLoggingType())
-        .setUseControl(playController)
-        .setOutputDirectory(outputDirectory)
-        .setGenerateJavascript(javascript)
-        .setJavascriptOutputDirectory(jsOutputDir)
-      ).write();
+      generate();
       project.addCompileSourceRoot(outputDirectory.getAbsolutePath());
     } catch (Exception e) {
       throw new MojoExecutionException(e.getMessage(), e);
     }
+  }
+
+  public void generate() throws IOException, MojoExecutionException {
+    if (!inputFile.exists()) {
+      throw new MojoExecutionException("Missing inputFile file: " + inputFile);
+    }
+    new LocalizerGenerator(new SofiaConfig()
+      .setBundleName(inputFile.getName())
+      .setPackageName(packageName)
+      .setProperties(inputFile)
+      .setType(loadLoggingType())
+      .setUseControl(playController)
+      .setOutputDirectory(outputDirectory)
+      .setGenerateJavascript(javascript)
+      .setJavascriptOutputFile(jsOutputFile)
+    ).write();
   }
 
   private LoggingType loadLoggingType() throws MojoExecutionException {
@@ -75,4 +80,22 @@ public class SofiaMojo extends AbstractMojo {
     }
   }
 
+  public File getInputFile() {
+    return inputFile;
+  }
+
+  @Override
+  public String toString() {
+    final StringBuilder sb = new StringBuilder();
+    sb.append("SofiaMojo");
+    sb.append("{inputFile=").append(inputFile);
+    sb.append(", outputDirectory=").append(outputDirectory);
+    sb.append(", packageName='").append(packageName).append('\'');
+    sb.append(", playController=").append(playController);
+    sb.append(", loggingType='").append(loggingType).append('\'');
+    sb.append(", jsOutputDir=").append(jsOutputFile);
+    sb.append(", javascript=").append(javascript);
+    sb.append('}');
+    return sb.toString();
+  }
 }

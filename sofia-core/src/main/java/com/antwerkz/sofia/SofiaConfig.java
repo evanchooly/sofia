@@ -19,7 +19,7 @@ public class SofiaConfig {
   private boolean useControl = false;
   private Map<String, String> properties;
   private boolean generateJavascript;
-  private File javascriptOutputDirectory;
+  private File javascriptOutputFile;
 
   public String getBundleName() {
     return bundleName;
@@ -126,12 +126,12 @@ public class SofiaConfig {
     return this;
   }
 
-  public File getJavascriptOutputDirectory() {
-    return javascriptOutputDirectory;
+  public File getJavascriptOutputFile() {
+    return javascriptOutputFile;
   }
 
-  public SofiaConfig setJavascriptOutputDirectory(File javascriptOutputDirectory) {
-    this.javascriptOutputDirectory = javascriptOutputDirectory;
+  public SofiaConfig setJavascriptOutputFile(File file) {
+    this.javascriptOutputFile = file;
     return this;
   }
 }
