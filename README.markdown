@@ -33,6 +33,32 @@ a java file will be generated with the following interface:
       public static java.lang.String testProperty(java.util.Locale...);
     }
 
+and now a javascript file can be generated as well that look like this:
+
+    sofia = {
+        another: function() {
+            return "I'm an error";
+        },
+        dateProperty: function(arg0, arg1) {
+            return "Today''s date {0,date,full} and now a number {1,number}";
+        },
+        me: function() {
+            return "I'm just a warning, though.";
+        },
+        lonely: function() {
+            return "I'm only in the default bundle.";
+        },
+        newProperty: function() {
+            return "New Property";
+        },
+        parameterizedPropertyLongName: function(arg0, arg1) {
+            return "I need parameters {0} and {1}";
+        },
+        testProperty: function() {
+            return "I'm the first test property";
+        }
+    }
+
 There are some other details but they're mostly irrelevant.  Feel free to explore the generated file if you're
 *really* interested.  What you see here is one method for each property listed in your properties file.  Those properties
 that take parameters result in methods that take parameters as well.  Notice that each parameter is typed according to
@@ -80,9 +106,10 @@ There are a few configuration options:
         <tr><td>packageName</td><td>Defines the package for the generated class</td><td>com.antwerkz.sofia</td></tr>
         <tr><td>inputFile</td><td>The base properties file to use</td><td>src/main/resources/sofia.properties</td></tr>
         <tr><td>outputDirectory</td><td>Generated source location</td><td>${project.build.directory}/generated-sources/sofia</td></tr>
-        <tr><td>loggingType</td><td>Use a specific logger</td><td></td></tr>
-        <tr><td>playController</td><td>Generate code for use in play applications (supported: none, jul, slf4j)</td><td>slf4j</td>
-        </tr>
+        <tr><td>loggingType</td><td>Use a specific logger (supported: none, jul, slf4j)</td><td>slf4j</td></tr>
+        <tr><td>playController</td><td>Generate code for use in play applications</td><td>false</td></tr>
+        <tr><td>jsOutputFile</td><td>The javascript file to generate</td><td>src/main/webapp/js/sofia.js</td></tr>
+        <tr><td>javascript</td><td>Enable javascript generation</td><td>false</td></tr>
     </tbody>
 </table>
 
