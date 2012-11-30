@@ -5,13 +5,13 @@
     <parent>
         <groupId>com.antwerkz.sofia</groupId>
         <artifactId>sofia-parent</artifactId>
-        <version>0.13-SNAPSHOT</version>
+        <version>0.13</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>com.antwerkz.sofia</groupId>
     <artifactId>sofia-play</artifactId>
-    <version>0.13-SNAPSHOT</version>
+    <version>0.13</version>
     <packaging>jar</packaging>
 
     <build>
