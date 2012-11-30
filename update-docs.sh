@@ -1,1 +1,1 @@
-asciidoc -o README-dev.html readmesource.asciidoc
+asciidoc -o README-dev.html README.asciidoc 2>&1
