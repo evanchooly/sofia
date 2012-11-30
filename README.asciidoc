@@ -1,7 +1,7 @@
 Sofia
 -----
 
-Sofia is a typesafe (ish) layer on top of a properties file.  Given a properties file, it will generate a java class
+Sofia is a typesafe(ish) layer on top of a properties file.  Given a properties file, it will generate a java class
 providing compile time checks that you're using values that actually exist in your properties file.  It supports multiple
 locales if you provide them.
 
