@@ -59,7 +59,7 @@ Add the following to your pom.xml:
     <plugin>
       <groupId>com.antwerkz.sofia</groupId>
       <artifactId>maven</artifactId>
-      <version>0.12</version>
+      <version>0.13</version>
       <executions>
         <execution>
           <goals>
@@ -93,7 +93,7 @@ sofia will watch for changes to your input file and regenerate as needed.
 
 Add the this line to your Build.scala file in your appDependencies variable
 
-    "com.antwerkz.sofia" % "sofia-play" % "0.12"
+    "com.antwerkz.sofia" % "sofia-play" % "0.13"
 
 If you've just checked out a new project, you might need to pregenerate your file before the play app
 will start.  The easiest way, for now, is if the project has provided a pom.xml and configured Sofia
