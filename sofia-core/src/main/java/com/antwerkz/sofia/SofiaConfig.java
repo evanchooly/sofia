@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
@@ -20,6 +21,7 @@ public class SofiaConfig {
   private Map<String, String> properties;
   private boolean generateJavascript;
   private File javascriptOutputFile;
+  private Map<String, Map<String, String>> bundles;
 
   public String getBundleName() {
     return bundleName;
@@ -77,10 +79,29 @@ public class SofiaConfig {
   public SofiaConfig setProperties(File propertiesFile) {
     try {
       this.properties = loadProperties(new FileInputStream(propertiesFile));
+      discoverBundles(propertiesFile);
     } catch (FileNotFoundException e) {
       throw new RuntimeException(e.getMessage(), e);
     }
     return this;
+  }
+
+  private void discoverBundles(final File propertiesFile) throws FileNotFoundException {
+    String name = propertiesFile.getName();
+    String rootDir = propertiesFile.getParent();
+    bundles = new TreeMap<>();
+    int last = name.lastIndexOf('.');
+    if(!name.matches(".*_[a-zA-Z]+[_a-zA-Z]*.properties")) {
+      Map<String, String> value = loadProperties(new FileInputStream(propertiesFile));
+      bundles.put("", value);
+      bundles.put(Locale.getDefault().toString(), value);
+    }
+    for (Locale locale : Locale.getAvailableLocales()) {
+      File file = new File(rootDir, String.format("%s_%s%s", name.substring(0, last), locale.toString(), name.substring(last)));
+      if(file.exists()) {
+        bundles.put(locale.toString(), loadProperties(new FileInputStream(file)));
+      }
+    }
   }
 
   public SofiaConfig setProperties(Map<String, String> properties) {
@@ -104,17 +125,17 @@ public class SofiaConfig {
   }
 
   private Map<String, String> loadProperties(InputStream inputStream) {
+    Map<String, String> map = new TreeMap<>();
     try (InputStream stream = inputStream) {
-      properties = new TreeMap<>();
       Properties props = new Properties();
       props.load(stream);
       for (Entry<Object, Object> entry : props.entrySet()) {
-        properties.put((String) entry.getKey(), (String) entry.getValue());
+        map.put((String) entry.getKey(), (String) entry.getValue());
       }
     } catch (IOException e) {
       throw new RuntimeException(e.getMessage(), e);
     }
-    return properties;
+    return map;
   }
 
   public boolean isGenerateJavascript() {
@@ -133,5 +154,9 @@ public class SofiaConfig {
   public SofiaConfig setJavascriptOutputFile(File file) {
     this.javascriptOutputFile = file;
     return this;
+  }
+
+  public Map<String, Map<String, String>> getBundles() {
+    return bundles;
   }
 }

@@ -81,7 +81,7 @@ public class LocalizerGenerator {
       Template template = new Template("sofia",
         new InputStreamReader(getClass().getResourceAsStream("/sofia-js.ftl")), cfg);
       Writer out = new StringWriter();
-      Map<String, Object> map = buildDataMap();
+      Map<String, Object> map = buildJSDataMap();
       map.put("properties", config.getProperties());
       template.process(map, out);
       out.flush();
@@ -92,7 +92,7 @@ public class LocalizerGenerator {
   }
 
   private Map<String, Object> buildDataMap() {
-    final HashMap<String, Object> map = new HashMap<>();
+    final Map<String, Object> map = new HashMap<>();
     map.put("packageName", config.getPackageName());
     map.put("className", className);
     map.put("methods", methods);
@@ -100,6 +100,16 @@ public class LocalizerGenerator {
     map.put("imports", config.getType().getImports());
     map.put("logger", config.getType().name());
     map.put("useControl", config.isUseControl());
+    return map;
+  }
+
+  private Map<String, Object> buildJSDataMap() {
+    final Map<String, Object> map = new HashMap<>();
+    map.put("packageName", config.getPackageName());
+    map.put("className", className);
+    map.put("methods", methods);
+    map.put("bundleName", bundleName);
+    map.put("bundles", config.getBundles());
     return map;
   }
 

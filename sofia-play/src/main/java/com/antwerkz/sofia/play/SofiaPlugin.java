@@ -76,7 +76,7 @@ public class SofiaPlugin {
     }
   }
 
-  private InputStream findProperties() throws FileNotFoundException {
+  private InputStream  findProperties() throws FileNotFoundException {
     InputStream stream = getClass().getClassLoader().getResourceAsStream("/messages");
     if (stream == null) {
       stream = new FileInputStream("conf/messages");

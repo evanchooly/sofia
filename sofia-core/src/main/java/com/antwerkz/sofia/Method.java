@@ -11,8 +11,8 @@ public class Method {
     private String value;
     private Boolean logged = Boolean.FALSE;
     private int argCount;
-    private List<String> arguments = new ArrayList<String>();
-    private List<String> parameters = new ArrayList<String>();
+    private List<String> arguments = new ArrayList<>();
+    private List<String> parameters = new ArrayList<>();
     private String key;
     private String logLevel;
     private String name;
@@ -100,7 +100,7 @@ public class Method {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder()
+        return new StringBuilder()
             .append("Method {")
             .append("key='").append(key).append('\'')
             .append(", parameters=").append(parameters)
@@ -109,7 +109,6 @@ public class Method {
             .append(", value='").append(value).append('\'')
             .append(", argCount=").append(argCount)
             .append(", arguments=").append(arguments)
-            .append('}');
-        return sb.toString();
+            .append('}').toString();
     }
 }
