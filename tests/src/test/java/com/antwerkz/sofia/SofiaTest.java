@@ -28,7 +28,8 @@ public class SofiaTest {
     Assert.assertEquals(Sofia.parameterizedPropertyLongName("bob", "alice", Locale.GERMAN),
       "I need zwei parameters bob and alice");
     String message = Sofia.dateProperty(new Date(), 2);
-    Assert.assertFalse(message.contains("{"), message);
+    Assert.assertTrue(message.contains("Today's date"), message);
+    message = Sofia.dateProperty2(new Date(), 2);
     Sofia.logMe();
     String s = FileUtils.readFileToString(new File("/tmp/sofia.log"));
     Assert.assertTrue(s.contains("I'm just a warning, though."));

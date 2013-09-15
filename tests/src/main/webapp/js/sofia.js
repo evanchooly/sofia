@@ -1,8 +1,8 @@
 var sofiaBundles = [];
     sofiaBundles[''] = {
         'another' : 'I\'m an error',
-        'date.property' : 'Today\'s date {0,date,full} and now a number {1,number}',
-        'date.property2' : 'Today\'s date {0} and now a number {1}',
+        'date.property' : 'Today\'\'s date {0,date,full} and now a number {1,number}',
+        'date.property2' : 'Today\'\'s date {0} and now a number {1}',
         'me' : 'I\'m just a warning, though.',
         'lonely' : 'I\'m only in the default bundle.',
         'new.property' : 'New Property',
@@ -23,8 +23,8 @@ var sofiaBundles = [];
     };
     sofiaBundles['en_US'] = {
         'another' : 'I\'m an error',
-        'date.property' : 'Today\'s date {0,date,full} and now a number {1,number}',
-        'date.property2' : 'Today\'s date {0} and now a number {1}',
+        'date.property' : 'Today\'\'s date {0,date,full} and now a number {1,number}',
+        'date.property2' : 'Today\'\'s date {0} and now a number {1}',
         'me' : 'I\'m just a warning, though.',
         'lonely' : 'I\'m only in the default bundle.',
         'new.property' : 'New Property',
@@ -43,8 +43,20 @@ sofia = {
         }
         return formatted;
     },
-    dateProperty: function() {
-        return format(sofiaBundles[sofiaLang]['date.property']);
+    another: function() {
+        return format(sofiaBundles[sofiaLang]['@error.another']);
+    },
+    dateProperty: function(arg0, arg1) {
+        return format(sofiaBundles[sofiaLang]['@error.date.property']);
+    },
+    dateProperty2: function(arg0, arg1) {
+        return format(sofiaBundles[sofiaLang]['@error.date.property2']);
+    },
+    me: function() {
+        return format(sofiaBundles[sofiaLang]['@warn.me']);
+    },
+    lonely: function() {
+        return format(sofiaBundles[sofiaLang]['lonely']);
     },
     newProperty: function() {
         return format(sofiaBundles[sofiaLang]['new.property']);
