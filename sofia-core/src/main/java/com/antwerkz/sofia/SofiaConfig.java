@@ -5,6 +5,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.Charset;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -21,6 +24,8 @@ public class SofiaConfig {
   private Map<String, String> properties;
   private boolean generateJavascript;
   private File javascriptOutputFile;
+  // This is the default charset used when reading property files from an InputStream
+  private Charset charset = Charset.forName("ISO-8859-1");
   private Map<String, Map<String, String>> bundles;
 
   public String getBundleName() {
@@ -126,9 +131,12 @@ public class SofiaConfig {
 
   private Map<String, String> loadProperties(InputStream inputStream) {
     Map<String, String> map = new TreeMap<>();
-    try (InputStream stream = inputStream) {
+    try (
+      InputStream stream = inputStream;
+      Reader reader = new InputStreamReader(stream, charset)
+    ) {
       Properties props = new Properties();
-      props.load(stream);
+      props.load(reader);
       for (Entry<Object, Object> entry : props.entrySet()) {
         map.put((String) entry.getKey(), (String) entry.getValue());
       }
@@ -154,6 +162,14 @@ public class SofiaConfig {
   public SofiaConfig setJavascriptOutputFile(File file) {
     this.javascriptOutputFile = file;
     return this;
+  }
+
+  public Charset getCharset() {
+    return charset;
+  }
+
+  public void setCharset(Charset charset) {
+    this.charset = charset;
   }
 
   public Map<String, Map<String, String>> getBundles() {
