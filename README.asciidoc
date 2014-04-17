@@ -115,6 +115,7 @@ There are a few configuration options:
 |playController|Generate code for use in play applications|false
 |jsOutputFile|The javascript file to generate|src/main/webapp/js/sofia.js
 |javascript|Enable javascript generation|false
+|charset|Change the character coding used when reading property files|ISO-8859-1
 |=======================
 
 If you'd like continuous monitoring and regeneration of your files, there's also "sofia:watch."  Using this target,
