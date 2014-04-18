@@ -168,8 +168,9 @@ public class SofiaConfig {
     return charset;
   }
 
-  public void setCharset(Charset charset) {
+  public SofiaConfig setCharset(Charset charset) {
     this.charset = charset;
+    return this;
   }
 
   public Map<String, Map<String, String>> getBundles() {

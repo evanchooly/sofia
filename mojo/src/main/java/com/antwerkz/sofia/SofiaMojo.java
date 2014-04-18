@@ -17,6 +17,7 @@ package com.antwerkz.sofia;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -43,6 +44,8 @@ public class SofiaMojo extends AbstractMojo {
   private File jsOutputFile;
   @Parameter(defaultValue = "false")
   private boolean javascript;
+  @Parameter(defaultValue = "ISO-8859-1")
+  private String charset;
 
   public void execute() throws MojoExecutionException {
     if (!outputDirectory.exists()) {
@@ -69,6 +72,7 @@ public class SofiaMojo extends AbstractMojo {
       .setOutputDirectory(outputDirectory)
       .setGenerateJavascript(javascript)
       .setJavascriptOutputFile(jsOutputFile)
+      .setCharset(Charset.forName(charset))
     ).write();
   }
 
@@ -86,15 +90,15 @@ public class SofiaMojo extends AbstractMojo {
 
   @Override
   public String toString() {
-    final StringBuilder sb = new StringBuilder();
-    sb.append("SofiaMojo");
-    sb.append("{inputFile=").append(inputFile);
-    sb.append(", outputDirectory=").append(outputDirectory);
+    final StringBuilder sb = new StringBuilder("SofiaMojo{");
+    sb.append("outputDirectory=").append(outputDirectory);
+    sb.append(", inputFile=").append(inputFile);
     sb.append(", packageName='").append(packageName).append('\'');
     sb.append(", playController=").append(playController);
     sb.append(", loggingType='").append(loggingType).append('\'');
-    sb.append(", jsOutputDir=").append(jsOutputFile);
+    sb.append(", jsOutputFile=").append(jsOutputFile);
     sb.append(", javascript=").append(javascript);
+    sb.append(", charset='").append(charset).append('\'');
     sb.append('}');
     return sb.toString();
   }
