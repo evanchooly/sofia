@@ -12,12 +12,10 @@ ${imports}
 public class ${className?capitalize} {
     private static Map<Locale, ResourceBundle> messages = new HashMap<>();
     <#if "${logger}" == "SLF4J">
-        private static final Logger logger = LoggerFactory.getLogger(${className?capitalize}.class);
+    private static final Logger logger = LoggerFactory.getLogger(${className?capitalize}.class);
     <#elseif "${logger}" == "JUL">
-        private static Logger logger = Logger.getLogger(${className?capitalize}.class.getName());
+    private static Logger logger = Logger.getLogger(${className?capitalize}.class.getName());
     </#if>
-
-    private ${className?capitalize}() {}
 
     private static ResourceBundle getBundle(Locale... localeList) {
         Locale locale = localeList.length == 0 ? Locale.getDefault() : localeList[0];
