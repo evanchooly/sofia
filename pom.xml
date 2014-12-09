@@ -22,7 +22,7 @@
     </scm>
 
     <properties>
-        <maven.version>3.0.4</maven.version>
+        <maven.version>3.2.3</maven.version>
     </properties>
 
     <repositories>
