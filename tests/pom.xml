@@ -5,13 +5,13 @@
     <parent>
         <groupId>com.antwerkz.sofia</groupId>
         <artifactId>sofia-parent</artifactId>
-        <version>0.15-SNAPSHOT</version>
+        <version>0.15</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>com.antwerkz.sofia</groupId>
     <artifactId>tests</artifactId>
-    <version>0.15-SNAPSHOT</version>
+    <version>0.15</version>
 
     <build>
         <defaultGoal>install</defaultGoal>
