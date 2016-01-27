@@ -2,13 +2,15 @@ var sofiaBundles = [];
 <#list bundles?keys as locale>
     <#assign bundle = bundles[locale]>
     sofiaBundles['${locale}'] = {
-    <#list bundle?keys as key>
-        <#assign value = bundle[key]?replace("'", "\\'")>
-        <#assign label = key>
-        <#if key?starts_with("@")>
-            <#assign label = key?substring(key?index_of('.')+1)>
+    <#list bundles?keys as bundle>
+        <#list bundles[bundle] as method>
+        <#assign value = method.value>
+        <#assign label = method.getMethodName()?replace("'", "\\'")>
+        <#if label?starts_with("@")>
+            <#assign label = label?substring(bundle?index_of('.')+1)>
         </#if>
-        '${label}' : '${value}'<#if key_has_next>,</#if>
+        '${label}' : '${value}'<#if bundle_has_next>,</#if>
+        </#list>
     </#list>
     };
 </#list>
