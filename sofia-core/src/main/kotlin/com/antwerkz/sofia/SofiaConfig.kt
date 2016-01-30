@@ -15,6 +15,8 @@ class SofiaConfig(
         var outputDirectory: File,
         var loggingType: LoggingType = LoggingType.NONE,
         var packageName: String = "com.antwerkz.sofia",
+        var generateJava: Boolean = true,
+        var generateKotlin: Boolean = false,
 //        var generateJavascript: Boolean = false,
 //        var javascriptOutputFile: File? = null,
         var bundleName: String = propertiesFile.nameWithoutExtension,
@@ -64,7 +66,6 @@ class SofiaConfig(
     }
 
     private fun loadProperties(file: File): MutableMap<String, String> {
-
         val map = TreeMap<String, String>()
         try {
             InputStreamReader(FileInputStream(file), charset).use { reader ->

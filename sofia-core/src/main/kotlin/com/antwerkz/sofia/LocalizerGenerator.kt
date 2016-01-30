@@ -8,15 +8,65 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.io.PrintWriter
 import java.io.StringWriter
-import java.util.HashMap
 
 class LocalizerGenerator(val config: SofiaConfig) {
 
+    fun write() {
+        val packagePath = config.packageName.replace('.', '/')
+        config.outputDirectory.mkdirs()
+        if (config.generateJava) {
+            generate(packagePath, "java", { generateJava() })
+        }
+        if(config.generateKotlin) {
+            generate(packagePath, "kt", { generateKotlin() })
+        }
+
+        /*
+                if (config.generateJavascript) {
+                    file = config.javascriptOutputFile!!
+                    System.out.printf("Generating javascript code in to %s\n", file)
+                    file.parentFile.mkdirs()
+                    try {
+                        PrintWriter(file, "UTF-8").use { stream ->
+                            stream.println(this.generateJavascript())
+                            stream.flush()
+                        }
+                    } catch (e: Exception) {
+                        throw RuntimeException(e.message, e)
+                    }
+
+                }
+        */
+    }
+
+    private fun generate(packagePath: String, extension: String, generate: () -> String) {
+        var file = File(config.outputDirectory, "${packagePath}/${config.className.capitalize()}.${extension}")
+        file.parentFile.mkdirs()
+        try {
+            PrintWriter(file, "UTF-8").use { stream ->
+                Template("sofia", InputStreamReader(javaClass.getResourceAsStream("/sofia-${extension}.ftl")), Configuration())
+                        .process(config, stream)
+                stream.flush()
+            }
+        } catch (e: Exception) {
+            throw RuntimeException(e.message, e)
+        }
+    }
+
     fun generateJava(): String {
         val cfg = Configuration()
-        val template = Template("sofia", InputStreamReader(javaClass.getResourceAsStream("/sofia.ftl")), cfg)
         val out = StringWriter()
-        template.process(config, out)
+        Template("sofia", InputStreamReader(javaClass.getResourceAsStream("/sofia-java.ftl")), cfg)
+                .process(config, out)
+        out.flush()
+        return out.toString()
+    }
+
+    fun generateKotlin(): String {
+        val cfg = Configuration()
+        val out = StringWriter()
+        Template("sofia", InputStreamReader(javaClass.getResourceAsStream("/sofia-kt.ftl")), cfg)
+                .process(config, out)
         out.flush()
         return out.toString()
     }
@@ -36,36 +86,6 @@ class LocalizerGenerator(val config: SofiaConfig) {
             throw RuntimeException(e.message, e)
         }
 
-    }
-
-    fun write() {
-        var file = File(config.outputDirectory, "%s/%s.java".format(config.packageName.replace('.', '/'), capitalize(config.className)))
-        file.parentFile.mkdirs()
-        try {
-            PrintWriter(file, "UTF-8").use { stream ->
-                stream.println(this.generateJava())
-                stream.flush()
-            }
-        } catch (e: Exception) {
-            throw RuntimeException(e.message, e)
-        }
-
-/*
-        if (config.generateJavascript) {
-            file = config.javascriptOutputFile!!
-            System.out.printf("Generating javascript code in to %s\n", file)
-            file.parentFile.mkdirs()
-            try {
-                PrintWriter(file, "UTF-8").use { stream ->
-                    stream.println(this.generateJavascript())
-                    stream.flush()
-                }
-            } catch (e: Exception) {
-                throw RuntimeException(e.message, e)
-            }
-
-        }
-*/
     }
 
     companion object {

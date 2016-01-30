@@ -22,6 +22,10 @@ open class SofiaMojo : AbstractMojo() {
     lateinit var packageName: String
     @Parameter(defaultValue = "jul")
     lateinit var loggingType: String
+    @Parameter(defaultValue = "true")
+    var generateJava: Boolean = true
+    @Parameter(defaultValue = "true")
+    var generateKotlin: Boolean = false
 //    @Parameter(defaultValue = "src/main/webapp/js/sofia.js")
 //    lateinit var jsOutputFile: File
 //    @Parameter(defaultValue = "false")
@@ -46,7 +50,7 @@ open class SofiaMojo : AbstractMojo() {
             throw MojoExecutionException("Missing inputFile file: " + inputFile)
         }
         val config = SofiaConfig(inputFile, outputDirectory, loadLoggingType(), packageName,
-                /*javascript, jsOutputFile, */charset = Charset.forName(charset))
+                generateJava = this.generateJava, generateKotlin = this.generateKotlin, charset = Charset.forName(charset))
         LocalizerGenerator(config).write()
     }
 

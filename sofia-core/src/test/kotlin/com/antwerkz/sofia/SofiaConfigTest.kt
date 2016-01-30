@@ -15,13 +15,14 @@ class SofiaConfigTest {
         Assert.assertEquals(sofiaConfig.findParentExtension("en"), "")
 
     }
+
     fun testProperties() {
         val properties = File("../tests/src/main/resources/sofia.properties")
-        val sofiaConfig = SofiaConfig(properties, packageName = "utils", loggingType = LoggingType.SLF4J,
-                outputDirectory = File("target/testProperties/"))
+        val sofiaConfig = SofiaConfig(properties, loggingType = LoggingType.SLF4J, generateJava = false,
+                generateKotlin = true, outputDirectory = File("../tests/target/generated-sources/sofia"))
 
         LocalizerGenerator(sofiaConfig).write()
-        val readFile = File("target/testProperties/utils/Sofia.java").readText()
-        Assert.assertTrue(readFile.contains("default String testProperty"))
+        val readFile = File("../tests/target/generated-sources/sofia/com/antwerkz/sofia/Sofia.kt").readText()
+        Assert.assertTrue(readFile.contains("fun dateProperty(arg0: java.util.Date, arg1: Number, vararg locale: Locale): String"))
     }
 }
