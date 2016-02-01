@@ -6,7 +6,7 @@ import java.text.MessageFormat
 import java.text.NumberFormat
 import java.util.ArrayList
 
-class Method(val loggingType: LoggingType, val key: String, val value: String) {
+class Method(val language: String, val loggingType: LoggingType, val key: String, val value: String) {
     var logged = java.lang.Boolean.FALSE
         private set
     var argCount: Int = 0
@@ -24,16 +24,10 @@ class Method(val loggingType: LoggingType, val key: String, val value: String) {
             logLevel = key.substring(1, key.indexOf(".")).toLowerCase()
             name = key.substring(key.indexOf(".") + 1)
         }
+        countArguments()
     }
 
-    fun getParameters(language: String): List<Pair<String, String>> {
-        arguments.clear()
-        parameters.clear()
-        countArguments(language)
-        return parameters
-    }
-
-    private fun countArguments(language: String) {
+    private fun countArguments() {
         val messageFormat = MessageFormat(value)
         val formats = messageFormat.formats
         argCount = messageFormat.formats.size
@@ -46,7 +40,7 @@ class Method(val loggingType: LoggingType, val key: String, val value: String) {
     private fun getType(language: String, format: Format?): String {
         return when (format) {
             null -> if (language == "java") "Object" else "Any"
-            is DateFormat -> "java.util.Date"
+            is DateFormat -> "Date"
             is NumberFormat -> "Number"
             else -> "Object"
         }

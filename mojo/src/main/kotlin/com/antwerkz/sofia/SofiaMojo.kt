@@ -20,6 +20,8 @@ open class SofiaMojo : AbstractMojo() {
     lateinit var inputFile: File
     @Parameter(defaultValue = "com.antwerkz.sofia")
     lateinit var packageName: String
+    @Parameter
+    var className: String? = null
     @Parameter(defaultValue = "jul")
     lateinit var loggingType: String
     @Parameter(defaultValue = "true")
@@ -50,7 +52,8 @@ open class SofiaMojo : AbstractMojo() {
             throw MojoExecutionException("Missing inputFile file: " + inputFile)
         }
         val config = SofiaConfig(inputFile, outputDirectory, loadLoggingType(), packageName,
-                generateJava = this.generateJava, generateKotlin = this.generateKotlin, charset = Charset.forName(charset))
+                generateJava = this.generateJava, generateKotlin = this.generateKotlin, className = this.className,
+                charset = Charset.forName(charset))
         LocalizerGenerator(config).write()
     }
 

@@ -3,9 +3,8 @@ import java.util.*;
 import java.text.*;
 ${loggingType.imports}
 
-object ${className?capitalize} {
-    private val logger = LoggerFactory.getLogger(${className?capitalize}::class.qualifiedName);
-
+object ${className} {
+    private val logger = LoggerFactory.getLogger("${packageName}.${className}");
     private val IMPLS = HashMap<String, Localized>()
 
     init {
@@ -32,7 +31,7 @@ object ${className?capitalize} {
     }
 
     <#list methods as method>
-    fun ${method.getMethodName()}(<#list method.getParameters("kotlin") as parameter>${parameter.second}: ${parameter.first}<#if parameter_has_next>, </#if></#list><#if method.parameters?size != 0>, </#if>vararg locale: Locale): String {
+    fun ${method.getMethodName()}(<#list method.parameters as parameter>${parameter.second}: ${parameter.first}<#if parameter_has_next>, </#if></#list><#if method.parameters?size != 0>, </#if>vararg locale: Locale): String {
     <#if method.arguments?size != 0>
         return get(*locale).${method.getMethodName()}(<#list method.arguments as argument>${argument}<#if argument_has_next>, </#if></#list>);
     <#else>
@@ -41,7 +40,7 @@ object ${className?capitalize} {
     }
 
     <#if method.logged>
-    fun ${method.getLoggerName()}(<#list method.getParameters("kotlin") as parameter>${parameter.second}: ${parameter.first}<#if parameter_has_next>, </#if></#list><#if method.parameters?size != 0>, </#if>vararg locale: Locale) {
+    fun ${method.getLoggerName()}(<#list method.parameters as parameter>${parameter.second}: ${parameter.first}<#if parameter_has_next>, </#if></#list><#if method.parameters?size != 0>, </#if>vararg locale: Locale) {
     <#if "${loggingType.name()}" == "SLF4J">
         if(logger.is${method.logLevel?cap_first}Enabled()) {
     <#elseif "${loggingType.name()}" == "JUL">
@@ -62,7 +61,7 @@ object ${className?capitalize} {
         /**
          * Generated from ${method.key}
          */
-        fun ${method.getMethodName()}(<#list method.getParameters("kotlin") as argument>${argument.second}: ${argument.first}<#if argument_has_next>, </#if></#list><#if method
+        fun ${method.getMethodName()}(<#list method.parameters as argument>${argument.second}: ${argument.first}<#if argument_has_next>, </#if></#list><#if method
         .parameters?size != 0>, </#if>vararg locale: Locale): String {
         <#if method.arguments?size != 0>
            return MessageFormat.format("${method.value}", <#list method.arguments as argument>${argument}<#if argument_has_next>, </#if></#list>);
@@ -75,17 +74,17 @@ object ${className?capitalize} {
         /**
          * Generated from ${method.key}
          */
-        fun ${method.getLoggerName()}(<#list method.getParameters("kotlin") as parameter>${parameter.second}: ${parameter.first}<#if parameter_has_next>, </#if></#list><#if method.parameters?size != 0>, </#if>vararg locale: Locale) {
+        fun ${method.getLoggerName()}(<#list method.parameters as parameter>${parameter.second}: ${parameter.first}<#if parameter_has_next>, </#if></#list><#if method.parameters?size != 0>, </#if>vararg locale: Locale) {
         <#if "${loggingType.name()}" == "SLF4J">
-           if(${className?capitalize}.logger.is${method.logLevel?cap_first}Enabled()) {
+           if(${className}.logger.is${method.logLevel?cap_first}Enabled()) {
         <#elseif "${loggingType.name()}" == "JUL">
-           if(${className?capitalize}.logger.isLoggable(Level.${method.logLevel?upper_case})) {
+           if(${className}.logger.isLoggable(Level.${method.logLevel?upper_case})) {
         </#if>
               <#if method.arguments?size != 0>
-               ${className?capitalize}.logger.${method.logLevel}(${method.getMethodName()}(<#list method.arguments as
+               ${className}.logger.${method.logLevel}(${method.getMethodName()}(<#list method.arguments as
                argument>${argument}<#if argument_has_next>, </#if></#list>, *locale));
                <#else>
-               ${className?capitalize}.logger.${method.logLevel}(${method.getMethodName()}(*locale));
+               ${className}.logger.${method.logLevel}(${method.getMethodName()}(*locale));
                </#if>
            }
         }
@@ -96,7 +95,7 @@ object ${className?capitalize} {
 
     <#macro impl methods genLogged>
        <#list methods as method>
-        <#if !genLogged>override </#if>fun ${method.getMethodName()}(<#list method.getParameters("kotlin") as parameter>${parameter.second}: ${parameter.first}<#if parameter_has_next>, </#if></#list><#if method .parameters?size != 0>, </#if>vararg locale: Locale): String {
+        <#if !genLogged>override </#if>fun ${method.getMethodName()}(<#list method.parameters as parameter>${parameter.second}: ${parameter.first}<#if parameter_has_next>, </#if></#list><#if method .parameters?size != 0>, </#if>vararg locale: Locale): String {
         <#if method.arguments?size != 0>
             return MessageFormat.format("${method.value}", <#list method.arguments as argument>${argument}<#if argument_has_next>, </#if></#list>);
         <#else>
@@ -105,16 +104,16 @@ object ${className?capitalize} {
         }
 
         <#if genLogged && method.logged>
-        fun ${method.getLoggerName()}(<#list method.getParameters("kotlin") as parameter>${parameter.second}: ${parameter.first}<#if parameter_has_next>, </#if></#list><#if method.parameters?size != 0>, </#if>Locale... locale) {
+        fun ${method.getLoggerName()}(<#list method.parameters as parameter>${parameter.second}: ${parameter.first}<#if parameter_has_next>, </#if></#list><#if method.parameters?size != 0>, </#if>Locale... locale) {
         <#if "${loggingType.name()}" == "SLF4J">
-            if(${className?capitalize}.logger.is${method.logLevel?cap_first}Enabled()) {
+            if(${className}.logger.is${method.logLevel?cap_first}Enabled()) {
         <#elseif "${loggingType.name()}" == "JUL">
-            if(${className?capitalize}.logger.isLoggable(Level.${method.logLevel?upper_case})) {
+            if(${className}.logger.isLoggable(Level.${method.logLevel?upper_case})) {
         </#if>
                <#if method.arguments?size != 0>
-                ${className?capitalize}.logger.${method.logLevel}(${method.getMethodName()}(<#list method.arguments as argument>${argument}<#if argument_has_next>, </#if></#list>, locale));
+                ${className}.logger.${method.logLevel}(${method.getMethodName()}(<#list method.arguments as argument>${argument}<#if argument_has_next>, </#if></#list>, locale));
                 <#else>
-                ${className?capitalize}.logger.${method.logLevel}(${method.getMethodName()}(locale));
+                ${className}.logger.${method.logLevel}(${method.getMethodName()}(locale));
                 </#if>
             }
         }

@@ -7,7 +7,7 @@ import java.io.File
 @Test
 class SofiaConfigTest {
     fun parentBundles() {
-        val properties = File("../tests/src/main/resources/sofia.properties")
+        val properties = File("../tests/kotlin/src/main/resources/sofia.properties")
         val sofiaConfig = SofiaConfig(properties, packageName = "utils", loggingType = LoggingType.SLF4J,
                 outputDirectory = File("target/testProperties/"))
 
@@ -16,13 +16,24 @@ class SofiaConfigTest {
 
     }
 
-    fun testProperties() {
-        val properties = File("../tests/src/main/resources/sofia.properties")
+    fun testKotlin() {
+        val properties = File("../tests/kotlin/src/main/resources/sofia.properties")
         val sofiaConfig = SofiaConfig(properties, loggingType = LoggingType.SLF4J, generateJava = false,
-                generateKotlin = true, outputDirectory = File("../tests/target/generated-sources/sofia"))
+                generateKotlin = true, outputDirectory = File("../tests/kotlin/target/generated-sources/sofia"))
 
         LocalizerGenerator(sofiaConfig).write()
-        val readFile = File("../tests/target/generated-sources/sofia/com/antwerkz/sofia/Sofia.kt").readText()
-        Assert.assertTrue(readFile.contains("fun dateProperty(arg0: java.util.Date, arg1: Number, vararg locale: Locale): String"))
+        val readFile = File("../tests/kotlin/target/generated-sources/sofia/com/antwerkz/sofia/Sofia.kt").readText()
+        Assert.assertTrue(readFile.contains("fun dateProperty(arg0: Date, arg1: Number, vararg locale: Locale): String"))
+    }
+
+    fun testJava() {
+        val properties = File("../tests/kotlin/src/main/resources/sofia.properties")
+        val sofiaConfig = SofiaConfig(properties, loggingType = LoggingType.SLF4J, className = "SofiaJava",
+                outputDirectory = File("../tests/java/target/generated-sources/sofia"))
+
+        Assert.assertEquals(sofiaConfig.className, "SofiaJava")
+        LocalizerGenerator(sofiaConfig).write()
+        val readFile = File("../tests/java/target/generated-sources/sofia/com/antwerkz/sofia/SofiaJava.java").readText()
+        Assert.assertTrue(readFile.contains("public String dateProperty(Date arg0"))
     }
 }

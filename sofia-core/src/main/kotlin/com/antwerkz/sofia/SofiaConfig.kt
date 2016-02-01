@@ -20,13 +20,19 @@ class SofiaConfig(
 //        var generateJavascript: Boolean = false,
 //        var javascriptOutputFile: File? = null,
         var bundleName: String = propertiesFile.nameWithoutExtension,
+        var className: String? = bundleName.capitalize(),
         var charset: Charset = Charset.forName("ISO-8859-1")) {
 
     var bundles: MutableMap<String, List<Method>> = sortedMapOf()
     val methods: List<Method>
-    var className: String = bundleName.capitalize()
+    private val language: String = when {
+        generateJava -> "java"
+        generateKotlin -> "kotlin"
+        else -> throw RuntimeException("Either 'java' or 'kotlin' must be selected to generate")
+    }
 
     init {
+        className = className ?: bundleName.capitalize()
         methods = mapMethods(loadProperties(propertiesFile))
         discoverBundles(propertiesFile)
     }
@@ -42,7 +48,7 @@ class SofiaConfig(
     private fun mapMethods(map: MutableMap<String, String>): ArrayList<Method> {
         val list = ArrayList<Method>()
         for (entry in map.entries) {
-            val method = Method(loggingType, entry.key, entry.value)
+            val method = Method(language, loggingType, entry.key, entry.value)
             list.add(method)
             if (method.logged && !loggingType.loggingLevels.contains(method.logLevel!!)) {
                 throw IllegalArgumentException("Invalid logging level '${method.logLevel}' for logging type '${loggingType}'")
