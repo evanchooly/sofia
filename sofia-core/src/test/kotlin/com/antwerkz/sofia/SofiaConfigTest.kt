@@ -23,7 +23,7 @@ class SofiaConfigTest {
 
         LocalizerGenerator(sofiaConfig).write()
         val readFile = File("../tests/kotlin/target/generated-sources/sofia/com/antwerkz/sofia/Sofia.kt").readText()
-        Assert.assertTrue(readFile.contains("fun dateProperty(arg0: Date, arg1: Number, vararg locale: Locale): String"))
+        Assert.assertTrue(readFile.contains("fun dateProperty(arg0: Date, arg1: Number, locale: Locale? = null): String"))
     }
 
     fun testJava() {

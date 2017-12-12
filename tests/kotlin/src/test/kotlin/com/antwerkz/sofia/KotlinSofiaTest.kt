@@ -3,16 +3,14 @@ package com.antwerkz.sofia
 import org.apache.commons.io.FileUtils
 import org.testng.Assert
 import org.testng.annotations.Test
-
 import java.io.File
 import java.io.FileInputStream
-import java.io.IOException
 import java.util.Date
 import java.util.Locale
 import java.util.logging.LogManager
 
 @Test
-class SofiaTest {
+class KotlinSofiaTest {
     fun simple() {
         Assert.assertEquals(Sofia.testProperty(), "I'm the first test property")
         Assert.assertEquals(Sofia.lonely(), "I'm only in the default bundle.")
@@ -29,9 +27,8 @@ class SofiaTest {
                 "I need two parameters bob and alice")
         Assert.assertEquals(Sofia.parameterizedPropertyLongName("bob", "alice", Locale.GERMAN),
                 "I need zwei parameters bob and alice")
-        var message = Sofia.dateProperty(Date(), 2)
+        val message = Sofia.dateProperty(Date(), 2)
         Assert.assertTrue(message.contains("Today's date"), message)
-        message = Sofia.dateProperty2(Date(), 2)
         LogManager.getLogManager().readConfiguration(FileInputStream("src/test/resources/logging.properties"))
         Sofia.logMe()
         Sofia.logMe(Locale.GERMAN)

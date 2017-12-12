@@ -6,11 +6,11 @@ enum class LoggingType {
     NONE {
         override val imports = ""
 
-        override val loggingLevels: Array<String> = arrayOf()
+        override val loggingLevels = listOf<String>()
     },
 
     SLF4J {
-        override val loggingLevels = arrayOf("error", "debug", "warn", "info")
+        override val loggingLevels = listOf("error", "debug", "warn", "info")
 
         override val imports = "import org.slf4j.*;"
     },
@@ -21,10 +21,10 @@ enum class LoggingType {
         override val loggingLevels = listOf(Level.ALL, Level.SEVERE, Level.WARNING, Level.INFO,
                 Level.CONFIG, Level.FINE, Level.FINER, Level.FINEST)
                 .map { it.toString().toLowerCase() }
-                .toTypedArray()
+                .toList()
     };
 
-    abstract val loggingLevels: Array<String>
+    abstract val loggingLevels: List<String>
 
     abstract val imports: String
 }

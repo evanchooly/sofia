@@ -4,10 +4,9 @@ import freemarker.template.Configuration
 import freemarker.template.Template
 import java.io.File
 import java.io.InputStreamReader
-import java.io.PrintWriter
 import java.io.StringWriter
 
-class LocalizerGenerator(val config: SofiaConfig) {
+class LocalizerGenerator(val config: SofiaConfig)  {
 
     fun write() {
         val packagePath = config.packageName.replace('.', '/')
@@ -37,12 +36,13 @@ class LocalizerGenerator(val config: SofiaConfig) {
     }
 
     private fun generate(packagePath: String, extension: String) {
-        var file = File(config.outputDirectory, "${packagePath}/${config.className}.${extension}")
+        val file = File(config.outputDirectory, "${packagePath}/${config.className}.${extension}")
         file.parentFile.mkdirs()
         val string = StringWriter()
-        Template("sofia", InputStreamReader(javaClass.getResourceAsStream("/sofia-${extension}.ftl")), Configuration())
-                .process(config, string)
-        file.writeText(string.toString(), "UTF-8")
+        val template = Template("sofia", InputStreamReader(javaClass.getResourceAsStream("/sofia-${extension}.ftl")), Configuration())
+
+        template.process(config, string)
+        file.writeText(string.toString(), charset("UTF-8"))
     }
 
     companion object {

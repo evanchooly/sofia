@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <properties>
-        <kotlin.version>1.0.0-beta-4589</kotlin.version>
-    </properties>
 
     <parent>
         <groupId>com.antwerkz.sofia</groupId>
         <artifactId>tests</artifactId>
-        <version>0.17-SNAPSHOT</version>
+        <version>0.16-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>java-tests</artifactId>
-    <version>0.17-SNAPSHOT</version>
+    <version>0.16-SNAPSHOT</version>
 
     <build>
         <defaultGoal>test</defaultGoal>
@@ -40,8 +38,7 @@
                             <inputFile>../kotlin/src/main/resources/sofia.properties</inputFile>
                             <className>SofiaJava</className>
                             <loggingType>slf4j</loggingType>
-                            <generateJava>true</generateJava>
-                            <generateKotlin>false</generateKotlin>
+                            <outputType>java</outputType>
                         </configuration>
                     </execution>
                 </executions>

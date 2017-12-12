@@ -12,7 +12,7 @@ import java.util.Locale;
 import java.util.logging.LogManager;
 
 @Test
-public class SofiaTest {
+public class JavaSofiaTest {
     public void simple() throws IOException {
         Assert.assertEquals(SofiaJava.testProperty(), "I'm the first test property");
         Assert.assertEquals(SofiaJava.lonely(), "I'm only in the default bundle.");

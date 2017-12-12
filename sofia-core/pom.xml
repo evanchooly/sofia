@@ -1,16 +1,17 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>com.antwerkz.sofia</groupId>
         <artifactId>sofia-parent</artifactId>
-        <version>0.17-SNAPSHOT</version>
+        <version>0.16-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>sofia-core</artifactId>
     <packaging>jar</packaging>
-    <version>0.17-SNAPSHOT</version>
+    <version>0.16-SNAPSHOT</version>
     <name>Sofia Core</name>
     <url>https://github.com/evanchooly/sofia</url>
 
@@ -36,6 +37,22 @@
                         <goals>
                             <goal>test-compile</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.jetbrains.dokka</groupId>
+                <artifactId>dokka-maven-plugin</artifactId>
+                <version>${dokka.version}</version>
+                <executions>
+                    <execution>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>dokka</goal>
+                        </goals>
+                        <configuration>
+                            <outputFormat>javadoc</outputFormat>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
