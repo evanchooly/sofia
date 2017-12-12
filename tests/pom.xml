@@ -5,11 +5,11 @@
     <parent>
         <groupId>com.antwerkz.sofia</groupId>
         <artifactId>sofia-parent</artifactId>
-        <version>0.17-SNAPSHOT</version>
+        <version>0.17</version>
     </parent>
 
     <artifactId>tests</artifactId>
-    <version>0.17-SNAPSHOT</version>
+    <version>0.17</version>
     <packaging>pom</packaging>
 
     <modules>
