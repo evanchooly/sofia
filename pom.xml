@@ -8,7 +8,7 @@
     </parent>
 
     <groupId>com.antwerkz.sofia</groupId>
-    <artifactId>sofia-parent</artifactId>
+    <artifactId>sofia</artifactId>
     <version>0.18-SNAPSHOT</version>
     <name>Sofia</name>
     <url>https://github.com/evanchooly/sofia</url>
