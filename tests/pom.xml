@@ -6,6 +6,7 @@
         <groupId>com.antwerkz.sofia</groupId>
         <artifactId>sofia</artifactId>
         <version>0.18-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>tests</artifactId>
