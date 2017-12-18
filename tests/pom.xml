@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.antwerkz.sofia</groupId>
         <artifactId>sofia</artifactId>
-        <version>0.19-SNAPSHOT</version>
+        <version>0.19</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>tests</artifactId>
-    <version>0.19-SNAPSHOT</version>
+    <version>0.19</version>
     <packaging>pom</packaging>
 
     <modules>

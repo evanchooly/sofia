@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.antwerkz.sofia</groupId>
         <artifactId>tests</artifactId>
-        <version>0.19-SNAPSHOT</version>
+        <version>0.19</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>java-tests</artifactId>
-    <version>0.19-SNAPSHOT</version>
+    <version>0.19</version>
 
     <build>
         <defaultGoal>test</defaultGoal>
