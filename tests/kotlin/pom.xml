@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.antwerkz.sofia</groupId>
         <artifactId>tests</artifactId>
-        <version>0.20-SNAPSHOT</version>
+        <version>0.20</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>kotlin-tests</artifactId>
-    <version>0.20-SNAPSHOT</version>
+    <version>0.20</version>
     <packaging>jar</packaging>
 
     <build>
