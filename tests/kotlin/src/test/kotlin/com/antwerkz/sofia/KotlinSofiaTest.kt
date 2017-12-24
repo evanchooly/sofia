@@ -37,6 +37,11 @@ class KotlinSofiaTest {
         Assert.assertTrue(s.contains("I'm just a warning, though."))
         Assert.assertTrue(s.contains("Ich bin nur eine Warnung, wenn."))
         file.delete()
+
+        Assert.assertEquals(SofiaKotlin.quoted(),
+                """"To be or not to be.  That is the question," said an overly wrought Hamlet.""")
+        Assert.assertEquals(SofiaKotlin.quoted2("stuff"),
+                """But sometimes one needs to "quote" stuff in the middle, too.""")
     }
 
     fun inheritance() {

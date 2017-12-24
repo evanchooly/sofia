@@ -103,9 +103,9 @@ class LocalizerGenerator(val config: SofiaConfig) {
         function.body =
                 if (method.parameters.isNotEmpty()) {
                     val arguments = method.arguments.joinToString(", ")
-                    """return MessageFormat.format("${method.value}", $arguments)"""
+                    """return MessageFormat.format("${'"'}"${method.value}"${'"'}", $arguments)"""
                 } else {
-                    """return "${method.value}""""
+                    """return "${'"'}"${method.value}"${'"'}""""
                 }
     }
 
