@@ -64,10 +64,11 @@ public class ${className} {
          * Generated from ${method.key}
          */
         default String ${method.getMethodName()}(<#list method.parameters as argument>${argument.first} ${argument.second}<#if argument_has_next>, </#if></#list><#if method.parameters?size != 0>, </#if>Locale... locale) {
+        <#assign value = method.value?replace("\"", "\\\"") >
         <#if method.arguments?size != 0>
-           return MessageFormat.format("${method.value}", <#list method.arguments as argument>${argument}<#if argument_has_next>, </#if></#list>);
+           return MessageFormat.format("${value}", <#list method.arguments as argument>${argument}<#if argument_has_next>, </#if></#list>);
         <#else>
-           return "${method.value}";
+           return "${value}";
         </#if>
         }
 
@@ -96,10 +97,11 @@ public class ${className} {
     <#macro impl methods genLogged>
        <#list methods as method>
         public String ${method.getMethodName()}(<#list method.parameters as argument>${argument.first} ${argument.second}<#if argument_has_next>, </#if></#list><#if method.parameters?size != 0>, </#if>Locale... locale) {
+        <#assign value = method.value?replace("\"", "\\\"") >
         <#if method.arguments?size != 0>
-            return MessageFormat.format("${method.value}", <#list method.arguments as argument>${argument}<#if argument_has_next>, </#if></#list>);
+            return MessageFormat.format("${value}", <#list method.arguments as argument>${argument}<#if argument_has_next>, </#if></#list>);
         <#else>
-            return "${method.value}";
+            return "${value}";
         </#if>
         }
 

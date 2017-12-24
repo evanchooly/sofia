@@ -32,14 +32,14 @@
                         <goals>
                             <goal>generate</goal>
                         </goals>
-                        <configuration>
-                            <inputFile>../kotlin/src/main/resources/sofia.properties</inputFile>
-                            <className>SofiaJava</className>
-                            <loggingType>slf4j</loggingType>
-                            <outputType>java</outputType>
-                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <inputFile>../kotlin/src/main/resources/sofia.properties</inputFile>
+                    <className>SofiaJava</className>
+                    <loggingType>slf4j</loggingType>
+                    <outputType>java</outputType>
+                </configuration>
             </plugin>
         </plugins>
     </build>
