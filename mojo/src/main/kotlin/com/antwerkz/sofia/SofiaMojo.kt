@@ -51,7 +51,7 @@ open class SofiaMojo : AbstractMojo() {
         }
         val config = SofiaConfig(inputFile, outputDirectory, loadLoggingType(), packageName,
                 generateJava = this.outputType == "java", generateKotlin = this.outputType == "kotlin",
-                className = this.className, charset = Charset.forName(charset))
+                className = this.className ?: inputFile.nameWithoutExtension.capitalize(), charset = Charset.forName(charset))
         LocalizerGenerator(config).write()
     }
 

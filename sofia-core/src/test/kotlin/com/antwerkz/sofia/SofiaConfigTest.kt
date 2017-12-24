@@ -19,10 +19,10 @@ class SofiaConfigTest {
     fun testKotlin() {
         val properties = File("../tests/kotlin/src/main/resources/sofia.properties")
         val sofiaConfig = SofiaConfig(properties, loggingType = LoggingType.SLF4J, generateJava = false,
-                generateKotlin = true, outputDirectory = File("../tests/kotlin/target/generated-sources/sofia"))
+                generateKotlin = true, outputDirectory = File("target/generated-sources/sofia"))
 
         LocalizerGenerator(sofiaConfig).write()
-        val readFile = File("../tests/kotlin/target/generated-sources/sofia/com/antwerkz/sofia/Sofia.kt").readText()
+        val readFile = File("target/generated-sources/sofia/com/antwerkz/sofia/Sofia.kt").readText()
         Assert.assertTrue(readFile.contains("fun dateProperty(arg0: Date, arg1: Number, locale: Locale? = null): String"))
     }
 

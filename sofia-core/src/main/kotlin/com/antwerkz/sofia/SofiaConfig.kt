@@ -20,7 +20,7 @@ class SofiaConfig(
 //        var generateJavascript: Boolean = false,
 //        var javascriptOutputFile: File? = null,
         var bundleName: String = propertiesFile.nameWithoutExtension,
-        var className: String? = bundleName.capitalize(),
+        var className: String = bundleName.capitalize(),
         var charset: Charset = Charset.forName("ISO-8859-1")) {
 
     var bundles: MutableMap<String, List<Method>> = sortedMapOf()
@@ -32,7 +32,6 @@ class SofiaConfig(
     }
 
     init {
-        className = className ?: bundleName.capitalize()
         methods = mapMethods(loadProperties(propertiesFile))
         discoverBundles(propertiesFile)
     }
@@ -41,8 +40,8 @@ class SofiaConfig(
         var parent = bundle
         do {
             parent = parent.split("_").dropLast(1).joinToString("_")
-        } while (bundles.get(parent) == null && parent != "")
-        return if (parent == "") parent else "_${parent}"
+        } while (bundles[parent] == null && parent != "")
+        return if (parent == "") parent else "_$parent"
     }
 
     private fun mapMethods(map: MutableMap<String, String>): ArrayList<Method> {
@@ -51,7 +50,7 @@ class SofiaConfig(
             val method = Method(language, loggingType, entry.key, entry.value)
             list.add(method)
             if (method.logged && !loggingType.loggingLevels.contains(method.logLevel!!)) {
-                throw IllegalArgumentException("Invalid logging level '${method.logLevel}' for logging type '${loggingType}'")
+                throw IllegalArgumentException("Invalid logging level '${method.logLevel}' for logging type '$loggingType'")
             }
         }
         return list

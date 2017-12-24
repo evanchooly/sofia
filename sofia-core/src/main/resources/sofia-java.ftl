@@ -1,7 +1,9 @@
 package ${packageName};
 import java.util.*;
 import java.text.*;
-${loggingType.imports}
+<#list loggingType.imports as import>
+import ${import};
+</#list>
 
 public class ${className} {
     private static final Logger logger = LoggerFactory.getLogger("${packageName}.${className}");

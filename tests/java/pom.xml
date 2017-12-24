@@ -10,7 +10,6 @@
     </parent>
 
     <artifactId>java-tests</artifactId>
-    <version>0.21-SNAPSHOT</version>
 
     <build>
         <defaultGoal>test</defaultGoal>

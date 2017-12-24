@@ -3,20 +3,16 @@ package com.antwerkz.sofia
 import java.util.logging.Level
 
 enum class LoggingType {
-    NONE {
-        override val imports = ""
-
-        override val loggingLevels = listOf<String>()
-    },
+    NONE,
 
     SLF4J {
         override val loggingLevels = listOf("error", "debug", "warn", "info")
 
-        override val imports = "import org.slf4j.*;"
+        override val imports =  listOf("org.slf4j.Logger", "org.slf4j.LoggerFactory")
     },
 
     JUL {
-        override val imports = "import java.util.logging.*;"
+        override val imports = listOf("java.util.logging.Logger")
 
         override val loggingLevels = listOf(Level.ALL, Level.SEVERE, Level.WARNING, Level.INFO,
                 Level.CONFIG, Level.FINE, Level.FINER, Level.FINEST)
@@ -24,7 +20,7 @@ enum class LoggingType {
                 .toList()
     };
 
-    abstract val loggingLevels: List<String>
+    open val loggingLevels: List<String> = emptyList()
 
-    abstract val imports: String
+    open val imports: List<String> = emptyList()
 }

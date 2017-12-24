@@ -10,7 +10,6 @@
     </parent>
 
     <artifactId>tests</artifactId>
-    <version>0.21-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>

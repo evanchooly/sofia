@@ -10,7 +10,6 @@
     </parent>
 
     <artifactId>kotlin-tests</artifactId>
-    <version>0.21-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <build>
@@ -51,6 +50,7 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <className>SofiaKotlin</className>
                     <loggingType>slf4j</loggingType>
                     <outputType>kotlin</outputType>
                 </configuration>
