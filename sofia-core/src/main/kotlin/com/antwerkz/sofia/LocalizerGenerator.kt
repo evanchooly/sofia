@@ -126,6 +126,7 @@ class LocalizerGenerator(val config: SofiaConfig) {
     private fun addMethods(sofia: FunctionHolder, it: Method, isOverride: Boolean = false) {
         val function = sofia.addFunction(it.methodName, "String")
         function.overriding = isOverride
+        function.addAnnotation("kotlin.jvm.JvmOverloads")
         it.parameters.forEach { param ->
             function.addParameter(param.second, param.first)
         }
@@ -134,6 +135,7 @@ class LocalizerGenerator(val config: SofiaConfig) {
 
         if (!isOverride && it.logged) {
             val logged = sofia.addFunction(it.loggerName)
+            logged.addAnnotation("kotlin.jvm.JvmOverloads")
             it.parameters.forEach { param ->
                 logged.addParameter(param.second, param.first)
             }
