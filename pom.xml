@@ -22,9 +22,9 @@
     </scm>
 
     <properties>
-        <maven.version>3.2.3</maven.version>
-        <kotlin.version>1.2.10</kotlin.version>
-        <dokka.version>0.9.13</dokka.version>
+        <maven.version>3.6.2</maven.version>
+        <kotlin.version>1.3.72</kotlin.version>
+        <dokka.version>0.10.1</dokka.version>
     </properties>
 
     <pluginRepositories>
@@ -153,7 +153,7 @@
         <dependencies>
             <dependency>
                 <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-stdlib-jre8</artifactId>
+                <artifactId>kotlin-stdlib</artifactId>
                 <version>${kotlin.version}</version>
             </dependency>
             <dependency>
