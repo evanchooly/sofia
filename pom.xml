@@ -24,7 +24,7 @@
     <properties>
         <maven.version>3.6.2</maven.version>
         <kotlin.version>1.6.0</kotlin.version>
-        <dokka.version>0.10.1</dokka.version>
+        <dokka.version>1.8.10</dokka.version>
     </properties>
 
     <pluginRepositories>
