@@ -1,26 +1,28 @@
-# This workflow will build a Java project with Maven
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
-
-name: Tests
+name: Build Project
 
 on:
   push:
-  pull_request:
+    branches-ignore:
+      - 'dependabot/**'
+    tags-ignore:
+      - r[0-9]*
+  workflow_dispatch:
 
 jobs:
-  sofia:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up JDK 11
-        uses: actions/setup-java@v1
-        with:
-          java-version: 11
-      - name: Cache Maven packages
-        uses: actions/cache@v1
-        with:
-          path: ~/.m2
-          key: \${{ runner.os }}-m2-\${{ hashFiles('**/pom.xml') }}
-          restore-keys: \${{ runner.os }}-m2
-      - name: Build with Maven
-        run: mvn -B verify --file pom.xml
+  Build:
+    uses: evanchooly/workflows/.github/workflows/build.yml@master
+    with:
+      java: 20
+
+  Snapshots:
+    if: github.ref_type == 'branch'
+    needs:
+      - Test
+    uses: evanchooly/workflows/.github/workflows/release.yml@master
+    secrets:
+      SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+      SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+      MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+      GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+      GH_TOKEN: ${{ secrets.GH_OAUTH }}
+
