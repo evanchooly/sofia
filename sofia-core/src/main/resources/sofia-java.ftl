@@ -52,14 +52,17 @@ public class ${className} {
     <#elseif "${loggingType.name()}" == "JUL">
         if(logger.isLoggable(Level.${method.logLevel?upper_case})) {
     </#if>
-        <#if method.logOnce>
-            if(loggedMessages.add("logAnother")) {
-        </#if>
         <#if method.arguments?size != 0>
-            logger.${method.logLevel}(${method.getMethodName()}(<#list method.arguments as argument>${argument}<#if argument_has_next>, </#if></#list>, locale));
-            <#else>
-            logger.${method.logLevel}(${method.getMethodName()}(locale));
-            </#if>
+            var message = ${method.getMethodName()}(<#list method.arguments as argument>${argument}<#if argument_has_next>, </#if></#list>, locale);
+        <#else>
+            var message = ${method.getMethodName()}(locale);
+        </#if>
+        <#if method.logOnce>
+            if(loggedMessages.add(message)) {
+        </#if>
+
+            logger.${method.logLevel}(message);
+
         <#if method.logOnce>
             }
         </#if>

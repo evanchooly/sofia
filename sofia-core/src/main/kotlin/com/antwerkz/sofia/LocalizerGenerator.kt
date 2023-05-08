@@ -186,10 +186,11 @@ class LocalizerGenerator(val config: SofiaConfig) {
                 SLF4J -> "if(logger.is${method.logLevel!!.capitalizeFirstLetter()}Enabled())"
                 else -> "if(logger.isLoggable(Level.${method.logLevel?.uppercase(Locale.getDefault())}))"
             })
+            logged.addStatement("val message = ${method.methodName}(${(method.arguments + "locale").joinToString(", ")})")
             if (method.logOnce) {
-                logged.beginControlFlow("if(loggedMessages.add(\"${loggerName}\"))")
+                logged.beginControlFlow("if(loggedMessages.add(message))")
             }
-            logged.addStatement("return logger.${method.logLevel}(${method.methodName}(${(method.arguments + "locale").joinToString(", ")}))")
+            logged.addStatement("logger.${method.logLevel}(message)")
             if (method.logOnce) {
                 logged.endControlFlow()
             }
