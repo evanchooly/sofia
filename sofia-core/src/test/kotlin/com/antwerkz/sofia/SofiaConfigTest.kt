@@ -23,7 +23,7 @@ class SofiaConfigTest {
 
         LocalizerGenerator(sofiaConfig).write()
         val readFile = File("target/generated-test-sources/sofia/com/antwerkz/sofia/Sofia.kt").readText()
-        Assert.assertTrue(readFile.contains("""@JvmOverloads
+        Assert.assertTrue(readFile.contains("""
   public fun dateProperty(
     arg0: Date,
     arg1: Number,

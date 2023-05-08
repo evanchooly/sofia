@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>target/sofia.log</file>
+
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{40} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="warn" additivity="false">
+        <appender-ref ref="FILE"/>
+    </root>
+
+    <logger name="com.antwerkz" level="info" additivity="false">
+        <appender-ref ref="FILE" />
+    </logger>
+
+</configuration>

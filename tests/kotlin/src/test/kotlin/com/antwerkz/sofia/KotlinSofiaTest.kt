@@ -1,13 +1,11 @@
 package com.antwerkz.sofia
 
-import org.apache.commons.io.FileUtils
-import org.testng.Assert
-import org.testng.annotations.Test
 import java.io.File
-import java.io.FileInputStream
+import java.util.Arrays
 import java.util.Date
 import java.util.Locale
-import java.util.logging.LogManager
+import org.testng.Assert
+import org.testng.annotations.Test
 
 @Test
 class KotlinSofiaTest {
@@ -29,11 +27,16 @@ class KotlinSofiaTest {
                 "I need zwei parameters bob and alice")
         val message = SofiaKotlin.dateProperty(Date(), 2)
         Assert.assertTrue(message.contains("Today's date"), "Could not find text in $message")
-        LogManager.getLogManager().readConfiguration(FileInputStream("src/test/resources/logging.properties"))
+        SofiaKotlin.logAnother()
+        SofiaKotlin.logAnother()
+        SofiaKotlin.logAnother()
+        SofiaKotlin.logAnother()
+        SofiaKotlin.logAnother()
         SofiaKotlin.logMe()
         SofiaKotlin.logMe(Locale.GERMAN)
-        val file = File("/tmp/sofia.log")
-        val s = FileUtils.readFileToString(file)
+        val file = File("target/sofia.log")
+        val s = file.readText()
+        Assert.assertFalse(s.isEmpty())
         Assert.assertTrue(s.contains("I'm just a warning, though."))
         Assert.assertTrue(s.contains("Ich bin nur eine Warnung, wenn."))
         file.delete()
@@ -42,6 +45,11 @@ class KotlinSofiaTest {
                 """"To be or not to be.  That is the question," said an overly wrought Hamlet.""")
         Assert.assertEquals(SofiaKotlin.quoted2("stuff"),
                 """But sometimes one needs to "quote" stuff in the middle, too.""")
+        val split = s.split("\n")
+        val count = split
+            .count { line -> line.endsWith(" - I'm an error") }
+
+        Assert.assertEquals(count, 1, "Should find the log message only once.")
     }
 
     fun inheritance() {

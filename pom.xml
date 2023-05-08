@@ -22,9 +22,11 @@
     </scm>
 
     <properties>
-        <maven.version>3.9.0</maven.version>
-        <kotlin.version>1.8.20</kotlin.version>
         <dokka.version>1.8.20</dokka.version>
+        <kotlin.version>1.8.20</kotlin.version>
+        <logback.version>1.4.7</logback.version>
+
+        <maven.version>3.9.0</maven.version>
     </properties>
 
     <build>
@@ -163,6 +165,11 @@
                 <version>2.3.32</version>
             </dependency>
             <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.12.0</version>
+            </dependency>
+            <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>2.0.7</version>
@@ -174,6 +181,13 @@
                 <version>7.7.1</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+                <scope>test</scope>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 </project>

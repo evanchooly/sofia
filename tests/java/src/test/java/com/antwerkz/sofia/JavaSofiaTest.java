@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 import java.util.logging.LogManager;
@@ -31,15 +32,21 @@ public class JavaSofiaTest {
                 "I need zwei parameters bob and alice");
         String message = SofiaJava.dateProperty(new Date(), 2);
         Assert.assertTrue(message.contains("Today's date"), message);
-        message = SofiaJava.dateProperty2(new Date(), 2);
-        LogManager.getLogManager().readConfiguration(new FileInputStream("../kotlin/src/test/resources/logging.properties"));
+        SofiaJava.logAnother();
+        SofiaJava.logAnother();
+        SofiaJava.logAnother();
+        SofiaJava.logAnother();
         SofiaJava.logMe();
         SofiaJava.logMe(Locale.GERMAN);
-        final File file = new File("/tmp/sofia.log");
+        final File file = new File("target/sofia.log");
         String s = FileUtils.readFileToString(file);
+        file.delete();
         Assert.assertTrue(s.contains("I'm just a warning, though."));
         Assert.assertTrue(s.contains("Ich bin nur eine Warnung, wenn."));
-        file.delete();
+        long count = Arrays.stream(s.split("\\n"))
+                           .filter(line -> line.endsWith(" - I'm an error"))
+                           .count();
+        Assert.assertEquals(count, 1, "Should find the log message only once.");
     }
 
     public void inheritance()

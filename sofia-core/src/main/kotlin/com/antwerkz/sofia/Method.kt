@@ -4,9 +4,10 @@ import java.text.DateFormat
 import java.text.Format
 import java.text.MessageFormat
 import java.text.NumberFormat
-import java.util.ArrayList
+import java.util.Locale
 
 class Method(val language: String, val loggingType: LoggingType, val key: String, val value: String) {
+    var logOnce: Boolean = false
     var logged = java.lang.Boolean.FALSE
         private set
     var argCount: Int = 0
@@ -21,7 +22,12 @@ class Method(val language: String, val loggingType: LoggingType, val key: String
         name = key
         if (key.startsWith("@")) {
             logged = java.lang.Boolean.TRUE
-            logLevel = key.substring(1, key.indexOf(".")).toLowerCase()
+            var level = key.substring(1, key.indexOf(".")).lowercase(Locale.getDefault())
+            if (level.endsWith("[once]") ?: false) {
+                logOnce = true
+                level = level.dropLast(6)
+            }
+            logLevel = level
             name = key.substring(key.indexOf(".") + 1)
         }
         countArguments()
@@ -59,7 +65,9 @@ class Method(val language: String, val loggingType: LoggingType, val key: String
 
     val loggerName: String
         get() {
-            val parts = name.split("\\.".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
+            val parts = name.split("\\.".toRegex())
+                .dropLastWhile { it.isEmpty() }
+                .toTypedArray()
             val name = StringBuilder()
             name.append("log")
             for (part in parts) {

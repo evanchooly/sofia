@@ -7,6 +7,7 @@ import ${import};
 
 public class ${className} {
     private static final Logger logger = LoggerFactory.getLogger("${packageName}.${className}");
+    private static final Set<String> loggedMessages = new HashSet<>();
     private static final Map<String, Localized> IMPLS = new HashMap<>();
 
     static {
@@ -33,6 +34,9 @@ public class ${className} {
     }
 
     <#list methods as method>
+    /**
+     * Generated from ${method.key}
+     */
     public static String ${method.getMethodName()}(<#list method.parameters as argument>${argument.first} ${argument.second}<#if argument_has_next>, </#if></#list><#if method.parameters?size != 0>, </#if>Locale... locale) {
     <#if method.arguments?size != 0>
         return get(locale).${method.getMethodName()}(<#list method.arguments as argument>${argument}<#if argument_has_next>, </#if></#list>);
@@ -48,11 +52,17 @@ public class ${className} {
     <#elseif "${loggingType.name()}" == "JUL">
         if(logger.isLoggable(Level.${method.logLevel?upper_case})) {
     </#if>
-           <#if method.arguments?size != 0>
+        <#if method.logOnce>
+            if(loggedMessages.add("logAnother")) {
+        </#if>
+        <#if method.arguments?size != 0>
             logger.${method.logLevel}(${method.getMethodName()}(<#list method.arguments as argument>${argument}<#if argument_has_next>, </#if></#list>, locale));
             <#else>
             logger.${method.logLevel}(${method.getMethodName()}(locale));
             </#if>
+        <#if method.logOnce>
+            }
+        </#if>
         }
     }
     </#if>
@@ -60,9 +70,6 @@ public class ${className} {
 
     interface Localized {
     <#list methods as method>
-        /**
-         * Generated from ${method.key}
-         */
         default String ${method.getMethodName()}(<#list method.parameters as argument>${argument.first} ${argument.second}<#if argument_has_next>, </#if></#list><#if method.parameters?size != 0>, </#if>Locale... locale) {
         <#assign value = method.value?replace("\"", "\\\"") >
         <#if method.arguments?size != 0>

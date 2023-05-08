@@ -37,4 +37,10 @@ enum class LoggingType {
     abstract val logger: KClass<*>
     abstract val loggingLevels: List<String>
     abstract val imports: List<String>
+
+    companion object {
+        fun possibleLoggingLevels(): Set<String> = values().map { it.loggingLevels }
+            .flatten()
+            .toSet()
+    }
 }
