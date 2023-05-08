@@ -42,7 +42,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <jvmTarget>1.8</jvmTarget>
+                    <jvmTarget>11</jvmTarget>
                 </configuration>
             </plugin>
         </plugins>
@@ -57,9 +57,9 @@
             <artifactId>freemarker</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.antwerkz.kibble</groupId>
-            <artifactId>kibble</artifactId>
-            <version>0.22.0</version>
+            <groupId>com.squareup</groupId>
+            <artifactId>kotlinpoet</artifactId>
+            <version>1.13.2</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>

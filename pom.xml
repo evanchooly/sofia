@@ -22,25 +22,11 @@
     </scm>
 
     <properties>
-        <maven.version>3.6.2</maven.version>
-        <kotlin.version>1.6.0</kotlin.version>
-        <dokka.version>0.10.1</dokka.version>
+        <maven.version>3.9.0</maven.version>
+        <kotlin.version>1.8.20</kotlin.version>
+        <dokka.version>1.8.20</dokka.version>
     </properties>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>jcenter</id>
-            <name>JCenter</name>
-            <url>https://jcenter.bintray.com/</url>
-        </pluginRepository>
-    </pluginRepositories>
-
-    <repositories>
-        <repository>
-            <id>typesafe</id>
-            <url>http://repo.typesafe.com/typesafe/releases/</url>
-        </repository>
-    </repositories>
     <build>
         <defaultGoal>install</defaultGoal>
         <pluginManagement>
@@ -51,8 +37,8 @@
                     <version>3.5.1</version>
                     <inherited>true</inherited>
                     <configuration>
-                        <source>1.8</source>
-                        <target>1.8</target>
+                        <source>11</source>
+                        <target>11</target>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -76,7 +62,7 @@
                         </execution>
                     </executions>
                     <configuration>
-                        <jvmTarget>1.8</jvmTarget>
+                        <jvmTarget>11</jvmTarget>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -138,15 +124,15 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.13</version>
+                <version>3.0.0</version>
             </plugin>
         </plugins>
     </build>
 
     <modules>
         <module>sofia-core</module>
-        <module>mojo</module>
-        <module>tests</module>
+<!--        <module>mojo</module>-->
+<!--        <module>tests</module>-->
     </modules>
 
     <dependencyManagement>
@@ -177,9 +163,15 @@
                 <version>2.3.32</version>
             </dependency>
             <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>2.0.7</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.testng</groupId>
                 <artifactId>testng</artifactId>
-                <version>6.8</version>
+                <version>7.7.1</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>

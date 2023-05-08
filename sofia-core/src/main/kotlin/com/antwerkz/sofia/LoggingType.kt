@@ -1,14 +1,19 @@
 package com.antwerkz.sofia
 
 import java.util.logging.Level
+import kotlin.reflect.KClass
+import org.slf4j.LoggerFactory
 
 enum class LoggingType {
     NONE,
 
+    LOGBACK {
+
+    },
     SLF4J {
         override val loggingLevels = listOf("error", "debug", "warn", "info")
-
         override val imports =  listOf("org.slf4j.Logger", "org.slf4j.LoggerFactory")
+        override val factory: KClass<*> = LoggerFactory::class
     },
 
     JUL {
@@ -19,6 +24,8 @@ enum class LoggingType {
                 .map { it.toString().toLowerCase() }
                 .toList()
     };
+
+    open val factory: KClass<*> = Any::class
 
     open val loggingLevels: List<String> = emptyList()
 
