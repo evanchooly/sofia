@@ -17,7 +17,7 @@ jobs:
   Snapshots:
     if: github.ref_type == 'branch'
     needs:
-      - Test
+      - Build
     uses: evanchooly/workflows/.github/workflows/release.yml@master
     secrets:
       SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
