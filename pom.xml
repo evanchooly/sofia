@@ -131,8 +131,8 @@
 
     <modules>
         <module>sofia-core</module>
-<!--        <module>mojo</module>-->
-<!--        <module>tests</module>-->
+        <module>mojo</module>
+        <module>tests</module>
     </modules>
 
     <dependencyManagement>
@@ -153,9 +153,9 @@
                 <version>${maven.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.codehaus.plexus</groupId>
+                <groupId>org.apache.maven</groupId>
                 <artifactId>plexus-utils</artifactId>
-                <version>3.0.21</version>
+                <version>4.0.0-alpha-5</version>
             </dependency>
             <dependency>
                 <groupId>org.freemarker</groupId>

@@ -17,8 +17,6 @@ class SofiaConfig(
         var packageName: String = "com.antwerkz.sofia",
         var generateJava: Boolean = true,
         var generateKotlin: Boolean = false,
-//        var generateJavascript: Boolean = false,
-//        var javascriptOutputFile: File? = null,
         var bundleName: String = propertiesFile.nameWithoutExtension,
         var className: String = bundleName.capitalize(),
         var charset: Charset = Charset.forName("ISO-8859-1")) {

@@ -8,6 +8,7 @@ import org.apache.maven.plugins.annotations.Parameter
 import org.apache.maven.project.MavenProject
 import java.io.File
 import java.nio.charset.Charset
+import java.util.Locale
 
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
 open class SofiaMojo : AbstractMojo() {
@@ -51,13 +52,13 @@ open class SofiaMojo : AbstractMojo() {
         }
         val config = SofiaConfig(inputFile, outputDirectory, loadLoggingType(), packageName,
                 generateJava = this.outputType == "java", generateKotlin = this.outputType == "kotlin",
-                className = this.className ?: inputFile.nameWithoutExtension.capitalize(), charset = Charset.forName(charset))
+                className = this.className ?: inputFile.nameWithoutExtension.capitalizeFirstLetter(), charset = Charset.forName(charset))
         LocalizerGenerator(config).write()
     }
 
     private fun loadLoggingType(): LoggingType {
         try {
-            return LoggingType.valueOf(loggingType.toUpperCase())
+            return LoggingType.valueOf(loggingType.uppercase(Locale.getDefault()))
         } catch (e: IllegalArgumentException) {
             throw MojoExecutionException("Unknown logging type: " + loggingType)
         }

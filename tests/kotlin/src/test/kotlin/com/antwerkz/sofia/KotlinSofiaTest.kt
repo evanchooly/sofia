@@ -28,7 +28,7 @@ class KotlinSofiaTest {
         Assert.assertEquals(SofiaKotlin.parameterizedPropertyLongName("bob", "alice", Locale.GERMAN),
                 "I need zwei parameters bob and alice")
         val message = SofiaKotlin.dateProperty(Date(), 2)
-        Assert.assertTrue(message.contains("Today's date"), message)
+        Assert.assertTrue(message.contains("Today's date"), "Could not find text in $message")
         LogManager.getLogManager().readConfiguration(FileInputStream("src/test/resources/logging.properties"))
         SofiaKotlin.logMe()
         SofiaKotlin.logMe(Locale.GERMAN)

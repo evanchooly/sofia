@@ -19,21 +19,26 @@ class SofiaConfigTest {
     fun testKotlin() {
         val properties = File("../tests/kotlin/src/main/resources/sofia.properties")
         val sofiaConfig = SofiaConfig(properties, loggingType = LoggingType.SLF4J, generateJava = false,
-                generateKotlin = true, outputDirectory = File("target/generated-sources/sofia"))
+                generateKotlin = true, outputDirectory = File("target/generated-test-sources/sofia"))
 
         LocalizerGenerator(sofiaConfig).write()
-        val readFile = File("target/generated-sources/sofia/com/antwerkz/sofia/Sofia.kt").readText()
-        Assert.assertTrue(readFile.contains("fun dateProperty(arg0: Date, arg1: Number, locale: Locale? = null): String"))
+        val readFile = File("target/generated-test-sources/sofia/com/antwerkz/sofia/Sofia.kt").readText()
+        Assert.assertTrue(readFile.contains("""@JvmOverloads
+  public fun dateProperty(
+    arg0: Date,
+    arg1: Number,
+    locale: Locale? = null,
+  ): String"""))
     }
 
     fun testJava() {
         val properties = File("../tests/kotlin/src/main/resources/sofia.properties")
         val sofiaConfig = SofiaConfig(properties, loggingType = LoggingType.SLF4J, className = "SofiaJava",
-                outputDirectory = File("../tests/java/target/generated-sources/sofia"))
+                outputDirectory = File("../tests/java/target/generated-test-sources/sofia"))
 
         Assert.assertEquals(sofiaConfig.className, "SofiaJava")
         LocalizerGenerator(sofiaConfig).write()
-        val readFile = File("../tests/java/target/generated-sources/sofia/com/antwerkz/sofia/SofiaJava.java").readText()
+        val readFile = File("../tests/java/target/generated-test-sources/sofia/com/antwerkz/sofia/SofiaJava.java").readText()
         Assert.assertTrue(readFile.contains("public String dateProperty(Date arg0"))
     }
 }

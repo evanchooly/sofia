@@ -1,33 +1,40 @@
 package com.antwerkz.sofia
 
+import java.util.Locale
 import java.util.logging.Level
+import java.util.logging.Logger
 import kotlin.reflect.KClass
 import org.slf4j.LoggerFactory
 
 enum class LoggingType {
-    NONE,
-
-    LOGBACK {
-
+    NONE {
+        override val factory: KClass<*> = Any::class
+        override val logger: KClass<*> = Any::class
+        override val imports: List<String> = listOf()
+        override val loggingLevels: List<String> = listOf()
     },
+
     SLF4J {
         override val loggingLevels = listOf("error", "debug", "warn", "info")
-        override val imports =  listOf("org.slf4j.Logger", "org.slf4j.LoggerFactory")
+        override val imports = listOf("org.slf4j.Logger", "org.slf4j.LoggerFactory")
         override val factory: KClass<*> = LoggerFactory::class
+        override val logger: KClass<*> = org.slf4j.Logger::class
     },
 
     JUL {
         override val imports = listOf("java.util.logging.Logger")
-
-        override val loggingLevels = listOf(Level.ALL, Level.SEVERE, Level.WARNING, Level.INFO,
-                Level.CONFIG, Level.FINE, Level.FINER, Level.FINEST)
-                .map { it.toString().toLowerCase() }
-                .toList()
+        override val loggingLevels = listOf(
+            Level.ALL, Level.SEVERE, Level.WARNING, Level.INFO,
+            Level.CONFIG, Level.FINE, Level.FINER, Level.FINEST
+        )
+            .map { it.toString().lowercase(Locale.getDefault()) }
+            .toList()
+        override val factory: KClass<*> = Logger::class
+        override val logger: KClass<*> = Logger::class
     };
 
-    open val factory: KClass<*> = Any::class
-
-    open val loggingLevels: List<String> = emptyList()
-
-    open val imports: List<String> = emptyList()
+    abstract val factory: KClass<*>
+    abstract val logger: KClass<*>
+    abstract val loggingLevels: List<String>
+    abstract val imports: List<String>
 }
