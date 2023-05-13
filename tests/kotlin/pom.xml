@@ -12,6 +12,10 @@
     <artifactId>kotlin-tests</artifactId>
     <packaging>jar</packaging>
 
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+
     <build>
         <defaultGoal>test</defaultGoal>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>

@@ -11,6 +11,10 @@
 
     <artifactId>java-tests</artifactId>
 
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+
     <build>
         <defaultGoal>test</defaultGoal>
         <plugins>
