@@ -11,23 +11,25 @@ import java.util.Properties
 import java.util.TreeMap
 
 class SofiaConfig(
-        val propertiesFile: File,
-        var outputDirectory: File,
-        var loggingType: LoggingType = LoggingType.NONE,
-        var packageName: String = "com.antwerkz.sofia",
-        var generateJava: Boolean = true,
-        var generateKotlin: Boolean = false,
-        var bundleName: String = propertiesFile.nameWithoutExtension,
-        var className: String = bundleName.capitalize(),
-        var charset: Charset = Charset.forName("ISO-8859-1")) {
+    val propertiesFile: File,
+    var outputDirectory: File,
+    var loggingType: LoggingType = LoggingType.NONE,
+    var packageName: String = "com.antwerkz.sofia",
+    var generateJava: Boolean = true,
+    var generateKotlin: Boolean = false,
+    var bundleName: String = propertiesFile.nameWithoutExtension,
+    var className: String = bundleName.capitalize(),
+    var charset: Charset = Charset.forName("ISO-8859-1")
+) {
 
     var bundles: MutableMap<String, List<Method>> = sortedMapOf()
     val methods: List<Method>
-    private val language: String = when {
-        generateJava -> "java"
-        generateKotlin -> "kotlin"
-        else -> throw RuntimeException("Either 'java' or 'kotlin' must be selected to generate")
-    }
+    private val language: String =
+        when {
+            generateJava -> "java"
+            generateKotlin -> "kotlin"
+            else -> throw RuntimeException("Either 'java' or 'kotlin' must be selected to generate")
+        }
 
     init {
         methods = mapMethods(loadProperties(propertiesFile))
@@ -48,7 +50,9 @@ class SofiaConfig(
             val method = Method(language, loggingType, entry.key, entry.value)
             list.add(method)
             if (method.logged && !loggingType.loggingLevels.contains(method.logLevel!!)) {
-                throw IllegalArgumentException("Invalid logging level '${method.logLevel}' for logging type '$loggingType'")
+                throw IllegalArgumentException(
+                    "Invalid logging level '${method.logLevel}' for logging type '$loggingType'"
+                )
             }
         }
         return list
@@ -60,7 +64,15 @@ class SofiaConfig(
         val last = name.lastIndexOf('.')
         if (!name.matches(".*_[a-zA-Z]+[_a-zA-Z]*.properties".toRegex())) {
             for (locale in Locale.getAvailableLocales()) {
-                val file = File(rootDir, "%s_%s%s".format(name.substring(0, last), locale.toString(), name.substring(last)))
+                val file =
+                    File(
+                        rootDir,
+                        "%s_%s%s".format(
+                            name.substring(0, last),
+                            locale.toString(),
+                            name.substring(last)
+                        )
+                    )
                 if (file.exists()) {
                     bundles.put(locale.toString(), mapMethods(loadProperties(file)))
                 }

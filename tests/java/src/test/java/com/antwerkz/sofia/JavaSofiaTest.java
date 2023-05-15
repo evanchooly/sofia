@@ -1,16 +1,14 @@
 package com.antwerkz.sofia;
 
-import org.apache.commons.io.FileUtils;
-import org.testng.Assert;
-import org.testng.annotations.Test;
-
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
-import java.util.logging.LogManager;
+
+import org.apache.commons.io.FileUtils;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 @Test
 public class JavaSofiaTest {
@@ -44,14 +42,13 @@ public class JavaSofiaTest {
         Assert.assertTrue(s.contains("I'm just a warning, though."));
         Assert.assertTrue(s.contains("Ich bin nur eine Warnung, wenn."));
         long count = Arrays.stream(s.split("\\n"))
-                           .filter(line -> line.endsWith(" - I'm an error"))
-                           .count();
+                .filter(line -> line.endsWith(" - I'm an error"))
+                .count();
         Assert.assertEquals(count, 1, "Should find the log message only once.");
     }
 
-    public void inheritance()
-    {
-        Assert.assertNotEquals(SofiaJava.dateProperty(new  Date(), 42, Locale.UK), SofiaJava.dateProperty(new Date(), 42));
+    public void inheritance() {
+        Assert.assertNotEquals(SofiaJava.dateProperty(new Date(), 42, Locale.UK), SofiaJava.dateProperty(new Date(), 42));
         Assert.assertEquals(SofiaJava.dateProperty(new Date(), 42, Locale.UK), SofiaJava.dateProperty(new Date(), 42, Locale.ENGLISH));
     }
 }

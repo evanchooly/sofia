@@ -1,0 +1,81 @@
+<FindBugsFilter>
+
+    <Match>
+        <Class name="~.*org\.bson.*"/>
+        <Not>
+            <Bug code="IJU"/>
+        </Not>
+    </Match>
+
+    <Match>
+        <Class name="~.*\.*DocumentWriter"/>
+        <Not>
+            <Bug code="RV_RETURN_VALUE_IGNORED_INFERRED"/>
+        </Not>
+    </Match>
+    <Match>
+        <Class name=".*Impl"/>
+    </Match>
+    <Match>
+        <Class name="~.*\.*Test.*"/>
+        <Not>
+            <Bug code="IJU"/>
+        </Not>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+    </Match>
+    <Match>
+        <Class name="dev.morphia.query.internal.MorphiaCursor"/>
+        <Bug pattern="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS"/>
+    </Match>
+    <Match>
+        <Class name="~.*\.*Test.*"/>
+        <Not>
+            <Bug pattern="SE_BAD_FIELD, EI_EXPOSE_REP, EI_EXPOSE_REP2"/>
+        </Not>
+    </Match>
+    <Match>
+        <Class name="~.*Options.*"/>
+        <Bug pattern="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS"/>
+    </Match>
+    <Match>
+        <Class name="dev.morphia.mapping.Mapper"/>
+        <Bug pattern="RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE"/>
+    </Match>
+    <Match>
+        <Class name="dev.morphia.DatastoreImpl"/>
+        <Bug pattern="RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE"/>
+    </Match>
+    <Match>
+        <Class name="dev.morphia.mapping.experimental.CollectionReference"/>
+        <Bug pattern="RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE"/>
+    </Match>
+    <Match>
+        <Class name="dev.morphia.mapping.experimental.MapReference"/>
+        <Bug pattern="RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE"/>
+    </Match>
+    <Match>
+        <!-- Ignore test entities as these will often have unused things -->
+        <Package name="~dev\.morphia\.testmappackage.*"/>
+    </Match>
+    <Match>
+        <Bug code="SQL,XSS,J2EE,SW,STI,DL,JLM,MWN,NN,RS,UL,HRS,PT,MTIA,XFB"/>
+    </Match>
+    <Match>
+        <Bug category="I18N,MT_CORRECTNESS,SECURITY,PERFORMANCE"/>
+    </Match>
+    <Match>
+        <Class name="dev.morphia.query.LegacyQuery"/>
+        <!--<Method name="compare" params="FindOptions,FindOptions"/>-->
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="~dev.morphia.query.internal.Morphia.*Cursor"/>
+        <Method name="getServerAddress"/>
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <Match>
+        <Class name="dev.morphia.internal.MorphiaInternals"/>
+    </Match>
+</FindBugsFilter>

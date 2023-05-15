@@ -1,12 +1,12 @@
 package com.antwerkz.sofia
 
-import org.apache.maven.plugin.MojoExecutionException
-import org.apache.maven.plugins.annotations.Mojo
 import java.io.IOException
 import java.nio.file.FileSystems
 import java.nio.file.Path
 import java.nio.file.StandardWatchEventKinds
 import java.nio.file.WatchEvent
+import org.apache.maven.plugin.MojoExecutionException
+import org.apache.maven.plugins.annotations.Mojo
 
 @Mojo(name = "watch")
 class WatchMojo : SofiaMojo() {
@@ -39,6 +39,5 @@ class WatchMojo : SofiaMojo() {
         } catch (e: InterruptedException) {
             throw MojoExecutionException(e.message, e)
         }
-
     }
 }

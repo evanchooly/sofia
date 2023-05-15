@@ -1,8 +1,8 @@
 package com.antwerkz.sofia
 
+import java.text.MessageFormat
 import org.testng.Assert
 import org.testng.annotations.Test
-import java.text.MessageFormat
 
 class MessageFormatTest {
     @Test

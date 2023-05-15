@@ -6,7 +6,12 @@ import java.text.MessageFormat
 import java.text.NumberFormat
 import java.util.Locale
 
-class Method(val language: String, val loggingType: LoggingType, val key: String, val value: String) {
+class Method(
+    val language: String,
+    val loggingType: LoggingType,
+    val key: String,
+    val value: String
+) {
     var logOnce: Boolean = false
     var logged = java.lang.Boolean.FALSE
         private set
@@ -50,7 +55,6 @@ class Method(val language: String, val loggingType: LoggingType, val key: String
             is NumberFormat -> "Number"
             else -> "Object"
         }
-
     }
 
     val methodName: String
@@ -65,9 +69,7 @@ class Method(val language: String, val loggingType: LoggingType, val key: String
 
     val loggerName: String
         get() {
-            val parts = name.split("\\.".toRegex())
-                .dropLastWhile { it.isEmpty() }
-                .toTypedArray()
+            val parts = name.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             val name = StringBuilder()
             name.append("log")
             for (part in parts) {
@@ -76,8 +78,8 @@ class Method(val language: String, val loggingType: LoggingType, val key: String
             return name.toString()
         }
 
-        override fun toString(): String {
-            return "Method {key='${key}', parameters=${parameters}', logged=${logged}', logLevel='${logLevel}, value='${value}'," +
-                    " argCount=${argCount}, arguments=${arguments}}"
-        }
+    override fun toString(): String {
+        return "Method {key='${key}', parameters=${parameters}', logged=${logged}', logLevel='${logLevel}, value='${value}'," +
+            " argCount=${argCount}, arguments=${arguments}}"
+    }
 }

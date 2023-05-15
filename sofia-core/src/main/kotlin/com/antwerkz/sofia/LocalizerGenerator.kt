@@ -28,8 +28,7 @@ import java.util.Locale
 
 class LocalizerGenerator(val config: SofiaConfig) {
     companion object {
-        val NULLABLE_LOCALE = Locale::class.asClassName()
-            .copy(nullable = true)
+        val NULLABLE_LOCALE = Locale::class.asClassName().copy(nullable = true)
 
         fun capitalize(text: String): String {
             return Character.toTitleCase(text[0]) + text.substring(1)
@@ -49,8 +48,12 @@ class LocalizerGenerator(val config: SofiaConfig) {
         val file = File(config.outputDirectory, "${packagePath}/${config.className}.${extension}")
         file.parentFile.mkdirs()
         val string = StringWriter()
-        val template = Template("sofia", InputStreamReader(javaClass.getResourceAsStream("/sofia-${extension}.ftl")),
-            Configuration(Configuration.VERSION_2_3_32))
+        val template =
+            Template(
+                "sofia",
+                InputStreamReader(javaClass.getResourceAsStream("/sofia-${extension}.ftl")),
+                Configuration(Configuration.VERSION_2_3_32)
+            )
 
         template.process(config, string)
         file.writeText(string.toString(), charset("UTF-8"))
@@ -65,12 +68,20 @@ class LocalizerGenerator(val config: SofiaConfig) {
                 PropertySpec.builder("logger", config.loggingType.logger)
                     .addModifiers(PRIVATE)
                     .mutable(false)
-                    .initializer(CodeBlock.of("""%T.getLogger("${config.packageName}.${config.className}")""", config.loggingType.factory))
+                    .initializer(
+                        CodeBlock.of(
+                            """%T.getLogger("${config.packageName}.${config.className}")""",
+                            config.loggingType.factory
+                        )
+                    )
                     .build()
             )
             sofia.addProperty(
-                PropertySpec.builder("loggedMessages", bestGuess("kotlin.collections.MutableSet")
-                    .parameterizedBy(String::class.asClassName()))
+                PropertySpec.builder(
+                        "loggedMessages",
+                        bestGuess("kotlin.collections.MutableSet")
+                            .parameterizedBy(String::class.asClassName())
+                    )
                     .addModifiers(PRIVATE)
                     .mutable(false)
                     .initializer("mutableSetOf()")
@@ -78,23 +89,28 @@ class LocalizerGenerator(val config: SofiaConfig) {
             )
         }
         sofia.addProperty(
-            PropertySpec.builder("IMPLS", bestGuess("kotlin.collections.MutableMap")
-                .parameterizedBy(String::class.asClassName(), bestGuess("Localized")))
+            PropertySpec.builder(
+                    "IMPLS",
+                    bestGuess("kotlin.collections.MutableMap")
+                        .parameterizedBy(String::class.asClassName(), bestGuess("Localized"))
+                )
                 .addModifiers(PRIVATE)
                 .mutable(false)
                 .initializer("mutableMapOf()")
-                .build())
+                .build()
+        )
 
-        sofia.addInitializerBlock(CodeBlock.of(
-            "IMPLS.put(\"\", LocalizedImpl())\n" +
-            config.bundles.keys
-                .joinToString("\n", postfix = "\n") {
-                "IMPLS.put(\"$it\", LocalizedImpl_$it())"
-            }))
+        sofia.addInitializerBlock(
+            CodeBlock.of(
+                "IMPLS.put(\"\", LocalizedImpl())\n" +
+                    config.bundles.keys.joinToString("\n", postfix = "\n") {
+                        "IMPLS.put(\"$it\", LocalizedImpl_$it())"
+                    }
+            )
+        )
 
         get(sofia)
-        val localized = TypeSpec.interfaceBuilder("Localized")
-            .addModifiers(PRIVATE)
+        val localized = TypeSpec.interfaceBuilder("Localized").addModifiers(PRIVATE)
         config.methods.forEach {
             addMethods(sofia, it)
             addLocalizer(localized, it)
@@ -103,23 +119,23 @@ class LocalizerGenerator(val config: SofiaConfig) {
 
         addLocaleSpecificImpls(sofia)
 
-        FileSpec.builder(className)
-            .addType(sofia.build())
-            .build()
-            .writeTo(config.outputDirectory)
+        FileSpec.builder(className).addType(sofia.build()).build().writeTo(config.outputDirectory)
     }
 
     private fun addLocaleSpecificImpls(sofia: Builder) {
-        sofia.addType(classBuilder("LocalizedImpl").apply {
-            this.modifiers += listOf(OPEN, PRIVATE)
-            addSuperinterface(bestGuess("Localized"))
-        }.build())
+        sofia.addType(
+            classBuilder("LocalizedImpl")
+                .apply {
+                    this.modifiers += listOf(OPEN, PRIVATE)
+                    addSuperinterface(bestGuess("Localized"))
+                }
+                .build()
+        )
         addLocalizerImpls(sofia)
     }
 
     private fun addLocalizer(localized: Builder, method: Method, isOverride: Boolean = false) {
-        val function = FunSpec.builder(method.methodName)
-            .returns(String::class)
+        val function = FunSpec.builder(method.methodName).returns(String::class)
         if (isOverride) {
             function.addModifiers(OVERRIDE)
         }
@@ -129,7 +145,11 @@ class LocalizerGenerator(val config: SofiaConfig) {
         function.addCode(
             if (method.parameters.isNotEmpty()) {
                 val arguments = method.arguments.joinToString(", ")
-                CodeBlock.of("""return %T.format(%S, ${arguments})""", MessageFormat::class, method.value )
+                CodeBlock.of(
+                    """return %T.format(%S, ${arguments})""",
+                    MessageFormat::class,
+                    method.value
+                )
             } else {
                 CodeBlock.of("return %S", method.value)
             }
@@ -140,37 +160,35 @@ class LocalizerGenerator(val config: SofiaConfig) {
 
     private fun addLocalizerImpls(sofia: Builder) {
         config.bundles.forEach { bundle, methods ->
-            val impl = classBuilder("LocalizedImpl_$bundle")
-                .apply {
+            val impl =
+                classBuilder("LocalizedImpl_$bundle").apply {
                     modifiers += listOf(OPEN, PRIVATE)
                     superclass(bestGuess("LocalizedImpl${config.findParentExtension(bundle)}"))
                 }
-            methods.forEach {
-                addLocalizer(impl, it, true)
-            }
+            methods.forEach { addLocalizer(impl, it, true) }
             sofia.addType(impl.build())
         }
     }
 
     private fun addMethods(sofia: Builder, method: Method, isOverride: Boolean = false) {
-        val function = FunSpec.builder(method.methodName)
-            .returns(String::class)
+        val function = FunSpec.builder(method.methodName).returns(String::class)
 
         function.addKdoc("Generated from ${method.key}")
-        if(isOverride) {
+        if (isOverride) {
             function.modifiers += OPEN
         }
         method.parameters.forEach { param ->
             function.addParameter(ParameterSpec(param.second, className(param)))
         }
-        val builder = ParameterSpec.builder("locale", NULLABLE_LOCALE)
-            .addModifiers()
+        val builder = ParameterSpec.builder("locale", NULLABLE_LOCALE).addModifiers()
         if (!isOverride) {
             builder.defaultValue("null")
         }
         function.addParameter(builder.build())
 
-        function.addCode("return get(locale).${method.methodName}(${method.arguments.joinToString(", ")})")
+        function.addCode(
+            "return get(locale).${method.methodName}(${method.arguments.joinToString(", ")})"
+        )
 
         if (!isOverride && method.logged) {
             val loggerName = method.loggerName
@@ -178,15 +196,20 @@ class LocalizerGenerator(val config: SofiaConfig) {
             method.parameters.forEach { param ->
                 logged.addParameter(ParameterSpec(param.second, className(param)))
             }
-            logged.addParameter(ParameterSpec.builder("locale", NULLABLE_LOCALE)
-                .defaultValue("null")
-                .build())
+            logged.addParameter(
+                ParameterSpec.builder("locale", NULLABLE_LOCALE).defaultValue("null").build()
+            )
 
-            logged.beginControlFlow(when (config.loggingType) {
-                SLF4J -> "if(logger.is${method.logLevel!!.capitalizeFirstLetter()}Enabled())"
-                else -> "if(logger.isLoggable(Level.${method.logLevel?.uppercase(Locale.getDefault())}))"
-            })
-            logged.addStatement("val message = ${method.methodName}(${(method.arguments + "locale").joinToString(", ")})")
+            logged.beginControlFlow(
+                when (config.loggingType) {
+                    SLF4J -> "if(logger.is${method.logLevel!!.capitalizeFirstLetter()}Enabled())"
+                    else ->
+                        "if(logger.isLoggable(Level.${method.logLevel?.uppercase(Locale.getDefault())}))"
+                }
+            )
+            logged.addStatement(
+                "val message = ${method.methodName}(${(method.arguments + "locale").joinToString(", ")})"
+            )
             if (method.logOnce) {
                 logged.beginControlFlow("if(loggedMessages.add(message))")
             }
@@ -195,7 +218,6 @@ class LocalizerGenerator(val config: SofiaConfig) {
                 logged.endControlFlow()
             }
             logged.endControlFlow()
-
 
             sofia.addFunction(logged.build())
         }
@@ -213,12 +235,13 @@ class LocalizerGenerator(val config: SofiaConfig) {
     }
 
     private fun get(sofia: Builder) {
-        val get = FunSpec.builder("get")
-            .addModifiers(PRIVATE)
-            .returns(bestGuess("Localized"))
-            .addCode(
-                CodeBlock.of(
-                    """
+        val get =
+            FunSpec.builder("get")
+                .addModifiers(PRIVATE)
+                .returns(bestGuess("Localized"))
+                .addCode(
+                    CodeBlock.of(
+                        """
             if (locale == null) {
                 return IMPLS.get("")!!
             }
@@ -232,16 +255,15 @@ class LocalizerGenerator(val config: SofiaConfig) {
                 }
             }
             return IMPLS.get("")!!
-        """.trimIndent()
+        """.trimIndent(
+                        )
+                    )
                 )
-            )
-            .addParameter(ParameterSpec("locale", NULLABLE_LOCALE))
+                .addParameter(ParameterSpec("locale", NULLABLE_LOCALE))
         sofia.addFunction(get.build())
     }
 }
 
 fun String?.capitalizeFirstLetter(): String {
-    return this?.let {
-        this[0].uppercaseChar() + this.drop(1)
-    } ?: ""
+    return this?.let { this[0].uppercaseChar() + this.drop(1) } ?: ""
 }
