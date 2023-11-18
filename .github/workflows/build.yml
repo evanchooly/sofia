@@ -4,8 +4,6 @@ on:
   push:
     branches-ignore:
       - 'dependabot/**'
-    tags-ignore:
-      - r[0-9]*
   workflow_dispatch:
 
 jobs:
@@ -14,15 +12,38 @@ jobs:
     with:
       java: 20
 
-  Snapshots:
-    if: github.ref_type == 'branch'
+  Matrix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Is releasable branch
+        id: releasable
+        run: |
+          if [ "${{ github.event.ref }}" == 'refs/heads/master' ] \
+            || [ "${{ github.event.ref }}" == 'refs/heads/main' ] \
+            || [[ "${{ github.event.ref }}" =~ ^refs/heads/[0-9]+\.[0-9]+\.x$ ]] \
+            || [[ "${{ github.event.ref }}" =~ ^refs/tags/v[0-9]+\.[0-9]+.[0-9]+$ ]]
+          then
+            echo "releasable=true" >> $GITHUB_OUTPUT
+          else
+            echo "releasable=false" >> $GITHUB_OUTPUT
+          fi          
+
+    outputs:
+      releasable: ${{ steps.releasable.outputs.releasable }}
+
+  Release:
     needs:
+      - Matrix
       - Build
-    uses: evanchooly/workflows/.github/workflows/release.yml@master
+    if: needs.Matrix.outputs.releasable == 'true'
+    uses: evanchooly/workflows/.github/workflows/jreleaser.yml@master
+    with:
+      java: 17
     secrets:
-      SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-      SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-      MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
-      GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
-      GH_TOKEN: ${{ secrets.GH_OAUTH }}
+      GH_PUSH_TOKEN       : ${{ secrets.GH_PUSH_TOKEN }}
+      GPG_PASSPHRASE      : ${{ secrets.GPG_PASSPHRASE }}
+      GPG_PUBLIC_KEY      : ${{ secrets.GPG_PUBLIC_KEY }}
+      GPG_PRIVATE_KEY     : ${{ secrets.GPG_PRIVATE_KEY }}
+      SONATYPE_USERNAME   : ${{ secrets.SONATYPE_USERNAME }}
+      SONATYPE_PASSWORD   : ${{ secrets.SONATYPE_PASSWORD }}
 
