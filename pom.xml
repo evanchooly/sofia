@@ -23,7 +23,7 @@
 
     <properties>
         <dokka.version>1.8.20</dokka.version>
-        <kotlin.version>1.9.20</kotlin.version>
+        <kotlin.version>1.9.21</kotlin.version>
         <logback.version>1.4.11</logback.version>
 
         <maven.version>3.9.5</maven.version>
