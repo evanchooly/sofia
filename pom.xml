@@ -26,7 +26,7 @@
         <kotlin.version>2.2.0</kotlin.version>
         <logback.version>1.5.18</logback.version>
 
-        <maven.version>3.9.10</maven.version>
+        <maven.version>3.9.11</maven.version>
     </properties>
 
     <build>
